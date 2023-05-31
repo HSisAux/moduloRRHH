@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33723.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "moduloRRHH", "moduloRRHH\moduloRRHH.csproj", "{687869AC-49D9-4B7B-8AD0-F4CD86B90BE7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "moduloRRHH.Tests", "moduloRRHH.Tests\moduloRRHH.Tests.csproj", "{8BB622A7-C0F6-4B09-91E7-DB84F6B3ACF5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{687869AC-49D9-4B7B-8AD0-F4CD86B90BE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{687869AC-49D9-4B7B-8AD0-F4CD86B90BE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{687869AC-49D9-4B7B-8AD0-F4CD86B90BE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{687869AC-49D9-4B7B-8AD0-F4CD86B90BE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BB622A7-C0F6-4B09-91E7-DB84F6B3ACF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BB622A7-C0F6-4B09-91E7-DB84F6B3ACF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BB622A7-C0F6-4B09-91E7-DB84F6B3ACF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BB622A7-C0F6-4B09-91E7-DB84F6B3ACF5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {154BDED6-359F-4619-916A-F925342C56F0}
+	EndGlobalSection
+EndGlobal
