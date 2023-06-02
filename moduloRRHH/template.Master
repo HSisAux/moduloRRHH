@@ -1,0 +1,182 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="template.master.cs" Inherits="moduloRRHH.template" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title><%: Page.Title %> RRHH </title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:ContentPlaceHolder>
+
+    <webopt:BundleReference runat="server" Path="~/Content/css"></webopt:BundleReference>
+
+</head>
+<body>
+    <form id="form1" runat="server">
+        <asp:ScriptManager runat="server">
+            <Scripts>
+                <%--Framework Scripts--%>
+                <asp:ScriptReference Name="MsAjaxBundle" />
+                <asp:ScriptReference Name="jquery" />
+                <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
+                <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
+                <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
+                <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
+                <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
+                <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
+                <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
+                <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
+                <asp:ScriptReference Name="WebFormsBundle" />
+                <%--Site Scripts--%>
+            </Scripts>
+        </asp:ScriptManager>
+        <!-- Navbar -->
+        <section id="navbar">
+            <nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color: #1D3B71;">
+                <div class="container-fluid">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                            <li class="nav-item dropdown ">
+                                <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-circle-user" style="font-size: 20px;"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item" href="#">USUARIO</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#"><i class="fa-solid fa-gear"></i> cuenta</a></li>                      
+                                    <li><a class="dropdown-item" href="#">
+                                        <i class="fa-solid fa-right-from-bracket"></i> cerrar sesión</a>
+
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </nav>
+        </section>
+        <!-- Sidebar -->
+        <section id="sidebar">
+            <nav class="sidebar">
+                <%--<div class="cabecerabonita">
+                    <section class="iconito">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="54" height="54" viewBox="0 0 2048 2048">
+                                <path fill="currentColor" d="M1792 1280h256v768H1024v-768h256v-256h512v256zm-384 0h256v-128h-256v128zm512 384h-128v128h-128v-128h-256v128h-128v-128h-128v256h768v-256zm-768-256v128h768v-128h-768zM896 896q0 93-41 174t-117 136q45 23 85 53t73 67v338q0-79-30-149t-82-122t-123-83t-149-30q-80 0-149 30t-122 82t-83 123t-30 149H0q0-73 20-141t57-129t91-108t118-81q-75-54-116-135t-42-174q0-79 30-149t82-122t122-83t150-30q72 0 137 25t119 74q32-29 71-51q-34-35-52-81t-19-95q0-53 20-99t55-82t81-55t100-20q53 0 99 20t82 55t55 81t20 100q0 49-18 95t-53 81q83 46 135 124q52-78 135-124q-34-35-52-81t-19-95q0-53 20-99t55-82t81-55t100-20q53 0 99 20t82 55t55 81t20 100q0 49-18 95t-53 81q46 25 83 61t62 79t40 94t14 102h-128q0-53-20-99t-55-82t-81-55t-100-20q-53 0-99 20t-82 55t-55 81t-20 100h-128q0-53-20-99t-55-82t-81-55t-100-20q-49 0-95 18t-81 53q24 42 36 89t12 96zm768-640q-27 0-50 10t-40 27t-28 41t-10 50q0 27 10 50t27 40t41 28t50 10q27 0 50-10t40-27t28-41t10-50q0-27-10-50t-27-40t-41-28t-50-10zm-640 0q-27 0-50 10t-40 27t-28 41t-10 50q0 27 10 50t27 40t41 28t50 10q27 0 50-10t40-27t28-41t10-50q0-27-10-50t-27-40t-41-28t-50-10zm-512 896q53 0 99-20t82-55t55-81t20-100q0-53-20-99t-55-82t-81-55t-100-20q-53 0-99 20t-82 55t-55 81t-20 100q0 53 20 99t55 82t81 55t100 20z" />
+                            </svg>
+                    </section>
+                    <section class="textito">
+                        <section class="recursos">Recursos</section>
+                        <section class="humanos">Humanos</section>
+                    </section>
+                    <i class="fa-solid fa-angles-right" id="btnMenu"></i>
+                </div>--%>
+                <div class="logo">
+                    <div class="row" style="color: white;">
+                        <div class="col">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="54" height="54" viewBox="0 0 2048 2048">
+                                <path fill="currentColor" d="M1792 1280h256v768H1024v-768h256v-256h512v256zm-384 0h256v-128h-256v128zm512 384h-128v128h-128v-128h-256v128h-128v-128h-128v256h768v-256zm-768-256v128h768v-128h-768zM896 896q0 93-41 174t-117 136q45 23 85 53t73 67v338q0-79-30-149t-82-122t-123-83t-149-30q-80 0-149 30t-122 82t-83 123t-30 149H0q0-73 20-141t57-129t91-108t118-81q-75-54-116-135t-42-174q0-79 30-149t82-122t122-83t150-30q72 0 137 25t119 74q32-29 71-51q-34-35-52-81t-19-95q0-53 20-99t55-82t81-55t100-20q53 0 99 20t82 55t55 81t20 100q0 49-18 95t-53 81q83 46 135 124q52-78 135-124q-34-35-52-81t-19-95q0-53 20-99t55-82t81-55t100-20q53 0 99 20t82 55t55 81t20 100q0 49-18 95t-53 81q46 25 83 61t62 79t40 94t14 102h-128q0-53-20-99t-55-82t-81-55t-100-20q-53 0-99 20t-82 55t-55 81t-20 100h-128q0-53-20-99t-55-82t-81-55t-100-20q-49 0-95 18t-81 53q24 42 36 89t12 96zm768-640q-27 0-50 10t-40 27t-28 41t-10 50q0 27 10 50t27 40t41 28t50 10q27 0 50-10t40-27t28-41t10-50q0-27-10-50t-27-40t-41-28t-50-10zm-640 0q-27 0-50 10t-40 27t-28 41t-10 50q0 27 10 50t27 40t41 28t50 10q27 0 50-10t40-27t28-41t10-50q0-27-10-50t-27-40t-41-28t-50-10zm-512 896q53 0 99-20t82-55t55-81t20-100q0-53-20-99t-55-82t-81-55t-100-20q-53 0-99 20t-82 55t-55 81t-20 100q0 53 20 99t55 82t81 55t100 20z" />
+                            </svg>
+                        </div>
+                        <div class="col">
+                            <p>
+                                <strong>Recursos</strong>
+                                Humanos
+                            </p>
+                        </div>
+                    </div>
+                    <div class="logoImg"></div>
+                    <i class="fa-solid fa-angles-right" id="btnMenu"></i>
+                    
+                </div>
+                <ul class="nav-links">
+                    <li>
+                        <asp:HyperLink ID="linkHome" NavigateUrl="#" runat="server">
+                            <i class="fa-solid fa-house"></i>
+                            <span class="link_name">inicio</span>
+                            <ul class="sub-menu blank">
+                                <li>
+                                    <asp:HyperLink ID="lnHome" NavigateUrl="#" CssClass="link_name" runat="server">inicio</asp:HyperLink>
+                                </li>
+                            </ul>
+                        </asp:HyperLink>
+                    </li>
+                    <li>
+                        <asp:HyperLink ID="linkDoc" NavigateUrl="#" runat="server">
+                            <i class="fa-solid fa-folder"></i>
+                            <span class="link_name">documentos</span>
+                            <ul class="sub-menu blank">
+                                <li>
+                                    <asp:HyperLink ID="lnDocumentos" NavigateUrl="#" CssClass="link_name" runat="server">documentos</asp:HyperLink>
+                                </li>
+                            </ul>
+                        </asp:HyperLink>
+                    </li>
+                    <li>
+                        <asp:HyperLink ID="linkDepto" NavigateUrl="#" runat="server">
+                            <i class="fa-solid fa-sitemap"></i>
+                            <span class="link_name">departamentos</span>
+                            <ul class="sub-menu blank">
+                                <li>
+                                    <asp:HyperLink ID="lnDpto" NavigateUrl="#" CssClass="link_name" runat="server">Departamentos</asp:HyperLink>
+                                </li>
+                            </ul>
+                        </asp:HyperLink>
+                    </li>
+                    <li>
+                        <asp:HyperLink ID="linkEmpleados" NavigateUrl="#" runat="server">
+                            <i class="fa-solid fa-users"></i>
+                            <span class="link_name">empleados</span>
+                            <ul class="sub-menu blank">
+                                <li>
+                                    <asp:HyperLink ID="lnEmpleados" NavigateUrl="#" CssClass="link_name" runat="server">empleados</asp:HyperLink>
+                                </li>
+                            </ul>
+                        </asp:HyperLink>
+                    </li>
+                    <li>
+                        <asp:HyperLink ID="linkPuestos" NavigateUrl="#" runat="server">
+                            <i class="fa-solid fa-users-gear"></i>
+                            <span class="link_name">puestos</span>
+                            <ul class="sub-menu blank">
+                                <li>
+                                    <asp:HyperLink ID="lnPuestos" NavigateUrl="#" CssClass="link_name" runat="server">puestos</asp:HyperLink>
+                                </li>
+                            </ul>
+                        </asp:HyperLink>
+                    </li>
+                    <li>
+                        <asp:HyperLink ID="linkSalarios" NavigateUrl="#" runat="server">
+                            <i class="fa-solid fa-money-bill-wave"></i>
+                            <span class="link_name">salarios</span>
+                            <ul class="sub-menu blank">
+                                <li>
+                                    <asp:HyperLink ID="lnSalarios" NavigateUrl="#" CssClass="link_name" runat="server">salarios</asp:HyperLink>
+                                </li>
+                            </ul>
+                        </asp:HyperLink>
+                    </li>
+                </ul>
+            </nav>
+        </section>
+        <!-- Contenido -->
+        <div class="contenedor">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/Scripts/jquery-3.7.0.js") %>
+        <%: Scripts.Render("~/Scripts/bootstrap.bundle.js") %>
+    </asp:PlaceHolder>
+</body>
+</html>

@@ -1,14 +1,22 @@
-﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="moduloRRHH._Default" %>
+﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/template.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="moduloRRHH._Default" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <main>
-        <section class="row" aria-labelledby="aspnetTitle">
+        <section class="row">
+            <div class="col-12">
+                <div style="height: 35px; color:white; background:#1D3B71; border-radius:4px;" class="ps-2 p-1" >
+                    <label style="font-weight:400; font-size:16px; ">empleados</label>
+                </div>
+            </div>
+        </section>
+        <div style="background: #D8E2FF; border-radius: 13px;" class="p-5 mt-2">
+        <section class="row" aria-labelledby="aspnetTitle" >
             <h1 id="aspnetTitle">ASP.NET</h1>
             <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
             <p><a href="http://www.asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
         </section>
-
+       
         <div class="row">
             <section class="col-md-4" aria-labelledby="gettingStartedTitle">
                 <h2 id="gettingStartedTitle">Getting started</h2>
@@ -19,6 +27,7 @@
                 <p>
                     <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301948">Learn more &raquo;</a>
                 </p>
+                <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
             </section>
             <section class="col-md-4" aria-labelledby="librariesTitle">
                 <h2 id="librariesTitle">Get more libraries</h2>
@@ -39,6 +48,7 @@
                 </p>
             </section>
         </div>
+            </div>
     </main>
 
 </asp:Content>
