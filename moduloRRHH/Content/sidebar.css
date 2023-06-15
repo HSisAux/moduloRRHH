@@ -1,13 +1,13 @@
 ﻿.contenedor {
     position: absolute;
-    height: 100vh;
+    height: calc(100% - 3rem);
     width: calc(100% - 240px);
     left: 240px;
-    overflow-y: scroll;
+    overflow-y: auto;
     padding-top: 1rem;
     padding-bottom: 2rem;
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: 4rem;
+    padding-right: 4rem;
     transition: all 0.3s ease;
     background-color: #efefef;
 }
@@ -19,7 +19,7 @@
     width: 240px;
     background: #1D3B71;
     z-index: 100;
-    transition: all 0.5s ease;
+    transition: all 0.3s ease;
 }
     .sidebar #btnMenu {
         position: absolute;
@@ -33,7 +33,7 @@
         line-height: 50px;
         transform: translateX(-50%);
         cursor: pointer;
-        transition: 0.5s ease;
+        transition: 0.3s ease;
     }
 /* Nav-links */
     .sidebar .nav-links {
@@ -59,7 +59,7 @@
                 color: #fff;
                 font-size: 18px;
                 font-weight: 500;
-                transition: all 0.5s ease;
+                transition: all 0.3s ease;
                 cursor: pointer;
             }
 
@@ -78,7 +78,7 @@
                     font-weight: 400;
                     color: #fff;
                     line-height: 50px;
-                    transition: all 0.5s ease;
+                    transition: all 0.3s ease;
                 }
             .sidebar .nav-links li .sub-menu {
                 padding: 6px 6px 14px 25px;
@@ -102,12 +102,12 @@
             }
                 .sidebar .nav-links li:hover span {
                     color: #211B00;
-                    font-weight: 500;
+                    font-weight: bolder;
                 }
                 .sidebar .nav-links li:hover i {
                     color: #211B00;
                     margin-left: 20px;
-                    font-weight: 500;
+                    font-weight: bolder;
                 }
 
                 .sidebar.close .nav-links li .sub-menu {
@@ -144,7 +144,7 @@
         top: 0;
         opacity: 1;
         pointer-events: auto;
-        transition: all 0.4s ease;
+        transition: all 0.3s ease;
     }
 
     .sidebar .nav-links li .sub-menu.blank {
@@ -234,3 +234,77 @@
     /* Inside auto layout */
 }
 /* ------------------ Cabecera -----------------*/
+
+/* Opcion selecionada */
+.sidebar .nav-links li.seleccionado {
+    background: #FFE24D;
+}.sidebar .nav-links li.seleccionado span {
+    color: #211B00;
+    font-weight: bolder;
+}
+
+ .sidebar .nav-links li.seleccionado i {
+    color: #211B00;
+    margin-left: 20px;
+    font-weight: bolder;
+}
+
+.barra {
+    background: red;
+    height: 3rem;
+    width: calc(100% - 240px);
+    left: 240px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+/* =====================Sidebar cerrada====================== */
+.sidebar.close {
+    width: 78px;
+}
+    .sidebar.close ~ .contenedor {
+        width: calc(100% - 78px);
+        left: 78px;
+    }
+
+    .sidebar.close ~ .barra {
+        width: calc(100% - 78px);
+        left: 78px;
+    }
+
+
+.sidebar.close .nav-links li.seleccionado {
+    background: #FFE24D;
+}
+
+    .sidebar.close .nav-links li.seleccionado span {
+        color: #211B00;
+        font-weight: bolder;
+    }
+
+    .sidebar.close .nav-links li.seleccionado i {
+        color: #211B00;
+        font-weight: bolder;
+        margin-left:0;
+    }
+    .sidebar.close #btnMenu {
+        text-align: center;
+        transform: rotate(-180deg) translate(55px,0 );
+    }
+    .sidebar.close .logo .dentro {
+        opacity: 0;
+    }
+
+    .sidebar.close .logo {
+        height: 18px;
+    }
+
+    .blink{
+        animation: blinker 1s linear infinite;
+    }
+
+    @keyframes blinker{
+        50% {
+            border-color: #d8e2ff;
+        }
+    }
