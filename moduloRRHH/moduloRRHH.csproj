@@ -43,6 +43,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AjaxControlToolkit, Version=20.1.0.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
+      <HintPath>..\packages\AjaxControlToolkit.20.1.0\lib\net40\AjaxControlToolkit.dll</HintPath>
+    </Reference>
     <Reference Include="AspNet.ScriptManager.jQuery, Version=3.6.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\AspNet.ScriptManager.jQuery.3.6.0\lib\net45\AspNet.ScriptManager.jQuery.dll</HintPath>
     </Reference>
@@ -129,7 +132,7 @@
     <Content Include="Assets\img\JAMA.png" />
     <Content Include="Assets\img\jamamadi.png" />
     <Content Include="Assets\img\Rectangle 27.png" />
-    <Content Include="Assets\img\tomholland.jpg" />
+    <Content Include="compania\division.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -149,17 +152,42 @@
     <Content Include="Content\sidebar.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
+    <Content Include="documentos\crud.aspx" />
+    <Content Include="empleados\assets\dropzone.css" />
+    <Content Include="empleados\assets\dropzone.js" />
+    <Content Include="empleados\assets\JSDetalles.js" />
+    <Content Include="empleados\assets\loading.gif" />
+    <Content Include="empleados\assets\Pdf-2127829.png" />
     <Content Include="empleados\crud.aspx" />
     <Content Include="empleados\detalles.aspx" />
     <Content Include="empleados\lista.aspx" />
+    <Content Include="empleados\visor.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="salario\salario.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\esm\popper-utils.js" />
+    <Content Include="Scripts\esm\popper-utils.min.js" />
+    <Content Include="Scripts\esm\popper.js" />
+    <Content Include="Scripts\esm\popper.min.js" />
+    <Content Include="Scripts\index.js.flow" />
+    <Content Include="Scripts\esm\popper.min.js.map" />
+    <Content Include="Scripts\esm\popper.js.map" />
+    <Content Include="Scripts\esm\popper-utils.min.js.map" />
+    <Content Include="Scripts\esm\popper-utils.js.map" />
+    <Content Include="Assets\fontawesome\webfonts\fa-brands-400.ttf" />
+    <Content Include="Assets\fontawesome\webfonts\fa-brands-400.woff2" />
+    <Content Include="Assets\fontawesome\webfonts\fa-regular-400.ttf" />
+    <Content Include="Assets\fontawesome\webfonts\fa-regular-400.woff2" />
+    <Content Include="Assets\fontawesome\webfonts\fa-solid-900.ttf" />
+    <Content Include="Assets\fontawesome\webfonts\fa-solid-900.woff2" />
+    <Content Include="Assets\fontawesome\webfonts\fa-v4compatibility.ttf" />
+    <Content Include="Assets\fontawesome\webfonts\fa-v4compatibility.woff2" />
     <Content Include="Scripts\bootstrap.min.js.map" />
     <Content Include="Scripts\bootstrap.js.map" />
     <Content Include="Scripts\bootstrap.esm.min.js.map" />
@@ -182,23 +210,7 @@
     <Content Include="Content\bootstrap-grid.rtl.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
-    <Content Include="Scripts\esm\popper-utils.js" />
-    <Content Include="Scripts\esm\popper-utils.min.js" />
-    <Content Include="Scripts\esm\popper.js" />
-    <Content Include="Scripts\esm\popper.min.js" />
-    <Content Include="Scripts\index.js.flow" />
-    <Content Include="Scripts\esm\popper.min.js.map" />
-    <Content Include="Scripts\esm\popper.js.map" />
-    <Content Include="Scripts\esm\popper-utils.min.js.map" />
-    <Content Include="Scripts\esm\popper-utils.js.map" />
-    <Content Include="Assets\fontawesome\webfonts\fa-brands-400.ttf" />
-    <Content Include="Assets\fontawesome\webfonts\fa-brands-400.woff2" />
-    <Content Include="Assets\fontawesome\webfonts\fa-regular-400.ttf" />
-    <Content Include="Assets\fontawesome\webfonts\fa-regular-400.woff2" />
-    <Content Include="Assets\fontawesome\webfonts\fa-solid-900.ttf" />
-    <Content Include="Assets\fontawesome\webfonts\fa-solid-900.woff2" />
-    <Content Include="Assets\fontawesome\webfonts\fa-v4compatibility.ttf" />
-    <Content Include="Assets\fontawesome\webfonts\fa-v4compatibility.woff2" />
+    <Content Include="empleados\prueba.pdf" />
     <None Include="Scripts\jquery-3.6.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.6.0.js" />
     <Content Include="Scripts\jquery-3.6.0.min.js" />
@@ -320,14 +332,29 @@
     <Content Include="Scripts\popper-utils.js.map" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Code\clsHerramientas.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="compania\division.aspx.cs">
+      <DependentUpon>division.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="compania\division.aspx.designer.cs">
+      <DependentUpon>division.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="documentos\crud.aspx.cs">
+      <DependentUpon>crud.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="documentos\crud.aspx.designer.cs">
+      <DependentUpon>crud.aspx</DependentUpon>
     </Compile>
     <Compile Include="empleados\crud.aspx.cs">
       <DependentUpon>crud.aspx</DependentUpon>
@@ -350,10 +377,24 @@
     <Compile Include="empleados\lista.aspx.designer.cs">
       <DependentUpon>lista.aspx</DependentUpon>
     </Compile>
+    <Compile Include="empleados\visor.aspx.cs">
+      <DependentUpon>visor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="empleados\visor.aspx.designer.cs">
+      <DependentUpon>visor.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="salario\salario.aspx.cs">
+      <DependentUpon>salario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="salario\salario.aspx.designer.cs">
+      <DependentUpon>salario.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -393,6 +434,7 @@
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
+  <PropertyGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />

@@ -12,6 +12,8 @@
             </section>
 
             <div class="row">
+                <asp:FileUpload ID="FileUpload1" runat="server" />
+                <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" />
                 <section class="col-md-4" aria-labelledby="gettingStartedTitle">
                     <h2 id="gettingStartedTitle">Getting started</h2>
                     <p>

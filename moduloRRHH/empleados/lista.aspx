@@ -1,19 +1,13 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/template.Master" AutoEventWireup="true" CodeBehind="lista.aspx.cs" Inherits="moduloRRHH.lista" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <style>
-        
-        .dropdown-item:hover, .dropdown-item:focus {
-            color: #211B00 !important;
-            background-color: #FFE24D !important;
-        }
-    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <div style="background: #E1E2EC; border-radius: 13px;" class="row p-4 mt-2">
+    <div style="background: #E1E2EC; border-radius: 13px;" class="row pt-3 mt-2">
+        <div class="col">
         <asp:UpdatePanel ID="UpdatePanel2" runat="server">
             <ContentTemplate>
-                <div class="row row-cols-auto d-flex justify-content-around" style="background: #335CA8; padding: 10px;">
+                <div class="row row-cols-auto d-flex " style="background: #335CA8; padding: 10px; margin: 0.6px;">
                     <div class="col">
                         <div class="containerH" style="height: 48px;">
                             <label>Mostrar</label>
@@ -38,13 +32,16 @@
                                     <a href="#" class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown">Empresa </a>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a class="dropdown-item" href="#">4 Matildes</a>
+                                            <asp:LinkButton ID="btn4M" CssClass="dropdown-item" runat="server">4 Matildes</asp:LinkButton>
+
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#">Hungaros</a>
+                                            <asp:LinkButton ID="btnHungaros" CssClass="dropdown-item" runat="server">Hungaros</asp:LinkButton>
+
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#">Jamamadi</a>
+                                            <asp:LinkButton ID="btnJamamadi" CssClass="dropdown-item" runat="server">Jamamadi</asp:LinkButton>
+
                                         </li>
                                     </ul>
                                 </li>
@@ -52,10 +49,10 @@
                                     <a href="#" class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown">Status </a>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a class="dropdown-item" href="#">Activo</a>
+                                            <asp:LinkButton ID="btnActivo" CssClass="dropdown-item" runat="server">Activo</asp:LinkButton>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#">Inactivo</a>
+                                            <asp:LinkButton ID="btnInactivo" CssClass="dropdown-item" runat="server">Inactivo</asp:LinkButton>
                                         </li>
                                     </ul>
                                 </li>
@@ -81,136 +78,52 @@
             </ContentTemplate>
         </asp:UpdatePanel>
 
-        <div class="mt-3 overflow-auto p-0">
-            <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-                <ContentTemplate>
-                    <asp:ListView ID="ListView1" runat="server" DataSourceID="SqlDataSource1" DataKeyNames="ID_compania">
-                        <AlternatingItemTemplate>
-                            <tr style="background-color: #D1D1D1; font-size: 12px;">
-                                <td>
-                                    <asp:Label Text='<%# Eval("ID_compania") %>' runat="server" ID="ID_companiaLabel" /></td>
-                                <td>
-                                    <asp:Label Text='<%# Eval("Nombre_comp") %>' runat="server" ID="Nombre_compLabel" /></td>
-                                <td>
-                                    <asp:Label Text='<%# Eval("Nombre_comercial") %>' runat="server" ID="Nombre_comercialLabel" /></td>
-                                <td>
-                                    <asp:Label Text='<%# Eval("Tipo_persona") %>' runat="server" ID="Tipo_personaLabel" /></td>
-                                <td>
-                                    <asp:Label Text='<%# Eval("RFC") %>' runat="server" ID="RFCLabel" /></td>
-                                <td>
-                                    <asp:Label Text='<%# Eval("CURP") %>' runat="server" ID="CURPLabel" /></td>
-                                <td>
-                                    <asp:Label Text='<%# Eval("tiempo_negocio") %>' runat="server" ID="tiempo_negocioLabel" /></td>
-                                <td>
-                                    <asp:Label Text='<%# Eval("Direccion") %>' runat="server" ID="DireccionLabel" /></td>
-                                <td>
-                                    <asp:Label Text='<%# Eval("codigo_postal") %>' runat="server" ID="codigo_postalLabel" /></td>
-                                <td>
-                                    <asp:Label Text='<%# Eval("Pais") %>' runat="server" ID="PaisLabel" /></td>
-                                <td>
-                                    <asp:Label Text='<%# Eval("Estado") %>' runat="server" ID="EstadoLabel" /></td>
-                                <td>
-                                    <asp:Label Text='<%# Eval("Ciudad") %>' runat="server" ID="CiudadLabel" /></td>
-                                <td>
-                                    <asp:Label Text='<%# Eval("Fecha_registro") %>' runat="server" ID="Fecha_registroLabel" /></td>
-                                <td>
-                                    <asp:Label Text='<%# Eval("Estatus") %>' runat="server" ID="EstatusLabel" /></td>
-                                <td>
-                                    <asp:Label Text='<%# Eval("ID_user") %>' runat="server" ID="ID_userLabel" /></td>
-                            </tr>
-                        </AlternatingItemTemplate>
-
-                        <EmptyDataTemplate>
-                            <table runat="server" style="background-color: #FFFFFF; border-collapse: collapse; border-color: #999999; border-style: none; border-width: 1px;">
-                                <tr>
-                                    <td>No se han devuelto datos.</td>
-                                </tr>
-                            </table>
-                        </EmptyDataTemplate>
-                        <ItemTemplate>
-                            <tr style="background-color: #FFFFFF; color: #000000; font-size: 12px;">
-                                <td>
-                                    <asp:Label Text='<%# Eval("ID_compania") %>' runat="server" ID="ID_companiaLabel" /></td>
-                                <td>
-                                    <asp:Label Text='<%# Eval("Nombre_comp") %>' runat="server" ID="Nombre_compLabel" /></td>
-                                <td>
-                                    <asp:Label Text='<%# Eval("Nombre_comercial") %>' runat="server" ID="Nombre_comercialLabel" /></td>
-                                <td>
-                                    <asp:Label Text='<%# Eval("Tipo_persona") %>' runat="server" ID="Tipo_personaLabel" /></td>
-                                <td>
-                                    <asp:Label Text='<%# Eval("RFC") %>' runat="server" ID="RFCLabel" /></td>
-                                <td>
-                                    <asp:Label Text='<%# Eval("CURP") %>' runat="server" ID="CURPLabel" /></td>
-                                <td>
-                                    <asp:Label Text='<%# Eval("tiempo_negocio") %>' runat="server" ID="tiempo_negocioLabel" /></td>
-                                <td>
-                                    <asp:Label Text='<%# Eval("Direccion") %>' runat="server" ID="DireccionLabel" /></td>
-                                <td>
-                                    <asp:Label Text='<%# Eval("codigo_postal") %>' runat="server" ID="codigo_postalLabel" /></td>
-                                <td>
-                                    <asp:Label Text='<%# Eval("Pais") %>' runat="server" ID="PaisLabel" /></td>
-                                <td>
-                                    <asp:Label Text='<%# Eval("Estado") %>' runat="server" ID="EstadoLabel" /></td>
-                                <td>
-                                    <asp:Label Text='<%# Eval("Ciudad") %>' runat="server" ID="CiudadLabel" /></td>
-                                <td>
-                                    <asp:Label Text='<%# Eval("Fecha_registro") %>' runat="server" ID="Fecha_registroLabel" /></td>
-                                <td>
-                                    <asp:Label Text='<%# Eval("Estatus") %>' runat="server" ID="EstatusLabel" /></td>
-                                <td>
-                                    <asp:Label Text='<%# Eval("ID_user") %>' runat="server" ID="ID_userLabel" /></td>
-                            </tr>
-                        </ItemTemplate>
-                        <LayoutTemplate>
-                            <table runat="server" style="text-align: center">
-                                <tr runat="server">
-                                    <td runat="server">
-                                        <table runat="server" cellspacing="5" id="itemPlaceholderContainer" style="background-color: #FFFFFF; border-collapse: collapse; border-color: #999999; border-style: none; border-width: 1px; font-family: Verdana, Arial, Helvetica, sans-serif;" border="1">
-                                            <tr runat="server" style="background-color: #335CA8; color: #FFFFFF; height: 60px; font-size: 11px;">
-                                                <th runat="server">ID_compania</th>
-                                                <th runat="server">Nombre_comp</th>
-                                                <th runat="server">Nombre_comercial</th>
-                                                <th runat="server">Tipo_persona</th>
-                                                <th runat="server">RFC</th>
-                                                <th runat="server">CURP</th>
-                                                <th runat="server">tiempo_negocio</th>
-                                                <th runat="server">Direccion</th>
-                                                <th runat="server">codigo_postal</th>
-                                                <th runat="server">Pais</th>
-                                                <th runat="server">Estado</th>
-                                                <th runat="server">Ciudad</th>
-                                                <th runat="server">Fecha_registro</th>
-                                                <th runat="server">Estatus</th>
-                                                <th runat="server">ID_user</th>
-                                            </tr>
-                                            <tr runat="server" id="itemPlaceholder"></tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr runat="server">
-                                    <td runat="server" style="text-align: center; color: #000000;">
-                                        <section class="m-3">
-                                            <asp:DataPager runat="server" PageSize="6" ID="DataPager1" PagedControlID="ListView1">
-                                                <Fields>
-                                                    <asp:NextPreviousPagerField ButtonType="Link" ShowFirstPageButton="false" ShowPreviousPageButton="true" ShowNextPageButton="false" ButtonCssClass="btn btn-sm btn-primary primario" PreviousPageText="&lt;i class=&quot;fa-solid fa-chevron-left&quot;&gt;&lt;/i&gt;" NextPageText="&lt;i class=&quot;fa-solid fa-chevron-right&quot;&gt;&lt;/i&gt;" />
-                                                    <asp:NumericPagerField ButtonType="Link" NumericButtonCssClass="btn btn-sm btn-primary primario" CurrentPageLabelCssClass="btn btn-sm btn-warning sobre-secundario" NextPreviousButtonCssClass="btn btn-sm btn-primary primario" NextPageText="&lt;i class=&quot;fa-solid fa-angles-right&quot;&gt;&lt;/i&gt;" PreviousPageText="&lt;i class=&quot;fa-solid fa-angles-left&quot;&gt;&lt;/i&gt;"></asp:NumericPagerField>
-                                                    <asp:NextPreviousPagerField ButtonCssClass="btn btn-sm btn-primary primario" ButtonType="Link" ShowNextPageButton="true" ShowLastPageButton="false" ShowPreviousPageButton="false" NextPageText="&lt;i class=&quot;fa-solid fa-chevron-right&quot;&gt;&lt;/i&gt;" PreviousPageText="&lt;i class=&quot;fa-solid fa-chevron-left&quot;&gt;&lt;/i&gt;" />
-
-                                                </Fields>
-                                            </asp:DataPager>
-                                        </section>
-                                    </td>
-                                </tr>
-                            </table>
-                        </LayoutTemplate>
-                    </asp:ListView>
-                    <asp:SqlDataSource runat="server" ID="SqlDataSource1" ConnectionString='<%$ ConnectionStrings:clientes_hungarosConnectionString %>' ProviderName='<%$ ConnectionStrings:clientes_hungarosConnectionString.ProviderName %>' SelectCommand="SELECT * FROM [Table_compania]"></asp:SqlDataSource>
-                </ContentTemplate>
-            </asp:UpdatePanel>
-        </div>
-
+        <asp:UpdatePanel ID="UPEmpleados" runat="server">
+            <ContentTemplate>
+                <asp:GridView ID="gvEmpleados" AutoGenerateColumns="false" ShowHeaderWhenEmpty="true"
+                    AllowPaging="true" AllowSorting="true" 
+                    Width="100%" CssClass="text-center table table-hover mt-2 align-middle" OnPageIndexChanging="gvEmpleados_PageIndexChanging" PagerStyle-CssClass="pagination-ys" runat="server">
+                    <Columns>
+                        <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" Visible="false"></asp:BoundField>
+                        <asp:BoundField DataField="no_empleado" HeaderText="No. Empleado" SortExpression="no_empleado"></asp:BoundField>
+                        <asp:TemplateField HeaderText="Foto">
+                            <ItemTemplate>
+                                <img src="<%# Eval("foto") %>" alt="fot de empleado" style="width:60px; height:60px; border-radius:50px;"  />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:BoundField DataField="Nombre" HeaderText="Nombre(s)" SortExpression="Nombre"></asp:BoundField>
+                        <asp:BoundField DataField="Apellido_P" HeaderText="A.P." SortExpression="Apellido_P"></asp:BoundField>
+                        <asp:BoundField DataField="Apellido_M" HeaderText="A.M." SortExpression="Apellido_M"></asp:BoundField>
+                        <asp:BoundField DataField="Fecha_ingreso" HeaderText="Fecha de ingreso" SortExpression="Fecha_ingreso"></asp:BoundField>
+                        <asp:BoundField DataField="Puesto" HeaderText="Puesto"></asp:BoundField>
+                        <asp:BoundField HeaderText="Empresa" DataField="Empresa" SortExpression="Empresa"></asp:BoundField>
+                        <%--<asp:BoundField HeaderText="Estado" DataField="Status" SortExpression="Status"></asp:BoundField>--%>
+                        <asp:TemplateField HeaderText="Estatus" SortExpression="Status">
+                            <ItemTemplate>
+                            <label class="estado <%# Eval("Status").Equals(false)?"inactivo":"" %>" ><%# Eval("Status").Equals(true)?"Activo":"Inactivo" %></label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Accion">
+                            <ItemTemplate>
+                                <asp:LinkButton ID="btnMas" CssClass="btn btn-sm btn-primary" ToolTip="Ver detalles" OnClick="btnMas_Click" runat="server"><i class="fa-solid fa-magnifying-glass-plus"></i></asp:LinkButton>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                    <PagerSettings Mode="NumericFirstLast" PageButtonCount="1"
+                        FirstPageText='<i class="fa-solid fa-angles-left"></i>'
+                        LastPageText='<i class="fa-solid fa-angles-right"></i>'
+                        NextPageText='<i class="fa-solid fa-chevron-right"></i>'
+                        PreviousPageText='<i class="fa-solid fa-chevron-left"></i>' />
+                    <EmptyDataTemplate>
+                        <div class="d-flex justify-content-center">
+                            <asp:Literal ID="Literal2" runat="server" Text="No se encontraron empleados"></asp:Literal>
+                        </div>
+                    </EmptyDataTemplate>
+                </asp:GridView>
+            </ContentTemplate>
+        </asp:UpdatePanel>
+            </div>
     </div>
-
     <script>
         $('#btnEmpleados').addClass('seleccionado');
 

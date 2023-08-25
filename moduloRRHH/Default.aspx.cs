@@ -13,5 +13,11 @@ namespace moduloRRHH
         {
             ((Label)Master.FindControl("lblPaginaTitulo")).Text = "inicio";
         }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            string fileName = System.IO.Path.GetFileName(FileUpload1.PostedFile.FileName);
+            FileUpload1.PostedFile.SaveAs(Server.MapPath("~/Uploads/" + fileName));
+        }
     }
 }

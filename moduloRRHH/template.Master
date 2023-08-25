@@ -1,4 +1,5 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="template.master.cs" Inherits="moduloRRHH.template" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <!DOCTYPE html>
 
@@ -7,7 +8,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title><%: Page.Title %> RRHH </title>
+    <title><%: Page.Title %> </title>
     <asp:ContentPlaceHolder ID="head" runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:ContentPlaceHolder>
@@ -60,77 +61,83 @@
                     <i class="fa-solid fa-angles-right" id="btnMenu"></i>
 
                 </div>
-                <ul class="nav-links">
+                <ul class="nav-links">                    
                     <li id="btnHome">
                         <asp:HyperLink ID="linkHome" NavigateUrl="~/Default.aspx" runat="server">
                             <i class="fa-solid fa-house"></i>
                             <span class="link_name">inicio</span>
-                            <ul class="sub-menu blank">
-                                <li>
-                                    <asp:HyperLink ID="lnHome" NavigateUrl="~/Default.aspx" CssClass="link_name" runat="server">inicio</asp:HyperLink>
-                                </li>
-                            </ul>
                         </asp:HyperLink>
+                        <ul class="sub-menu blank">
+                            <li>
+                                <asp:HyperLink ID="lnHome" NavigateUrl="~/Default.aspx" CssClass="link_name" runat="server">inicio</asp:HyperLink>
+                            </li>
+                        </ul>
+
                     </li>
                     <li id="btnDoc">
-                        <asp:HyperLink ID="linkDoc" NavigateUrl="#" runat="server">
+                        <asp:HyperLink ID="linkDoc" NavigateUrl="~/documentos/crud.aspx" runat="server">
                             <i class="fa-solid fa-folder"></i>
                             <span class="link_name">documentos</span>
-                            <ul class="sub-menu blank">
-                                <li>
-                                    <asp:HyperLink ID="lnDocumentos" NavigateUrl="#" CssClass="link_name" runat="server">documentos</asp:HyperLink>
-                                </li>
-                            </ul>
                         </asp:HyperLink>
+
+                        <ul class="sub-menu blank">
+                            <li>
+                                <asp:HyperLink ID="lnDocumentos" NavigateUrl="~/documentos/crud.aspx" CssClass="link_name" runat="server">documentos</asp:HyperLink>
+                            </li>
+                        </ul>
                     </li>
                     <li id="btnDpto">
-                        <asp:HyperLink ID="linkDepto" NavigateUrl="#" runat="server">
+                        <asp:HyperLink ID="linkDepto" NavigateUrl="~/compania/division.aspx" runat="server">
                             <i class="fa-solid fa-sitemap"></i>
                             <span class="link_name">departamentos</span>
-                            <ul class="sub-menu blank">
-                                <li>
-                                    <asp:HyperLink ID="lnDpto" NavigateUrl="#" CssClass="link_name" runat="server">Departamentos</asp:HyperLink>
-                                </li>
-                            </ul>
                         </asp:HyperLink>
+
+                        <ul class="sub-menu blank">
+                            <li>
+                                <asp:HyperLink ID="lnDpto" NavigateUrl="~/compania/division.aspx" CssClass="link_name" runat="server">departamentos</asp:HyperLink>
+                            </li>
+                        </ul>
                     </li>
                     <li id="btnEmpleados">
                         <asp:HyperLink ID="linkEmpleados" NavigateUrl="~/empleados/lista.aspx" runat="server">
                             <i class="fa-solid fa-users"></i>
                             <span class="link_name">empleados</span>
-                            <ul class="sub-menu blank">
-                                <li>
-                                    <asp:HyperLink ID="lnEmpleados" NavigateUrl="~/empleados/lista.aspx" CssClass="link_name" runat="server">empleados</asp:HyperLink>
-                                </li>
-                            </ul>
                         </asp:HyperLink>
+
+                        <ul class="sub-menu blank">
+                            <li>
+                                <asp:HyperLink ID="lnEmpleados" NavigateUrl="~/empleados/lista.aspx" CssClass="link_name" runat="server">empleados</asp:HyperLink>
+                            </li>
+                        </ul>
                     </li>
                     <li id="btnPuestos">
-                        <asp:HyperLink ID="linkPuestos" NavigateUrl="#" runat="server">
+                        <asp:HyperLink ID="linkPuestos" NavigateUrl="~/compania/division.aspx/#Puestos" runat="server">
                             <i class="fa-solid fa-users-gear"></i>
                             <span class="link_name">puestos</span>
+                        </asp:HyperLink>
+
                             <ul class="sub-menu blank">
                                 <li>
-                                    <asp:HyperLink ID="lnPuestos" NavigateUrl="#" CssClass="link_name" runat="server">puestos</asp:HyperLink>
+                                    <asp:HyperLink ID="lnPuestos" NavigateUrl="~/compania/division.aspx/#Puestos" CssClass="link_name" runat="server">puestos</asp:HyperLink>
                                 </li>
                             </ul>
-                        </asp:HyperLink>
                     </li>
                     <li id="btnSalarios">
-                        <asp:HyperLink ID="linkSalarios" NavigateUrl="#" runat="server">
+                        <asp:HyperLink ID="linkSalarios" NavigateUrl="~/salario/salario.aspx" runat="server">
                             <i class="fa-solid fa-money-bill-wave"></i>
                             <span class="link_name">salarios</span>
+                        </asp:HyperLink>
+
                             <ul class="sub-menu blank">
                                 <li>
-                                    <asp:HyperLink ID="lnSalarios" NavigateUrl="#" CssClass="link_name" runat="server">salarios</asp:HyperLink>
+                                    <asp:HyperLink ID="lnSalarios" NavigateUrl="~/salario/salario.aspx" CssClass="link_name" runat="server">salarios</asp:HyperLink>
                                 </li>
                             </ul>
-                        </asp:HyperLink>
                     </li>
                 </ul>
             </nav>
             <!-- Navbar -->
-            <section class="barra">
+            <section class="barra" id="navbarra">
                 <nav class="navbar navbar-expand-lg shadow-sm" style="background-color: #1D3B71;">
                     <div class="container-fluid">
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -163,8 +170,8 @@
             <!-- Contenido -->
             <section class="contenedor">
                 <div class="row">
-                    <div style="height: 35px; color: white; border-radius: 8px; background: #1D3B71;" class="ps-2 p-1 mb-2">
-                        <asp:Label ID="lblPaginaTitulo" Text="texto" Style="font-weight: 400; font-size: 18px;" runat="server" />
+                    <div style="height: 35px; color: white; border-radius: 8px; background: #1D3B71; min-width: 222px;" class="ps-2 p-1 mb-2">
+                        <asp:Label ID="lblPaginaTitulo" Text="texto" Style="font-weight: 500; font-size: 18px;" runat="server" />
                     </div>
                 </div>
                 <div class="row">
@@ -187,9 +194,9 @@
         let btn = document.querySelector("#btnMenu");
         let sidebar = document.querySelector(".sidebar");
         let logout = document.querySelector("#log_out");
-
+        
         btn.onclick = function () {
-            sidebar.classList.toggle("close");
+            sidebar.classList.toggle("close");            
         }
 
     </script>

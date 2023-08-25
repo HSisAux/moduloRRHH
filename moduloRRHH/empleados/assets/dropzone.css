@@ -1,0 +1,293 @@
+﻿.contenedor-zone {
+    text-align: center;
+    width: 100%;
+    max-width: 502px;
+    min-height: 335px;
+    margin: auto;
+    border-radius: 16px;
+}
+
+.header-section {
+    padding: 0;
+}
+
+    .header-section h1 {
+        font-weight: 500;
+        font-size: 1.7rem;
+        text-transform: uppercase;
+        color: #3f4e74;
+        margin: 0;
+        margin-bottom: 8px;
+    }
+
+    .header-section p {
+        margin: 0;
+        font-size: 0.95rem;
+        color: #3f4e74;
+    }
+
+.drop-here {
+    animation: subebaja 3s linear infinite;
+}
+
+.drop-section {
+    min-height: 260px;
+    border: 2px dashed #3446ED;
+    background-image: linear-gradient(180deg,white, #F1F6FF);
+    margin: 5px;
+    border-radius: 12px;
+    position: relative;
+}
+
+    .drop-section div.col:first-child {
+        opacity: 1;
+        visibility: visible;
+        transition-duration: 0.2s;
+        transform: scale(1);
+        width: 200px;
+        margin: auto;
+    }
+
+    .drop-section div.col.dropped {
+        font-size: 40px;
+        font-weight: 700;
+        color: #c0cae1;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        width: 200px;
+        height: 140px;
+        pointer-events: none;
+        opacity: 0;
+        visibility: hidden;
+        transform: scale(0.6);
+        transition-duration: 0.2s;
+    }
+
+    .drop-section div.col.preview {
+        font-size: 16px;
+        font-weight: 400;
+        color: #c0cae1;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        visibility: hidden;
+        transform: scale(0.6);
+        transition-duration: 0.2s;
+    }
+
+    .drop-section.drag-over-effect div.col:first-child {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transform: scale(1.1);
+    }
+
+    .drop-section.drag-over-effect {
+        border-style: solid;
+        border-color: #2a5ae8;
+    }
+
+
+        .drop-section.drag-over-effect div.col.dropped {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
+
+    .drop-section.file-preview div.col.preview {
+        opacity: 1;
+        visibility: visible;
+        transform: scale(1);
+    }
+
+    .drop-section.file-preview div.col:first-child {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transform: scale(1.1);
+    }
+
+    .drop-section .nube {
+        margin-top: 25px;
+        margin-bottom: 20px;
+    }
+
+    .drop-section span {
+        display: block;
+        margin: auto;
+        color: #6167d5f2;
+        margin-bottom: 10px;
+    }
+
+    .drop-section input {
+        display: none;
+    }
+
+.list-section {
+    text-align: left;
+    margin: 0 35px;
+    padding-bottom: 20px;
+    display: none;
+}
+
+    .list-section .list-title {
+        font-size: 0.95rem;
+        color: #707EA0;
+    }
+
+    .list-section li {
+        display: flex;
+        margin: 15px 0;
+        padding-top: 4px;
+        padding-bottom: 2px;
+        border-radius: 8px;
+        transition-duration: 0.2s;
+        background-color: #dcdcf5;
+    }
+
+        .list-section li:hover {
+            box-shadow: #E3EAF9 0 0 4px 0,#E3EAF9 0 12px 16px 0;
+        }
+
+        .list-section li .col {
+            flex: 0.1;
+        }
+
+            .list-section li .col:nth-child(1) {
+                flex: 0.15;
+                text-align: center;
+            }
+
+            .list-section li .col:nth-child(2) {
+                flex: 0.75;
+                text-align: left;
+                font-size: 0.9rem;
+                color: #3e4046;
+                padding: 8px 10px;
+            }
+
+                .list-section li .col:nth-child(2) div.name {
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    max-width: 250px;
+                    display: inline-block;
+                }
+
+            .list-section li .col .file-name span {
+                color: #707EA0;
+                float: right;
+            }
+
+        .list-section li .file-progress {
+            width: 100%;
+            height: 5px;
+            margin-top: 8px;
+            border-radius: 8px;
+            background-color: #dee6fd;
+        }
+
+            .list-section li .file-progress span {
+                display: block;
+                width: 0%;
+                height: 100%;
+                border-radius: 8px;
+                background-image: linear-gradient(120deg,#6b99fd,#9385ff);
+                transition-duration: 0.4s;
+            }
+
+        .list-section li .col .file-size {
+            font-size: 0.75rem;
+            margin-top: 3px;
+            color: #707EA0;
+        }
+
+        .list-section li .col .cross,
+        .list-section li .col .tick {
+            fill: #8694d2;
+            position: relative;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+            border-radius: 50%;
+            background-color: #dee6fd;
+        }
+
+        .list-section li .col .tick {
+            color: #50a156;
+            background-color: transparent;
+        }
+
+        .list-section li.complete span,
+        .list-section li.complete .file-progress,
+        .list-section li.complete .cross {
+            display: none;
+        }
+
+        .list-section li.in-prog .file-size,
+        .list-section li.in-prog .tick {
+            display: none;
+        }
+
+.holds-the-iframe {
+    background: url(loading.gif) center center no-repeat;
+}
+
+.info {
+    background: #D8E2FF;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding-left: 16px;
+    gap: 5px;
+    color: #001A43;
+    width: 100%;
+    height: 30px;
+    border-radius: 5px;
+}
+
+.masinfo {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 5px;
+}
+/*-------------nube---------------------------*/
+.nube {
+    font-size: 3.5rem;
+    color: #3446ED;
+}
+/*.nube:hover{
+    animation: subebaja 3s linear infinite;
+}*/
+@keyframes subebaja {
+    0% {
+        transform: translateY(0)
+    }
+
+    25% {
+        transform: translateY(3px)
+    }
+
+    50% {
+        transform: translateY(-3px)
+    }
+
+    75% {
+        transform: translateY(3px)
+    }
+
+    100% {
+        transform: translateY(0)
+    }
+}

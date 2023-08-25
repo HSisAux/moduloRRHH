@@ -62,6 +62,7 @@ textarea {
     border-style: Solid;
     border-radius: 100px;
     width: 124px;
+    height:124px;
     background-size:cover;
     background-position:center;
 }
@@ -168,6 +169,83 @@ input:checked + .slider:before {
     background: #335CA8 !important;
 }
 
+th {
+    font-size: 11px;
+    font-weight: bold;
+    text-align: center;
+    background-color: #335CA8 !important;
+    color: #FFFFFF !important;
+    line-height: 4;
+    font-size: 11px;
+}
+    th a {
+        text-decoration: none;
+        color:#fff;
+    }
+
+.dropdown-item:hover, .dropdown-item:focus {
+    color: #211B00 !important;
+    background-color: #FFE24D !important;
+}
+option:hover {
+    color: #211B00 !important;
+    background-color: #FFE24D !important;
+}
+
+/*  ===== checkbox ====  */
+.chbox {
+    display: block;
+    min-height: 1.5rem;
+    padding-left: 1.5em;
+    margin-bottom: 0.125rem;
+}
+
+    .chbox input[type="checkbox"] {
+        float: left;
+        margin-left: -1.5em;
+    }
+
+    .chbox input[type="checkbox"] {
+        width: 1em;
+        border-radius: 0.25em;
+        height: 1em;
+        margin-top: 0.25em;
+        vertical-align: top;
+        background-color: #fff;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        border: 1px solid rgba(0, 0, 0, 0.25);
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+        .chbox input[type="checkbox"]:checked {
+            background-color: #e3b030;
+            border-color: #e3b030;
+        }
+
+input[type="checkbox"]:checked[type="checkbox"] {
+    /*DarkGoldenrod*/
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e");
+}
+input[type="checkbox"]:focus {
+    border-color: #ffc107;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem #ffc10759;
+}
+
+.form-select:focus {
+    color: #212529;
+    background-color: #fff;
+    border-color: #ffc107;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(255, 218, 29, 0.55);
+}
+
 /* Rounded sliders */
 .slider.round {
     border-radius: 34px;
@@ -246,4 +324,160 @@ input:checked + .slider:before {
 
 .nav-links::-webkit-scrollbar {
     display: none;
+}
+
+
+/*===================paginador======================*/
+
+.pagination-ys {
+    margin: 20px 0;
+}
+
+    .pagination-ys > td > table {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .pagination-ys table > tbody > tr {
+        border: none;
+    }
+
+    .pagination-ys table > tbody > tr
+    .pagination-ys table > tbody > tr > td {
+        display: block;
+    }
+
+    .pagination-ys table > tbody > tr > td > a,
+    .pagination-ys table > tbody > tr > td > span {
+        position: relative;
+        float: left;
+        line-height: 1.5;
+        text-decoration: none;
+        color: #ffffff;
+        background-color: #335CA8 !important;
+        border: 1px solid #0d6efd;
+        margin-left: 2px;
+        font-size: 0.875rem;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.25rem;
+    }
+
+    .pagination-ys table > tbody > tr > td > span {
+        position: relative;
+        float: left;
+        line-height: 1.42857143;
+        text-decoration: none;
+        margin-left: -1px;
+        z-index: 2;
+        color: #6D5E00;
+        background-color: #FFE24D !important;
+        border-color: #ffc107;
+        cursor: default;
+        font-size: 0.875rem;
+        padding: 0.25rem 0.5rem;
+    }
+
+    .pagination-ys table > tbody > tr > td:first-child > a,
+    .pagination-ys table > tbody > tr > td:first-child > span {
+        margin-left: 0;
+        border-bottom-left-radius: 4px;
+        border-top-left-radius: 4px;
+    }
+
+    .pagination-ys table > tbody > tr > td:last-child > a,
+    .pagination-ys table > tbody > tr > td:last-child > span {
+        border-bottom-right-radius: 4px;
+        border-top-right-radius: 4px;
+    }
+
+    .pagination-ys table > tbody > tr > td > a:hover,
+    .pagination-ys table > tbody > tr > td > span:hover,
+    .pagination-ys table > tbody > tr > td > a:focus,
+    .pagination-ys table > tbody > tr > td > span:focus {
+        color: #ffff;
+        background-color: #2e5293 !important;
+        border-color: #1b325c;
+    }
+
+    /*============= modal =====================*/
+
+.modal-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    pointer-events: auto;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,0.175);
+    border-radius: 0.5rem;
+    outline: 0;
+}
+
+.modal-header {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1rem;
+    border-bottom: 1px solid #dee2e6;
+    border-top-left-radius: calc(0.5rem - 1px);
+    border-top-right-radius: calc(0.5rem - 1px);
+}
+
+.modal-body {
+    position: relative;
+    flex: 1 1 auto;
+    padding: 1rem;
+}
+
+.modal-footer {
+    display: flex;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    padding: calc(1rem - 0.5rem * .5);
+    background-color: var(--bs-modal-footer-bg);
+    border-top: 1px solid #dee2e6;
+    border-bottom-right-radius: calc(0.5rem - 1px);
+    border-bottom-left-radius: calc(0.5rem - 1px);
+    gap: 0.5rem;
+}
+
+.modalBackground {
+    height: 100%;
+    backdrop-filter: blur(1px);
+    transition: all 0.3s ease;
+}
+
+.modalPopup {
+    position: fixed;
+    top: -100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 9999;
+    transition: top 0.3s;
+}
+
+.modalBackground {
+    height: 100%;
+    backdrop-filter: blur(4px);
+    transition: all 0.3s ease;
+}
+
+.modalPopup.show {
+    top: 0;
+}
+
+.modalContent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* background-color: #fff; */
+    padding: 20px;
+    border-radius: 5px;
+    width: fit-content;
 }
