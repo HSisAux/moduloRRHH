@@ -18,6 +18,7 @@ namespace moduloRRHH.App_Code
         }
 
         public static string strConexion = ConfigurationManager.ConnectionStrings["rrhh_ConnectionString"].ConnectionString;
+        public static string strUser_admin = ConfigurationManager.ConnectionStrings["user_admin_ConneccionString"].ConnectionString;
 
         public static DataTable SQLConsulta(string sqlCommand)
         {
@@ -36,6 +37,24 @@ namespace moduloRRHH.App_Code
                throw ex;
            }
            return dt;            
+        }
+        public static DataTable SQLConsultaTUser(string sqlCommand)
+        {
+            DataTable dt = new DataTable();
+
+            SqlConnection con = new SqlConnection(strUser_admin);
+            SqlCommand cmd = new SqlCommand(sqlCommand, con);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            try
+            {
+                da.Fill(dt);
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return dt;
         }
 
         public static string SQLEjecutar(string sqlCommand)

@@ -26,6 +26,8 @@ namespace moduloRRHH.empleados
             if (!IsPostBack)
             {
                 llenarComboDpto();
+                llenarComboEmpresa(); 
+                
                 if (Request["id"] != null)
                 {
                     this.Page.Title = "Edicion";
@@ -43,6 +45,19 @@ namespace moduloRRHH.empleados
             }
 
 
+        }
+
+        private void llenarComboEmpresa()
+        {
+            ddEmpresa.Items.Clear();
+            DataTable dt = clsHerramientas.SQLConsultaTUser("SELECT * FROM Empresa");
+            if(dt.Rows.Count > 0)
+            {
+                foreach (DataRow row in dt.Rows)
+                {
+                    ddEmpresa.Items.Add(new ListItem(row["Nombre"].ToString(), row["ID_Empresa"].ToString()));
+                }
+            }
         }
 
         protected void chkOnOff_CheckedChanged(object sender, EventArgs e)
@@ -75,41 +90,53 @@ namespace moduloRRHH.empleados
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
-            string foto = "";    
-            
-            if(Context.Request.Files.Count > 0)
+            if (btnGuardar.Text == "Registrar")
             {
-                HttpFileCollection files = Context.Request.Files;
-                HttpPostedFile file = files[0];
-                if(file.FileName != "")
+                string foto = "";
+                if (Context.Request.Files.Count > 0)
                 {
-                    string link = "\\Archivos\\" + ddEmpresa.SelectedItem.Text + "\\" + txtNombre.Text + " " + txtApellidoP.Text;
-                    if (!Directory.Exists(Context.Server.MapPath(link)))
+                    HttpFileCollection files = Context.Request.Files;
+                    HttpPostedFile file = files[0];
+                    if (file.FileName != "")
                     {
-                        DirectoryInfo di = System.IO.Directory.CreateDirectory(Context.Server.MapPath(link));
-                    }
-                    foto = link +"\\"+ file.FileName;                    
-                    file.SaveAs(Context.Server.MapPath(foto));
+                        string link = "\\Archivos\\" + ddEmpresa.SelectedItem.Text + "\\" + txtNombre.Text + " " + txtApellidoP.Text;
+                        if (!Directory.Exists(Context.Server.MapPath(link)))
+                        {
+                            DirectoryInfo di = System.IO.Directory.CreateDirectory(Context.Server.MapPath(link));
+                        }
+                        foto = link + "\\" + file.FileName;
+                        file.SaveAs(Context.Server.MapPath(foto));
 
+                    }
+                    else
+                    {
+                        foto = "\\Assets\\img\\default-user.png";
+                    }
                 }
                 else
                 {
                     foto = "\\Assets\\img\\default-user.png";
                 }
+
+                registrarEmpleado(
+                    "insert",
+                    txtNombre.Text.Trim(), txtNoEmpleado.Text.Trim(), txtApellidoP.Text.Trim(), txtApellidoM.Text.Trim(),
+                    chkEstatus.Checked, txtRfc.Text.Trim(), txtNSS.Text.Trim(), txtFechaNac.Text,
+                    txtFechaIngreso.Text, txtCalle.Text.Trim(), txtcolonia.Text.Trim(), txtCP.Text.Trim(),
+                    txtEstado.Text.Trim(), txtCiudad.Text.Trim(), txtTelefono.Text.Trim(), txtCorreo.Text.Trim(),
+                    txtTelEmergencia.Text.Trim(), txtContactoEmergencia.Text.Trim(), ddDepartamento.SelectedValue, ddPuesto.SelectedValue,
+                    foto, ddEmpresa.SelectedValue);
             }
             else
             {
-                foto = "\\Assets\\img\\default-user.png";
+                registrarEmpleado(
+                    "update", txtNoEmpleado.Text.Trim(),txtNombre.Text.Trim(), txtApellidoP.Text.Trim(), txtApellidoM.Text.Trim(),
+                    chkEstatus.Checked, txtRfc.Text.Trim(), txtNSS.Text.Trim(), txtFechaNac.Text,
+                    txtFechaIngreso.Text, txtCalle.Text.Trim(), txtcolonia.Text.Trim(), txtCP.Text.Trim(),
+                    txtEstado.Text.Trim(), txtCiudad.Text.Trim(), txtTelefono.Text.Trim(), txtCorreo.Text.Trim(),
+                    txtTelEmergencia.Text.Trim(), txtContactoEmergencia.Text.Trim(), ddDepartamento.SelectedValue, ddPuesto.SelectedValue,
+                   "", ddEmpresa.SelectedValue);
             }
-
-            registrarEmpleado(
-                "",
-                txtNombre.Text.Trim(), txtNoEmpleado.Text.Trim(), txtApellidoP.Text.Trim(), txtApellidoM.Text.Trim(),
-                chkEstatus.Checked, txtRfc.Text.Trim(), txtNSS.Text.Trim(), txtFechaNac.Text,
-                txtFechaIngreso.Text, txtCalle.Text.Trim(), txtcolonia.Text.Trim(), txtCP.Text.Trim(),
-                txtEstado.Text.Trim(), txtCiudad.Text.Trim(), txtTelefono.Text.Trim(), txtCorreo.Text.Trim(),
-                txtTelEmergencia.Text.Trim(), txtContactoEmergencia.Text.Trim(), ddDepartamento.SelectedValue, ddPuesto.SelectedValue,
-                foto, ddEmpresa.SelectedValue);
 
         }
 
@@ -186,7 +213,7 @@ namespace moduloRRHH.empleados
         }
 
 
-        protected void registrarEmpleado(string pagetitle, string noEmpleado,
+        protected void registrarEmpleado(string accion, string noEmpleado,
             string nombre, string apellidoPaterno, string apellidoMaterno,
             bool status, string rfc, string nss, string FechaNac, string FechaIngreso,
             string Calle, string colonia, string cp, string estado,string ciudad, 
@@ -196,11 +223,11 @@ namespace moduloRRHH.empleados
         {
             List<clsHerramientas.clsParametros> parametros = new List<clsHerramientas.clsParametros>()
             {
-                new clsHerramientas.clsParametros{NombreParametro="@accion", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro="insert"},
-                new clsHerramientas.clsParametros{NombreParametro="@no_empleado", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= txtNoEmpleado.Text },
-                new clsHerramientas.clsParametros{NombreParametro="@Nombre", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= txtNombre.Text },
-                new clsHerramientas.clsParametros{NombreParametro="@ApellidoP", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= txtApellidoP.Text },
-                new clsHerramientas.clsParametros{NombreParametro="@ApellidoM", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= txtApellidoM.Text },
+                new clsHerramientas.clsParametros{NombreParametro="@accion", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro=accion},
+                new clsHerramientas.clsParametros{NombreParametro="@no_empleado", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= noEmpleado },
+                new clsHerramientas.clsParametros{NombreParametro="@Nombre", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= nombre },
+                new clsHerramientas.clsParametros{NombreParametro="@ApellidoP", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= apellidoPaterno },
+                new clsHerramientas.clsParametros{NombreParametro="@ApellidoM", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= apellidoMaterno },
                 new clsHerramientas.clsParametros{NombreParametro="@status", TipoParametro=System.Data.SqlDbType.Bit , ValorParametro= status.ToString() },
                 new clsHerramientas.clsParametros{NombreParametro="@rfc", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= rfc },
                 new clsHerramientas.clsParametros{NombreParametro="@nss", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= nss },
@@ -217,12 +244,16 @@ namespace moduloRRHH.empleados
                 new clsHerramientas.clsParametros{NombreParametro="@Correo", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= correo},
                 new clsHerramientas.clsParametros{NombreParametro="@IDdepartamento", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= IDDepartamento},
                 new clsHerramientas.clsParametros{NombreParametro="@IDpuesto", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= idpuesto},
-                new clsHerramientas.clsParametros{NombreParametro="@foto", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= foto},
                 new clsHerramientas.clsParametros{NombreParametro="@Empresa", TipoParametro=System.Data.SqlDbType.Int, ValorParametro= empresa}
             };
+          
+            if(accion == "insert")
+            {
+                parametros.Add(new clsHerramientas.clsParametros { NombreParametro = "@foto", TipoParametro = System.Data.SqlDbType.VarChar, ValorParametro = foto });
+            }
 
             var resultado = clsHerramientas.TProcedimientoAlmacenado("Master_Empleado", parametros);
-            ScriptManager.RegisterStartupScript(this, GetType(), "MostrarAlerta", "alert('"+resultado.Item2+"');", true);
+            ScriptManager.RegisterStartupScript(this, GetType(), "MostrarAlerta", "alert('" + resultado.Item2 + "');", true);
 
         }
 
@@ -250,20 +281,20 @@ namespace moduloRRHH.empleados
             };
             DataTable dt = clsHerramientas.ProcedimientoAlmacenado("Master_Empleado", parametros);
 
-            if(dt.Rows.Count > 0)
+            if (dt.Rows.Count > 0)
             {
                 //Imagen
-                imgEmpl.BackImageUrl = dt.Rows[0]["foto"].ToString().Replace('\\','/');
+                imgEmpl.BackImageUrl = dt.Rows[0]["foto"].ToString().Replace('\\', '/');
 
                 //Nombre
                 txtNombre.Text = dt.Rows[0]["Nombre"].ToString();
 
                 //Apellidos
                 txtApellidoP.Text = dt.Rows[0]["Apellido_P"].ToString();
-                txtApellidoM.Text= dt.Rows[0]["Apellido_M"].ToString();
+                txtApellidoM.Text = dt.Rows[0]["Apellido_M"].ToString();
 
                 //fecha de nacimineto
-                txtFechaNac.Text = Convert.ToDateTime(dt.Rows[0]["Fecha_ingreso"].ToString()).Date.ToString("yyyy-MM-dd");
+                txtFechaNac.Text = Convert.ToDateTime(dt.Rows[0]["Fecha_nacimiento"].ToString()).Date.ToString("yyyy-MM-dd");
 
                 //rfc
                 txtRfc.Text = dt.Rows[0]["RFC"].ToString();
@@ -272,16 +303,37 @@ namespace moduloRRHH.empleados
                 txtNSS.Text = dt.Rows[0]["NSS"].ToString();
 
                 //fracc
-                txtcolonia.Text= dt.Rows[0]["Colonia"].ToString();
-                
+                txtcolonia.Text = dt.Rows[0]["Colonia"].ToString();
+
                 //Calle
-                txtCalle.Text= dt.Rows[0]["Calle"].ToString();
+                txtCalle.Text = dt.Rows[0]["Calle"].ToString();
 
                 //CP
                 txtCP.Text = dt.Rows[0]["CP"].ToString();
 
                 //telefono
                 txtTelefono.Text = dt.Rows[0]["Telefono"].ToString();
+
+                //Contacto de emergencia
+                txtContactoEmergencia.Text = dt.Rows[0]["Contacto_Emergencia"].ToString();
+                //telefono de emergencia
+                txtTelEmergencia.Text = dt.Rows[0]["Tel_Emergencia"].ToString();
+
+                //numero de empleado
+                txtNoEmpleado.Text = dt.Rows[0]["no_empleado"].ToString();
+
+                //Empresa          
+                ddEmpresa.Items.FindByValue(dt.Rows[0]["Empresa"].ToString()).Selected = true;
+
+                //Fecha de ingreso
+                txtFechaIngreso.Text = Convert.ToDateTime(dt.Rows[0]["Fecha_ingreso"].ToString()).Date.ToString("yyyy-MM-dd");
+
+                //Departamento
+                ddDepartamento.Items.FindByValue(dt.Rows[0]["ID_Departamento"].ToString()).Selected = true;
+
+                //Puesto
+                LLenarComboPuesto(dt.Rows[0]["ID_Departamento"].ToString());
+                ddPuesto.Items.FindByValue(dt.Rows[0]["ID_puesto"].ToString()).Selected = true;
 
             }
         }
