@@ -338,5 +338,53 @@ namespace moduloRRHH.empleados
             }
         }
 
+        protected void btnSubirImagen_Click(object sender, EventArgs e)
+        {
+            string foto = "";
+            if (Context.Request.Files.Count > 0)
+            {
+                HttpFileCollection files = Context.Request.Files;
+                HttpPostedFile file = files[0];
+                if (file.FileName != "")
+                {
+                    try
+                    {
+                        string link = "\\Archivos\\" + ddEmpresa.SelectedItem.Text + "\\" + txtNombre.Text + " " + txtApellidoP.Text;
+                        if (!Directory.Exists(Context.Server.MapPath(link)))
+                        {
+                            DirectoryInfo di = System.IO.Directory.CreateDirectory(Context.Server.MapPath(link));
+                        }
+                        foto = link + "\\" + file.FileName;
+                        file.SaveAs(Context.Server.MapPath(foto));
+
+                        List<clsHerramientas.clsParametros> parametros = new List<clsHerramientas.clsParametros>()
+                        {                            
+                            new clsHerramientas.clsParametros{NombreParametro="@accion", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro="Fotoperfil"},
+                            new clsHerramientas.clsParametros{NombreParametro="@foto", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro=foto},
+                            new clsHerramientas.clsParametros{NombreParametro="@no_empleado", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro= Request["id"]}
+                        };
+                        var ejecutarquery = clsHerramientas.TProcedimientoAlmacenado("Master_Empleado", parametros);
+
+                        ScriptManager.RegisterStartupScript(this, GetType(), "MostrarAlerta", "alert('"+ejecutarquery.Item2+"');", true);
+                        imgEmpl.BackImageUrl = foto.Replace('\\','/');                   
+                    }
+                    catch (Exception ex)
+                    {
+                        ScriptManager.RegisterStartupScript(this, GetType(), "MostrarAlerta", "alert('"+ex.Message+"');", true);
+                    }
+
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(this, GetType(), "MostrarAlerta", "alert('No ha seleccionado una foto');", true);
+                }
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(this, GetType(), "MostrarAlerta", "alert('No ha seleccionado una foto');", true);
+
+               
+            }
+        }
     }
 }

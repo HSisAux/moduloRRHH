@@ -11,7 +11,7 @@
                 <label id="lblfoto" class="form-label">Seleccionar foto</label>
                 <asp:Panel ID="imgEmpl" runat="server" BackImageUrl="~/Assets/img/default-user.png" Width="134px" Height="134px" CssClass="foto-empleado edicion mb-3"></asp:Panel>
                 <asp:FileUpload ID="FUfoto" onchange="ShowPreview(this);" accept=".png, .jpg, .jpeg" CssClass="form-control" runat="server" />
-                <asp:LinkButton ID="btnSubirImagen" Visible="false" CssClass="btn btn-primary btn-sm" runat="server">Subir <i class="fa-solid fa-upload"></i></asp:LinkButton>
+                <asp:LinkButton ID="btnSubirImagen" Visible="false" CssClass="btn btn-primary btn-sm" runat="server" OnClick="btnSubirImagen_Click" >Cambiar foto <i class="fa-solid fa-upload"></i></asp:LinkButton>
             </div>
         </section>
 
