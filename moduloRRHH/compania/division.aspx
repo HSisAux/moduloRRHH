@@ -342,7 +342,7 @@
 
     </div>
     <!--///////////////////////////////////////////////// MODAL ///////////////////////////////////////////////// -->
-     <asp:Button ID="btnShowModal" runat="server" Visible="false" Text="mostrar modal"  />
+     <asp:Button ID="btnShowModal" runat="server" Text="mostrar modal"  />
     <asp:Panel ID="pnlModal" CssClass="modalPopup" Style="display: none; color: black;" runat="server">
         <asp:UpdatePanel ID="UpdatePanel7" runat="server">
             <ContentTemplate>

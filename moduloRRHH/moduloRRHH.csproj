@@ -356,6 +356,7 @@
     <Compile Include="documentos\crud.aspx.designer.cs">
       <DependentUpon>crud.aspx</DependentUpon>
     </Compile>
+    <Compile Include="empleados\CapaManejoEmpleados.cs" />
     <Compile Include="empleados\crud.aspx.cs">
       <DependentUpon>crud.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

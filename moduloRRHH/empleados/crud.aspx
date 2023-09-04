@@ -11,7 +11,7 @@
                 <label id="lblfoto" class="form-label">Seleccionar foto</label>
                 <asp:Panel ID="imgEmpl" runat="server" BackImageUrl="~/Assets/img/default-user.png" Width="134px" Height="134px" CssClass="foto-empleado edicion mb-3"></asp:Panel>
                 <asp:FileUpload ID="FUfoto" onchange="ShowPreview(this);" accept=".png, .jpg, .jpeg" CssClass="form-control" runat="server" />
-                <asp:LinkButton ID="btnSubirImagen" Visible="false" CssClass="btn btn-primary btn-sm" runat="server" OnClick="btnSubirImagen_Click" >Cambiar foto <i class="fa-solid fa-upload"></i></asp:LinkButton>
+                <asp:LinkButton ID="btnSubirImagen" Visible="false" CssClass="btn btn-primary btn-sm" runat="server" CausesValidation="false" OnClick="btnSubirImagen_Click" >Cambiar foto <i class="fa-solid fa-upload"></i></asp:LinkButton>
             </div>
         </section>
 
@@ -72,14 +72,14 @@
                             <asp:TextBox runat="server" CssClass="form-control" ID="txtCalle" />
                         </section>
                     </div>
-                    <div class="row">
-                        <section class="col-md">
-                            <label for="txtEstado" class="form-label">Estado:</label>
-                            <asp:TextBox runat="server" CssClass="form-control" ID="txtEstado" />
-                        </section>
+                    <div class="row">                        
                         <section class="col-md">
                             <label for="txtCiudad" class="form-label">Ciudad:</label>
                             <asp:TextBox runat="server" CssClass="form-control" ID="txtCiudad" />
+                        </section>
+                        <section class="col-md">
+                            <label for="txtEstado" class="form-label">Estado:</label>
+                            <asp:TextBox runat="server" CssClass="form-control" ID="txtEstado" />
                         </section>
                         <section class="col-md">
                             <label for="txtCP" class="form-label">CP:</label>
@@ -142,6 +142,7 @@
                                 <asp:DropDownList ID="ddDepartamento" AutoPostBack="true" CssClass="form-select" OnSelectedIndexChanged="ddDepartamento_SelectedIndexChanged" runat="server">
                                     <asp:ListItem Text="--Seleccionar departamento" Value="0" />
                                 </asp:DropDownList>
+                                <asp:Label ID="lblNoHayPuestos" runat="server" ForeColor="#cc0000" Visible="false" Text="<i class='fa-solid fa-circle-xmark'></i> Este departamento no tiene puestos regstrados"></asp:Label>
                                 <asp:RequiredFieldValidator ID="rvDepto" ForeColor="#cc0000" InitialValue="0" Display="Dynamic" runat="server" ControlToValidate="ddDepartamento" ErrorMessage="<i class='fa-solid fa-triangle-exclamation'></i> Seleccione un departamento"></asp:RequiredFieldValidator>
 
                             </section>

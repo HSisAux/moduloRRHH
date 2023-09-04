@@ -121,10 +121,7 @@ namespace moduloRRHH.App_Code
         {
             DataTable dt = new DataTable();
             
-            SqlConnection con = new SqlConnection(strConexion);
-
-            string Accion = "";
-            DataTable table = SQLConsulta("SELECT * FROM Documentos WHERE ID='" + Parametros[1].ValorParametro+"'");
+            SqlConnection con = new SqlConnection(strConexion);     
                 try
                 {
                     SqlCommand cmd = new SqlCommand()

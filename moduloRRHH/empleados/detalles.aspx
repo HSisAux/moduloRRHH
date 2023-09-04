@@ -9,20 +9,20 @@
         <section class="col-auto d-flex flex-column align-items-center p-3 m-3" style="background: #E1E2EC; border-radius: 13px;">
             <asp:Image ID="imgEmpresa" runat="server" AlternateText="hungaros" ImageUrl="~/Assets/img/hungaros.png" Width="184px" />
             <asp:Image ID="imgEmpleado" runat="server" AlternateText="foto del empleado" ImageUrl="~/Assets/img/tomholland.jpg" CssClass="foto-empleado" />
-            
-            <asp:Label Text="Nombre"  ForeColor="#8f9099" CssClass="align-self-start mt-1" Font-Size="14px" runat="server" />
+
+            <asp:Label Text="Nombre" ForeColor="#8f9099" CssClass="align-self-start mt-1" Font-Size="14px" runat="server" />
             <asp:Label ID="lblNombres" runat="server" Text="Peter Benjamin" Font-Bold="true" Font-Size="18px" CssClass="mt-2"></asp:Label>
             <asp:Label ID="lblApellido" runat="server" Text="Parker" Font-Bold="true" Font-Size="16px"></asp:Label>
-            <asp:Label Text="Puesto"  ForeColor="#8f9099" CssClass="align-self-start mt-1" Font-Size="14px" runat="server" />
-            <asp:Label ID="lblPuesto" Text="Novio de Melissa"  Font-Size="16px" runat="server"  />
-            <asp:Label Text="Estado"  ForeColor="#8f9099" CssClass="align-self-start mt-1" Font-Size="14px" runat="server" />            
-            <asp:Label ID="lblStatus" Text="activo"  CssClass="estado mt-4" runat="server" />
+            <asp:Label Text="Puesto" ForeColor="#8f9099" CssClass="align-self-start mt-1" Font-Size="14px" runat="server" />
+            <asp:Label ID="lblPuesto" Text="Novio de Melissa" Font-Size="16px" runat="server" />
+            <asp:Label Text="Estado" ForeColor="#8f9099" CssClass="align-self-start mt-1" Font-Size="14px" runat="server" />
+            <asp:Label ID="lblStatus" Text="activo" CssClass="estado" runat="server" />
         </section>
         <section class="col-auto p-4 m-3" style="background: #E1E2EC; border-radius: 13px;">
             <div class="row" id="Puestoinfo">
                 <div class="col-md">
                     <asp:Label ID="lblNoEmp" runat="server" Text="No. de empleado" CssClass="form-label"></asp:Label>
-                    <asp:TextBox runat="server" ReadOnly="true" ID="txtNoEmpleado" CssClass="form-control"  />
+                    <asp:TextBox runat="server" ReadOnly="true" ID="txtNoEmpleado" CssClass="form-control" />
                 </div>
                 <div class="col-md">
                     <asp:Label ID="lblFechaIngreso" runat="server" Text="Fecha de ingreso" CssClass="form-label"></asp:Label>
@@ -94,89 +94,43 @@
                 </section>
 
             </div>
-            <hr  />
+            <hr />
             <div class="d-flex justify-content-end gap-2">
                 <asp:LinkButton ID="btnEditar" runat="server" CssClass="btn btn-sm btn-warning text-white" OnClick="btnEditar_Click">Editar<i class="fa-solid fa-pencil ms-1"></i></asp:LinkButton>
-                <asp:LinkButton ID="btnActivarEstado" OnClick="btnActivarEstado_Click" Visible="false" runat="server" CssClass="btn btn-sm btn-outline-success">Activar <i class="fa-solid fa-power-off ms-1"></i></asp:LinkButton>
-                <asp:LinkButton ID="btnBajaTemporal" OnClick="btnBajaTemporal_Click" runat="server" CssClass="btn btn-sm btn-outline-danger">Baja temporal <i class="fa-solid fa-ban ms-1"></i></asp:LinkButton>
+                <asp:LinkButton ID="btnCambioEstado" OnClick="btnCambioEstado_Click" runat="server" CssClass="btn btn-sm btn-outline-danger">Baja temporal <i class="fa-solid fa-ban ms-1"></i></asp:LinkButton>
             </div>
         </section>
     </div>
 
     <div class="row my-2" id="Documentos">
         <div class="col-12">
-            <table class="table table-responsive table-striped table-hover text-center">
-                <thead style="color:white; background:#1D3B71; font-size:11px; font-weight:bold; line-height:4;">
-                  <tr> 
-                    <th>Documento</th>
-                    <th>Fecha de subida</th>
-                    <th>Vencimiento</th>
-                    <th>Status</th>
-                    <th>Accion</th>
-                  </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Documento 1</td>
-                        <td>29/10/2011</td>
-                        <td> --/--/----</td>
-                        <td>
-                            <label class="estado">entregado</label>
-                        </td>
-                        <td>
-                            <asp:HyperLink ID="hlUpload" CssClass="btn btn-sm btn-warning text-white"  data-bs-toggle="modal" data-bs-target="#exampleModal" runat="server"><i class="fa-solid fa-arrow-up-from-bracket"></i></asp:HyperLink>
-                            <asp:HyperLink ID="hlView" runat="server" CssClass="btn btn-sm btn-secondary"><i class="fa-solid fa-eye"></i></asp:HyperLink>
-                            <asp:HyperLink ID="hlHistorial" data-bs-toggle="modal" data-bs-target="#HistorialModal" data-bs-document="Documento 1" runat="server" CssClass="btn btn-sm btn-historial text-white" ><i class="fa-solid fa-clock-rotate-left"></i></asp:HyperLink>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Documento 2</td>
-                        <td>29/10/2011</td>
-                        <td> --/--/----</td>
-                        <td>
-                            <label class="estado">entregado</label>
-                        </td>
-                        <td>
-                            <asp:HyperLink ID="HyperLink1" CssClass="btn btn-sm btn-warning text-white" runat="server"><i class="fa-solid fa-arrow-up-from-bracket"></i></asp:HyperLink>
-                            <asp:HyperLink ID="HyperLink2" runat="server" CssClass="btn btn-sm btn-secondary"><i class="fa-solid fa-eye"></i></asp:HyperLink>
-                            <asp:HyperLink ID="HyperLink3" data-bs-toggle="modal" data-bs-target="#HistorialModal" data-bs-document="Documento 2" runat="server" CssClass="btn btn-sm text-white" BackColor="#7D5D2B"><i class="fa-solid fa-clock-rotate-left"></i></asp:HyperLink>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Documento 3</td>
-                        <td>29/10/2011</td>
-                        <td> --/--/----</td>
-                        <td>
-                            <label class="estado">entregado</label>
-                        </td>
-                        <td>
-                            <asp:HyperLink ID="HyperLink4" CssClass="btn btn-sm btn-warning text-white" runat="server"><i class="fa-solid fa-arrow-up-from-bracket"></i></asp:HyperLink>
-                            <asp:HyperLink ID="HyperLink5" runat="server" CssClass="btn btn-sm btn-secondary"><i class="fa-solid fa-eye"></i></asp:HyperLink>
-                            <asp:HyperLink ID="HyperLink6" runat="server" data-bs-toggle="modal" data-bs-target="#HistorialModal" data-bs-document="Documento 3" CssClass="btn btn-sm text-white" BackColor="#7D5D2B"><i class="fa-solid fa-clock-rotate-left"></i></asp:HyperLink>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Documento 4</td>
-                        <td>29/10/2011</td>
-                        <td> --/--/----</td>
-                        <td>
-                            <label class="estado">entregado</label>
-                        </td>
-                        <td>
-                            <asp:HyperLink ID="HyperLink7" CssClass="btn btn-sm btn-warning text-white" runat="server"><i class="fa-solid fa-arrow-up-from-bracket"></i></asp:HyperLink>
-                            <asp:HyperLink ID="HyperLink8" runat="server" CssClass="btn btn-sm btn-secondary"><i class="fa-solid fa-eye"></i></asp:HyperLink>
-                            <asp:HyperLink ID="HyperLink9" data-bs-toggle="modal" data-bs-target="#HistorialModal" data-bs-document="Documento 4" runat="server" CssClass="btn btn-sm text-white" BackColor="#7D5D2B"><i class="fa-solid fa-clock-rotate-left"></i></asp:HyperLink>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <!--=================== TEST ===================================================== -->
+            <asp:GridView ID="gvTest" runat="server"
+                CssClass="table table-responsive table-striped table-hover text-center"
+                OnRowDataBound="gvTest_RowDataBound" AutoGenerateColumns="false" Width="100%">
+                <Columns>
+                    <asp:BoundField DataField="Documento" HeaderText="Documento" SortExpression="Documento"></asp:BoundField>
+                    <asp:CheckBoxField DataField="requerido" HeaderText="Requerido" ReadOnly="True" ></asp:CheckBoxField>
+                    <asp:BoundField DataField="fecha_registro" HeaderText="Fecha de registro"></asp:BoundField>
+                    <asp:BoundField DataField="Vencimiento" HeaderText="Vencimiento"></asp:BoundField>
+                    <asp:BoundField DataField="detalles" HeaderText="Estado"></asp:BoundField>
+                    <asp:TemplateField HeaderText="Accion">
+                        <ItemTemplate>
+                            <asp:HyperLink ID="subir" CssClass="btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#exampleModal" runat="server"><i class="fa-solid fa-arrow-up-from-bracket"></i></asp:HyperLink>
+                            <asp:HyperLink ID="ver" runat="server" CssClass="btn btn-sm btn-secondary"><i class="fa-solid fa-eye"></i></asp:HyperLink>
+                            <asp:HyperLink ID="historial" data-bs-toggle="modal" data-bs-target="#HistorialModal" data-bs-document="Documento 4" runat="server" CssClass="btn btn-sm text-white" BackColor="#7D5D2B"><i class="fa-solid fa-clock-rotate-left"></i></asp:HyperLink>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
+            </asp:GridView>
         </div>
-      
+
 
     </div>
-    
-     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1"  data-bs-backdrop="static" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+    <!-- Modal -->
+    <asp:SqlDataSource runat="server" ID="SqlDataSource1"></asp:SqlDataSource>
+    <div class="modal fade" id="exampleModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -217,12 +171,12 @@
                                 </section>
 
                             </div>
-                            <button class="btn btn-secondary btn-sm" type="button" id="btnCancelar"  style="display: none;" title="Cancelar">
+                            <button class="btn btn-secondary btn-sm" type="button" id="btnCancelar" style="display: none;" title="Cancelar">
                                 <i class="fa-solid fa-trash"></i>
                             </button>
                         </div>
-                        <div id="pgrs" style="display:none;" class="mt-1">
-                            <div class="progress" role="progressbar" style="height:24px;" aria-label="Warning example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                        <div id="pgrs" style="display: none;" class="mt-1">
+                            <div class="progress" role="progressbar" style="height: 24px;" aria-label="Warning example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
                                 <div class="progress-bar text-bg-success" id="barrita" style="width: 0%"></div>
                             </div>
                         </div>
@@ -272,29 +226,29 @@
 
     <!-- Model de historial -->
     <div class="modal fade" id="HistorialModal" tabindex="-1" aria-labelledby="HistorialModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="HistorialModalLabel">New message</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-          <div class="mb-3">
-            <label for="recipient-name" class="col-form-label">Recipient:</label>
-            <input type="text" class="form-control" id="recipient-name">
-          </div>
-          <div class="mb-3">
-            <label for="message-text" class="col-form-label">Message:</label>
-            <textarea class="form-control" id="message-text"></textarea>
-          </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Send message</button>
-      </div>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="HistorialModalLabel">New message</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Recipient:</label>
+                        <input type="text" class="form-control" id="recipient-name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="message-text" class="col-form-label">Message:</label>
+                        <textarea class="form-control" id="message-text"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Send message</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 
 
     <script src="assets/dropzone.js"></script>

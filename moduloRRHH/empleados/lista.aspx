@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/template.Master" AutoEventWireup="true" CodeBehind="lista.aspx.cs" Inherits="moduloRRHH.lista" %>
+﻿<%@ Page Title="Empleados" Language="C#" MasterPageFile="~/template.Master" AutoEventWireup="true" CodeBehind="lista.aspx.cs" Inherits="moduloRRHH.lista" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -7,12 +7,15 @@
         <div class="col">
         <asp:UpdatePanel ID="UpdatePanel2" runat="server">
             <ContentTemplate>
+                <asp:HiddenField ID="lblParametro" runat="server" Value="@valor" />
+                <asp:HiddenField ID="lblValor" runat="server" Value="" />
+                <asp:HiddenField ID="lblAccion" runat="server" Value="buscar" />
+
                 <div class="row row-cols-auto d-flex " style="background: #335CA8; padding: 10px; margin: 0.6px;">
                     <div class="col">
                         <div class="containerH" style="height: 48px;">
                             <label>Mostrar</label>
                             <asp:DropDownList ID="ddRegistros" runat="server" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddRegistros_SelectedIndexChanged">
-                                <asp:ListItem Text="6" Value="6" />
                                 <asp:ListItem Text="12" Value="12" />
                                 <asp:ListItem Text="24" Value="24" />
                                 <asp:ListItem Text="50" Value="50" />
@@ -32,15 +35,15 @@
                                     <a href="#" class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown">Empresa </a>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <asp:LinkButton ID="btn4M" CssClass="dropdown-item" runat="server">4 Matildes</asp:LinkButton>
+                                            <asp:LinkButton ID="btn4M" CssClass="dropdown-item" OnClick="botonesBusqueda_Click" runat="server">4 Matildes</asp:LinkButton>
 
                                         </li>
                                         <li>
-                                            <asp:LinkButton ID="btnHungaros" CssClass="dropdown-item" runat="server">Hungaros</asp:LinkButton>
+                                            <asp:LinkButton ID="btnHungaros" CssClass="dropdown-item" OnClick="botonesBusqueda_Click" runat="server">Hungaros</asp:LinkButton>
 
                                         </li>
                                         <li>
-                                            <asp:LinkButton ID="btnJamamadi" CssClass="dropdown-item" runat="server">Jamamadi</asp:LinkButton>
+                                            <asp:LinkButton ID="btnJamamadi" CssClass="dropdown-item" OnClick="botonesBusqueda_Click" runat="server">Jamamadi</asp:LinkButton>
 
                                         </li>
                                     </ul>
@@ -49,10 +52,10 @@
                                     <a href="#" class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown">Status </a>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <asp:LinkButton ID="btnActivo" CssClass="dropdown-item" runat="server">Activo</asp:LinkButton>
+                                            <asp:LinkButton ID="btnActivo" CssClass="dropdown-item" OnClick="botonesBusqueda_Click" runat="server">Activo</asp:LinkButton>
                                         </li>
                                         <li>
-                                            <asp:LinkButton ID="btnInactivo" CssClass="dropdown-item" runat="server">Inactivo</asp:LinkButton>
+                                            <asp:LinkButton ID="btnInactivo" CssClass="dropdown-item" OnClick="botonesBusqueda_Click" runat="server">Inactivo</asp:LinkButton>
                                         </li>
                                     </ul>
                                 </li>
@@ -63,7 +66,7 @@
                         <div class="containerH">
                             <div class="input-group">
                                 <asp:TextBox ID="txtBusqueda" runat="server" CssClass="form-control" Placeholder="Buscar..."></asp:TextBox>
-                                <asp:LinkButton ID="btnBusqueda" CssClass="btn text-center btn-secondary" data-accion="buscar" runat="server"><i class="fa-solid fa-magnifying-glass"></i></asp:LinkButton>
+                                <asp:LinkButton ID="btnBusqueda" OnClick="btnBusqueda_Click" CssClass="btn text-center btn-secondary" data-accion="buscar" runat="server"><i class="fa-solid fa-magnifying-glass"></i></asp:LinkButton>
 
                             </div>
                         </div>
@@ -81,14 +84,14 @@
         <asp:UpdatePanel ID="UPEmpleados" runat="server">
             <ContentTemplate>
                 <asp:GridView ID="gvEmpleados" AutoGenerateColumns="false" ShowHeaderWhenEmpty="true"
-                    AllowPaging="true" AllowSorting="true" 
-                    Width="100%" CssClass="text-center table table-hover mt-2 align-middle" OnPageIndexChanging="gvEmpleados_PageIndexChanging" PagerStyle-CssClass="pagination-ys" runat="server">
+                    AllowPaging="true" AllowSorting="true" PageSize="12" Width="100%" 
+                    CssClass="text-center table table-hover mt-2 align-middle" OnPageIndexChanging="gvEmpleados_PageIndexChanging" PagerStyle-CssClass="pagination-ys" runat="server">
                     <Columns>
                         <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" Visible="false"></asp:BoundField>
                         <asp:BoundField DataField="no_empleado" HeaderText="No. Empleado" SortExpression="no_empleado"></asp:BoundField>
                         <asp:TemplateField HeaderText="Foto">
                             <ItemTemplate>
-                                <img src="<%# Eval("foto") %>" alt="fot de empleado" style="width:60px; height:60px; border-radius:50px;"  />
+                                <img src="<%# Eval("foto") %>" alt="foto de empleado" style="width:60px; height:60px; border-radius:50px;"  />
                             </ItemTemplate>
                         </asp:TemplateField>
                         <asp:BoundField DataField="Nombre" HeaderText="Nombre(s)" SortExpression="Nombre"></asp:BoundField>
@@ -97,7 +100,6 @@
                         <asp:BoundField DataField="Fecha_ingreso" HeaderText="Fecha de ingreso" SortExpression="Fecha_ingreso"></asp:BoundField>
                         <asp:BoundField DataField="Puesto" HeaderText="Puesto"></asp:BoundField>
                         <asp:BoundField HeaderText="Empresa" DataField="Empresa" SortExpression="Empresa"></asp:BoundField>
-                        <%--<asp:BoundField HeaderText="Estado" DataField="Status" SortExpression="Status"></asp:BoundField>--%>
                         <asp:TemplateField HeaderText="Estatus" SortExpression="Status">
                             <ItemTemplate>
                             <label class="estado <%# Eval("Status").Equals(false)?"inactivo":"" %>" ><%# Eval("Status").Equals(true)?"Activo":"Inactivo" %></label>
@@ -113,12 +115,13 @@
                         FirstPageText='<i class="fa-solid fa-angles-left"></i>'
                         LastPageText='<i class="fa-solid fa-angles-right"></i>'
                         NextPageText='<i class="fa-solid fa-chevron-right"></i>'
-                        PreviousPageText='<i class="fa-solid fa-chevron-left"></i>' />
+                        PreviousPageText='<i class="fa-solid fa-chevron-left"></i>' NextPageImageUrl="&lt;i class=&quot;fa-solid fa-chevron-right&quot;&gt;&lt;/i&gt;" PreviousPageImageUrl="&lt;i class=&quot;fa-solid fa-chevron-left&quot;&gt;&lt;/i&gt;" />
                     <EmptyDataTemplate>
                         <div class="d-flex justify-content-center">
                             <asp:Literal ID="Literal2" runat="server" Text="No se encontraron empleados"></asp:Literal>
                         </div>
                     </EmptyDataTemplate>
+                    <PagerStyle CssClass="pagination-ys" />
                 </asp:GridView>
             </ContentTemplate>
         </asp:UpdatePanel>
