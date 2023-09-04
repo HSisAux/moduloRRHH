@@ -24,6 +24,15 @@ namespace moduloRRHH.salario
         protected global::System.Web.UI.WebControls.Label lblsubtitulo;
 
         /// <summary>
+        /// Control hfNoEmpleado.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfNoEmpleado;
+
+        /// <summary>
         /// Control txtEmpleado.
         /// </summary>
         /// <remarks>
@@ -33,13 +42,22 @@ namespace moduloRRHH.salario
         protected global::System.Web.UI.WebControls.TextBox txtEmpleado;
 
         /// <summary>
-        /// Control txtDpto.
+        /// Control txtSalario.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDpto;
+        protected global::System.Web.UI.WebControls.TextBox txtSalario;
+
+        /// <summary>
+        /// Control RegularExpressionValidator1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator1;
 
         /// <summary>
         /// Control btnRegistrarSalario.

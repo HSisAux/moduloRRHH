@@ -11,7 +11,8 @@
                 
                 <div class="row">
                     <div class="col">
-                        <label for="txtID" class="form-label">No. Empleado:</label>
+                        <label for="txtEmpleado" class="form-label">Empleado</label>
+                        <asp:HiddenField ID="hfNoEmpleado" runat="server" />
                         <asp:TextBox runat="server" CssClass="form-control" ID="txtEmpleado" list="Empleados_list" />
                         <datalist id="Empleados_list">
                             <option value="0" >Melissa</option>
@@ -28,8 +29,11 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <label for="txtDpto" class="form-label">Salario:</label>
-                        <asp:TextBox runat="server" CssClass="form-control" ID="txtDpto" />
+                        <label for="txtSalario" class="form-label">Salario:</label>
+                        <asp:TextBox runat="server" CssClass="form-control" ID="txtSalario" />
+                        <asp:RegularExpressionValidator ID="RegularExpressionValidator1"
+                            ValidationExpression="^\d{1,3}(,\d{3})*(\.\d+)?$" runat="server" ControlToValidate="txtSalario"
+                            ErrorMessage="tas mal compa" BackColor="Red" ForeColor="White"></asp:RegularExpressionValidator>
                     </div>
                 </div>
                 <div class="row mt-3">
