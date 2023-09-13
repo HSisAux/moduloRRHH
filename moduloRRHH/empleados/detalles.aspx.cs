@@ -60,6 +60,17 @@ namespace moduloRRHH
             txtCorreo.Text = Info["Correo"];
             txtContactoEmrgecia.Text= Info["Contacto_Emergencia"];
             txtTelEmergencia.Text = Info["Tel_Emergencia"];
+
+            if (Info["salario_actual"] != "Sin asignar")
+            {
+                txtSalario.Attributes["value"] = Info["salario_actual"];
+            }
+            else
+            {
+                txtSalario.TextMode = TextBoxMode.SingleLine;
+                txtSalario.Text = "Sin asignar";
+                chSHowHide.Visible = false;
+            }
         }
 
         protected void btnEditar_Click(object sender, EventArgs e)
@@ -159,6 +170,19 @@ namespace moduloRRHH
                     e.Row.Cells[4].Text = "<label class='estado'>Entregado</label>";
 
                 }
+            }
+        }
+
+        protected void chSHowHide_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chSHowHide.Checked)
+            {
+                txtSalario.TextMode = TextBoxMode.SingleLine;
+            }
+            else
+            {
+                txtSalario.TextMode = TextBoxMode.Password;
+
             }
         }
     }

@@ -342,7 +342,7 @@
 
     </div>
     <!--///////////////////////////////////////////////// MODAL ///////////////////////////////////////////////// -->
-     <asp:Button ID="btnShowModal" runat="server" Text="mostrar modal"  />
+     <asp:Button ID="btnShowModal" runat="server" Text="mostrar modal" CssClass="visually-hidden"  />
     <asp:Panel ID="pnlModal" CssClass="modalPopup" Style="display: none; color: black;" runat="server">
         <asp:UpdatePanel ID="UpdatePanel7" runat="server">
             <ContentTemplate>
@@ -357,11 +357,18 @@
                         <div class="modal-body">
                             <asp:Label ID="lblTabla" hidden runat="server" Text="Label"></asp:Label>
                             <asp:Label ID="lblData" hidden runat="server" Text="Label"></asp:Label>
-                            <asp:Label ID="lblDocDel" runat="server" Text="Label"></asp:Label>                
-                            
+                            <asp:Label ID="lblDocDel" runat="server"  Text="text"></asp:Label><br />
+                            <%--<asp:Label ID="lblDptoPuesto" ClientIDMode="Static" runat="server" Font-Bold="true" Text="Label"></asp:Label>--%>
+                            <asp:Panel ID="pAlertaModal" runat="server">
+                            <asp:TextBox ID="lblDptoPuesto" CssClass="form-control disabled" ReadOnly="true" runat="server"></asp:TextBox>
+                            <div>Ingrese el nombre del <asp:Label ID="lblTipo" runat="server" Text="Label"></asp:Label> para continuar</div>
+                            <asp:TextBox ID="txtPD" ClientIDMode="Static" CssClass="form-control" ValidationGroup="borrar" runat="server"></asp:TextBox>
+                            <asp:CompareValidator ID="CompareValidator1" ControlToValidate="txtPD" Display="Dynamic" ValidationGroup="borrar" ControlToCompare="lblDptoPuesto" runat="server" ErrorMessage="*No coincide"></asp:CompareValidator>
+                                </asp:Panel>
+                            <%--<label id="txtMensaje" class="text-danger"></label>--%>
                         </div>
                         <div class="modal-footer">
-                            <asp:Button ID="btnAceptarModal"  CssClass="btn btn-sm btn-primary" OnClick="btnAceptarModal_Click" runat="server" Text="Si" />
+                            <asp:Button ID="btnAceptarModal" ClientIDMode="Static" CausesValidation="false"  CssClass="btn btn-sm btn-primary" OnClick="btnAceptarModal_Click" runat="server" Text="Si" />
                             <asp:Button ID="btnCloseModal"  class="btn btn-sm btn-secondary" OnClientClick="return hideModal();" runat="server" Text="Cancelar" />
                         </div>
                     </div>
@@ -377,5 +384,5 @@
         </Animations>--%>
     </cc1:ModalPopupExtender>
 
-
 </asp:Content>
+

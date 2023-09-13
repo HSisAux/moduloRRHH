@@ -357,6 +357,15 @@ namespace moduloRRHH.empleados
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rvPuesto;
 
         /// <summary>
+        /// Control btnShowModalAJAX.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnShowModalAJAX;
+
+        /// <summary>
         /// Control txtSalario.
         /// </summary>
         /// <remarks>
@@ -411,6 +420,33 @@ namespace moduloRRHH.empleados
         protected global::System.Web.UI.WebControls.Button btnGuardar;
 
         /// <summary>
+        /// Control btnTargetAjax.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnTargetAjax;
+
+        /// <summary>
+        /// Control PnlModal.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel PnlModal;
+
+        /// <summary>
+        /// Control upModal.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upModal;
+
+        /// <summary>
         /// Control txtSalarioActual.
         /// </summary>
         /// <remarks>
@@ -427,5 +463,50 @@ namespace moduloRRHH.empleados
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtSalarioNuevo;
+
+        /// <summary>
+        /// Control rfvSalario.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvSalario;
+
+        /// <summary>
+        /// Control lblRes.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblRes;
+
+        /// <summary>
+        /// Control btnAceptarModal.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAceptarModal;
+
+        /// <summary>
+        /// Control btnCloseModal.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCloseModal;
+
+        /// <summary>
+        /// Control ModalPopupExtender1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::AjaxControlToolkit.ModalPopupExtender ModalPopupExtender1;
     }
 }

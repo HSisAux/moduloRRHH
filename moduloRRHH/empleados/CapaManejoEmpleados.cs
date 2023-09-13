@@ -244,6 +244,7 @@ namespace moduloRRHH.empleados
                     Informacion.Add(col.ColumnName, row[col.ColumnName].ToString());
                 }
                 Informacion["foto"] = Informacion["foto"].Replace('\\', '/');
+
             }
 
             return Informacion;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 
@@ -70,10 +71,10 @@ namespace moduloRRHH.App_Code
                 cmd.ExecuteNonQuery();
                 conn.Close();
                 sqlResult = "done";
+                conn.Close();
             }
             catch (SqlException ex)
             {
-
                 sqlResult = ex.Message;
             }
 
@@ -114,7 +115,7 @@ namespace moduloRRHH.App_Code
             SqlDataAdapter sa = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             sa.Fill(dt);
-
+            con.Close();
             return dt;
         }
         public static (DataTable, string) TProcedimientoAlmacenado(string TextoComando, List<clsParametros> Parametros)
@@ -138,8 +139,10 @@ namespace moduloRRHH.App_Code
                     cmd.Parameters.Add("@message", SqlDbType.NVarChar, 10000).Direction = ParameterDirection.Output;                    
                     SqlDataAdapter sa = new SqlDataAdapter(cmd);
                     sa.Fill(dt);
-                    string res= Convert.ToString(cmd.Parameters["@message"].Value);                   
-                    return (dt, res);
+                    string res= Convert.ToString(cmd.Parameters["@message"].Value);   
+                    con.Close();
+
+                return (dt, res);
                 }
                 catch (SqlException ex)
                 {

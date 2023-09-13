@@ -38,6 +38,7 @@
                 <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
                 <asp:ScriptReference Name="WebFormsBundle" />
                 <%--Site Scripts--%>
+                <asp:ScriptReference Path="~/Scripts/jquery-ui.js"/>
             </Scripts>
         </asp:ScriptManager>
         <div>
@@ -187,8 +188,9 @@
 
 
     <asp:PlaceHolder runat="server">
-        <%: Scripts.Render("~/Scripts/jquery-3.7.0.js") %>
+        <%: Scripts.Render("~/Scripts/jquery-3.7.1.js") %>
         <%: Scripts.Render("~/Scripts/bootstrap.bundle.js") %>
+        <%: Scripts.Render("~/Scripts/jquery-ui.js") %>
     </asp:PlaceHolder>
     <script type="text/javascript">
         let btn = document.querySelector("#btnMenu");
@@ -200,5 +202,8 @@
         }
 
     </script>
+    <asp:ContentPlaceHolder ID="ContentScript" runat="server"></asp:ContentPlaceHolder>
+
+
 </body>
 </html>

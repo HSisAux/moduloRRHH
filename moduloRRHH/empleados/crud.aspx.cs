@@ -1,10 +1,12 @@
 ﻿using Antlr.Runtime.Misc;
 using Microsoft.Ajax.Utilities;
 using moduloRRHH.App_Code;
+using moduloRRHH.salario;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net.NetworkInformation;
@@ -17,7 +19,8 @@ namespace moduloRRHH.empleados
 {
     public partial class crud : System.Web.UI.Page
     {
-        CapaManejoEmpleados manejoEmpleados = new CapaManejoEmpleados();
+        CapaManejoEmpleados ManejoEmpleados = new CapaManejoEmpleados();
+        CapaSalarios CapaSalarios = new CapaSalarios();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -103,55 +106,7 @@ namespace moduloRRHH.empleados
             }
             
             ScriptManager.RegisterStartupScript(this, GetType(), "MostrarAlerta", "alert('" + EmpleadoCE(accion) + "');", true);
-            /*if (btnGuardar.Text == "Registrar")
-            {
-                string foto = "";
-                if (Context.Request.Files.Count > 0)
-                {
-                    HttpFileCollection files = Context.Request.Files;
-                    HttpPostedFile file = files[0];
-                    if (file.FileName != "")
-                    {
-                        string link = "\\Archivos\\" + ddEmpresa.SelectedItem.Text + "\\" + txtNombre.Text + " " + txtApellidoP.Text;
-                        if (!Directory.Exists(Context.Server.MapPath(link)))
-                        {
-                            DirectoryInfo di = System.IO.Directory.CreateDirectory(Context.Server.MapPath(link));
-                        }
-                        foto = link + "\\" + file.FileName;
-                        file.SaveAs(Context.Server.MapPath(foto));
-
-                    }
-                    else
-                    {
-                        foto = "\\Assets\\img\\default-user.png";
-                    }
-                }
-                else
-                {
-                    foto = "\\Assets\\img\\default-user.png";
-                }
-
-                registrarEmpleado(
-                    "insert",
-                    txtNombre.Text.Trim(), txtNoEmpleado.Text.Trim(), txtApellidoP.Text.Trim(), txtApellidoM.Text.Trim(),
-                    chkEstatus.Checked, txtRfc.Text.Trim(), txtNSS.Text.Trim(), txtFechaNac.Text,
-                    txtFechaIngreso.Text, txtCalle.Text.Trim(), txtcolonia.Text.Trim(), txtCP.Text.Trim(),
-                    txtEstado.Text.Trim(), txtCiudad.Text.Trim(), txtTelefono.Text.Trim(), txtCorreo.Text.Trim(),
-                    txtTelEmergencia.Text.Trim(), txtContactoEmergencia.Text.Trim(), ddDepartamento.SelectedValue, ddPuesto.SelectedValue,
-                    foto, ddEmpresa.SelectedValue);
-            }
-            else
-            {
-                registrarEmpleado(
-                    "update", txtNoEmpleado.Text.Trim(),txtNombre.Text.Trim(), txtApellidoP.Text.Trim(), txtApellidoM.Text.Trim(),
-                    chkEstatus.Checked, txtRfc.Text.Trim(), txtNSS.Text.Trim(), txtFechaNac.Text,
-                    txtFechaIngreso.Text, txtCalle.Text.Trim(), txtcolonia.Text.Trim(), txtCP.Text.Trim(),
-                    txtEstado.Text.Trim(), txtCiudad.Text.Trim(), txtTelefono.Text.Trim(), txtCorreo.Text.Trim(),
-                    txtTelEmergencia.Text.Trim(), txtContactoEmergencia.Text.Trim(), ddDepartamento.SelectedValue, ddPuesto.SelectedValue,
-                   "", ddEmpresa.SelectedValue);
-            }*/
-
-
+            
         }
 
         protected void LimpiarCampos()
@@ -172,7 +127,6 @@ namespace moduloRRHH.empleados
             txtTelEmergencia.Text = "";
             txtNoEmpleado.Text = "";
             txtFechaIngreso.Text= "";
-           // txtDpto.Text = "";
             txtSalarioActual.Text = "";
             txtSalarioNuevo.Text = "";
 
@@ -180,7 +134,7 @@ namespace moduloRRHH.empleados
 
         public void llenarComboDpto()
         {
-            DataTable dt = manejoEmpleados.LlenarComboDepartamento();            
+            DataTable dt = ManejoEmpleados.LlenarComboDepartamento();            
             foreach (DataRow row in dt.Rows)
             {
                 ddDepartamento.Items.Add(new ListItem(row["Nombre"].ToString(), row["ID_Departamento"].ToString()));
@@ -194,7 +148,7 @@ namespace moduloRRHH.empleados
             ddPuesto.Items.Clear();
             ddPuesto.Items.Add(new ListItem("--Seleccionar puesto", "0"));
 
-            DataTable dt = manejoEmpleados.LLenarComboPuestos(id);
+            DataTable dt = ManejoEmpleados.LLenarComboPuestos(id);
             if (dt.Rows.Count > 0)
             {
                 foreach (DataRow row in dt.Rows)
@@ -244,53 +198,11 @@ namespace moduloRRHH.empleados
         }
 
 
-       /* protected void registrarEmpleado(string accion, string noEmpleado,
-            string nombre, string apellidoPaterno, string apellidoMaterno,
-            bool status, string rfc, string nss, string FechaNac, string FechaIngreso,
-            string Calle, string colonia, string cp, string estado,string ciudad, 
-            string telefono, string correo,
-            string TelEmergencia, string ContactoEmergencia,
-            string IDDepartamento, string idpuesto, string foto, string empresa)
-        {
-            List<clsHerramientas.clsParametros> parametros = new List<clsHerramientas.clsParametros>()
-            {
-                new clsHerramientas.clsParametros{NombreParametro="@accion", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro=accion},
-                new clsHerramientas.clsParametros{NombreParametro="@no_empleado", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= noEmpleado },
-                new clsHerramientas.clsParametros{NombreParametro="@Nombre", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= nombre },
-                new clsHerramientas.clsParametros{NombreParametro="@ApellidoP", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= apellidoPaterno },
-                new clsHerramientas.clsParametros{NombreParametro="@ApellidoM", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= apellidoMaterno },
-                new clsHerramientas.clsParametros{NombreParametro="@status", TipoParametro=System.Data.SqlDbType.Bit , ValorParametro= status.ToString() },
-                new clsHerramientas.clsParametros{NombreParametro="@rfc", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= rfc },
-                new clsHerramientas.clsParametros{NombreParametro="@nss", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= nss },
-                new clsHerramientas.clsParametros{NombreParametro="@fechaNacimiento", TipoParametro=System.Data.SqlDbType.Date, ValorParametro= FechaNac },
-                new clsHerramientas.clsParametros{NombreParametro="@fechaIngreso", TipoParametro=System.Data.SqlDbType.Date, ValorParametro= FechaIngreso },
-                new clsHerramientas.clsParametros{NombreParametro="@Calle", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= Calle},
-                new clsHerramientas.clsParametros{NombreParametro="@Colonia", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= colonia},
-                new clsHerramientas.clsParametros{NombreParametro="@cp", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= cp},
-                new clsHerramientas.clsParametros{NombreParametro="@Estado", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= estado},
-                new clsHerramientas.clsParametros{NombreParametro="@Ciudad", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= ciudad},
-                new clsHerramientas.clsParametros{NombreParametro="@Telefono", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= telefono},
-                new clsHerramientas.clsParametros{NombreParametro="@TelEmergencia", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro = TelEmergencia},
-                new clsHerramientas.clsParametros{NombreParametro="@ContactoEmergencia", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= ContactoEmergencia},
-                new clsHerramientas.clsParametros{NombreParametro="@Correo", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= correo},
-                new clsHerramientas.clsParametros{NombreParametro="@IDdepartamento", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= IDDepartamento},
-                new clsHerramientas.clsParametros{NombreParametro="@IDpuesto", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= idpuesto},
-                new clsHerramientas.clsParametros{NombreParametro="@Empresa", TipoParametro=System.Data.SqlDbType.Int, ValorParametro= empresa}
-            };
-          
-            if(accion == "insert")
-            {
-                parametros.Add(new clsHerramientas.clsParametros { NombreParametro = "@foto", TipoParametro = System.Data.SqlDbType.VarChar, ValorParametro = foto });
-            }
-
-            var resultado = clsHerramientas.TProcedimientoAlmacenado("Master_Empleado", parametros);
-            ScriptManager.RegisterStartupScript(this, GetType(), "MostrarAlerta", "alert('" + resultado.Item2 + "');", true);
-
-        }*/
+      
 
             protected void txtNoEmpleado_TextChanged(object sender, EventArgs e)
         {
-            if(manejoEmpleados.BuscarNoEmpleado(txtNoEmpleado.Text))
+            if(ManejoEmpleados.BuscarNoEmpleado(txtNoEmpleado.Text))
             {
                 lblYaexiste.Visible = true;
                 lblYaexiste.Text = "<i class=\"fa-regular fa-circle-xmark\"></i> Este numero ya esta asignado";
@@ -307,7 +219,7 @@ namespace moduloRRHH.empleados
             try
             {
                
-                Dictionary<string, string> Info = manejoEmpleados.ObtenerInformacion(id,"details");
+                Dictionary<string, string> Info = ManejoEmpleados.ObtenerInformacion(id,"details");
                 imgEmpl.BackImageUrl = Info["foto"];
                 txtNombre.Text = Info["Nombre"];
                 txtApellidoP.Text = Info["Apellido_P"];
@@ -330,6 +242,20 @@ namespace moduloRRHH.empleados
                 LLenarComboPuesto(Info["ID_Departamento"]);
                 ddPuesto.Items.FindByValue(Info["ID_puesto"]).Selected = true;
 
+                //Obtencion del salario del empleado
+                DataTable dtSalario = CapaSalarios.ObtenerSalario(Info["no_empleado"]);
+                if (dtSalario.Rows.Count > 0)
+                {
+                    txtSalarioActual.Text = dtSalario.Rows[0]["salario_actual"].ToString();                    
+
+                    //Como el textbox esta en modo password, no sep puede llenar con .Text, en cambio se establece la propiedad value del input
+                    txtSalario.Attributes["value"] = dtSalario.Rows[0]["salario_actual"].ToString();
+                }
+                else
+                {
+                    txtSalario.TextMode = TextBoxMode.SingleLine;
+                    txtSalario.Text = "Sin asignar";
+                }
                 //Label
                 if (Info["Status"] == "True")
                 {
@@ -357,7 +283,7 @@ namespace moduloRRHH.empleados
         protected void btnSubirImagen_Click(object sender, EventArgs e)
         {
             
-            var foto = manejoEmpleados.CambiarFoto(Request["id"], ddEmpresa.SelectedItem.Text,txtNoEmpleado.Text.Trim()+" "+ txtNombre.Text.Trim()+" "+txtApellidoP.Text.Trim()+" "+txtApellidoM.Text.Trim());
+            var foto = ManejoEmpleados.CambiarFoto(Request["id"], ddEmpresa.SelectedItem.Text,txtNoEmpleado.Text.Trim()+" "+ txtNombre.Text.Trim()+" "+txtApellidoP.Text.Trim()+" "+txtApellidoM.Text.Trim());
             if(foto.Item2 != "")
             {
                 imgEmpl.BackImageUrl = foto.Item2.Replace('\\', '/');
@@ -368,6 +294,31 @@ namespace moduloRRHH.empleados
                 ScriptManager.RegisterStartupScript(this, GetType(), "MostrarAlerta", "alert('" + foto.Item1 + "');", true);
             }
 
+        }
+
+        protected void btnAceptarModal_Click(object sender, EventArgs e)
+        {
+                if (txtNoEmpleado.Text != "")
+                {
+                    MetodosSalarios salarios = new MetodosSalarios(txtNoEmpleado.Text, Convert.ToDecimal(00.0), Convert.ToDecimal(txtSalarioNuevo.Text));
+                //ScriptManager.RegisterStartupScript(this, GetType(), "MostrarAlerta", "alert('" + salarios.RegistrarSalario() + "');", true);
+                lblRes.Text = salarios.RegistrarSalario();
+                DataTable dtSalario = CapaSalarios.ObtenerSalario(txtNoEmpleado.Text);
+                txtSalarioActual.Text = dtSalario.Rows[0]["salario_actual"].ToString();
+                txtSalarioNuevo.Text = "";
+            }
+                else
+                {
+                    lblRes.ForeColor = Color.FromArgb(204, 0, 0);
+                    lblRes.Text = "*Debe ingresar un numero de empleado para poder continuar";
+                }
+        }
+
+        protected void btnShowModalAJAX_Click(object sender, EventArgs e)
+        {
+            ModalPopupExtender1.Show();
+            lblRes.Text = "";
+            
         }
     }
 }

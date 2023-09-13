@@ -105,6 +105,15 @@ namespace moduloRRHH
         protected global::System.Web.UI.WebControls.TextBox txtFechaIngeso;
 
         /// <summary>
+        /// Control UpdatePanel1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+
+        /// <summary>
         /// Control lblSalario.
         /// </summary>
         /// <remarks>
@@ -121,6 +130,15 @@ namespace moduloRRHH
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtSalario;
+
+        /// <summary>
+        /// Control chSHowHide.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chSHowHide;
 
         /// <summary>
         /// Control lblRFC.

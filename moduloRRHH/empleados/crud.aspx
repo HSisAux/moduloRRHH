@@ -11,7 +11,7 @@
                 <label id="lblfoto" class="form-label">Seleccionar foto</label>
                 <asp:Panel ID="imgEmpl" runat="server" BackImageUrl="~/Assets/img/default-user.png" Width="134px" Height="134px" CssClass="foto-empleado edicion mb-3"></asp:Panel>
                 <asp:FileUpload ID="FUfoto" onchange="ShowPreview(this);" accept=".png, .jpg, .jpeg" CssClass="form-control" runat="server" />
-                <asp:LinkButton ID="btnSubirImagen" Visible="false" CssClass="btn btn-primary btn-sm" runat="server" CausesValidation="false" OnClick="btnSubirImagen_Click" >Cambiar foto <i class="fa-solid fa-upload"></i></asp:LinkButton>
+                <asp:LinkButton ID="btnSubirImagen" Visible="false" CssClass="btn btn-primary btn-sm" runat="server" CausesValidation="false" OnClick="btnSubirImagen_Click">Cambiar foto <i class="fa-solid fa-upload"></i></asp:LinkButton>
             </div>
         </section>
 
@@ -72,7 +72,7 @@
                             <asp:TextBox runat="server" CssClass="form-control" ID="txtCalle" />
                         </section>
                     </div>
-                    <div class="row">                        
+                    <div class="row">
                         <section class="col-md">
                             <label for="txtCiudad" class="form-label">Ciudad:</label>
                             <asp:TextBox runat="server" CssClass="form-control" ID="txtCiudad" />
@@ -159,8 +159,12 @@
                         <section class="row">
                             <label for="txtSalario" class="form-label"><i class="fa-solid fa-circle-info me-1" title="Puede registrar el salario del trabajador o hacerlo mas tarde en la pagina de salarios"></i>Salario:</label>
                             <div class="input-group mb-3 w-50">
-                                <button class="btn btn-outline-success" title="editar salario" type="button" data-bs-toggle="modal" data-bs-target="#SalarioModal" id="btnSalario"><i class="fa-solid fa-dollar-sign"></i></button>
+                                <asp:LinkButton ID="btnShowModalAJAX" OnClick="btnShowModalAJAX_Click" CssClass="btn btn-outline-success" ToolTip="Editar salario" runat="server"><i class="fa-solid fa-dollar-sign"></i></asp:LinkButton>
+                                <%--<asp:Button runat="server" CausesValidation="false" Text=":D" />--%>
+                                <%--<button class="btn btn-outline-success" title="editar salario" type="button" data-bs-toggle="modal" data-bs-target="#SalarioModal" id="btnSalario"><i class="fa-solid fa-dollar-sign"></i></button>--%>
                                 <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true" TextMode="Password" ID="txtSalario" />
+
+
                             </div>
                         </section>
                         <section class="row mt">
@@ -196,6 +200,54 @@
         </section>
 
     </div>
+
+    <!-- modal ajax -->
+    <asp:Button ID="btnTargetAjax" runat="server" CssClass="visually-hidden" Text="show" />
+
+    <asp:Panel ID="PnlModal" CssClass="modalPopup" Style="display: none; color: black" runat="server">
+        <asp:UpdatePanel ID="upModal" runat="server">
+            <ContentTemplate>
+                <div class="modalContent">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Salario</h5>
+                            <button type="button" class="btn-close" onclick="return hideModal();"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-auto d-flex mt-1">Salario actual</div>
+                                <div class="col-auto">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text bg-primary text-white" id="spanSalario"><i class="fa-solid fa-dollar-sign"></i></span>
+                                        <asp:TextBox runat="server" CssClass="form-control" ID="txtSalarioActual" ReadOnly="true" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-auto mt-1">Salario nuevo</div>
+                                <div class="col-auto">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text bg-success text-white" id="spanSalarioN"><i class="fa-solid fa-dollar-sign"></i></span>
+                                        <asp:TextBox runat="server" CssClass="form-control" pattern="^[0-9]+\.[0-9]{2}$" ID="txtSalarioNuevo" ValidationGroup="salario" placeholder="Ingrese un monto" />
+                                        <asp:RequiredFieldValidator ID="rfvSalario" Display="Dynamic" runat="server" ControlToValidate="txtSalarioNuevo" ValidationGroup="salario" ForeColor="#cc0000" ErrorMessage="*Ingrese una cantidad"></asp:RequiredFieldValidator>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <asp:Label ID="lblRes" ForeColor="#008800" runat="server" Text=""></asp:Label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <asp:Button ID="btnAceptarModal" ClientIDMode="Static" ValidationGroup="salario" CssClass="btn btn-sm btn-success" OnClick="btnAceptarModal_Click" runat="server" Text="Registrar" />
+                            <asp:Button ID="btnCloseModal" class="btn btn-sm btn-secondary" OnClientClick="return hideModal();" runat="server" Text="Cancelar" />
+                        </div>
+                    </div>
+                </div>
+            </ContentTemplate>
+        </asp:UpdatePanel>
+    </asp:Panel>
+    <cc1:ModalPopupExtender ID="ModalPopupExtender1" runat="server" BackgroundCssClass="modalBackground" PopupControlID="PnlModal" TargetControlID="btnTargetAjax"></cc1:ModalPopupExtender>
     <!-- Modal -->
     <div class="modal fade" id="SalarioModal" tabindex="-1" aria-labelledby="SalarioModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -205,7 +257,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
+                    <%--     <div class="row">
                         <div class="col-auto d-flex mt-1">Salario actual</div>
                         <div class="col-auto">
                             <div class="input-group mb-3">
@@ -222,11 +274,11 @@
                                 <asp:TextBox runat="server" CssClass="form-control" ID="txtSalarioNuevo" TextMode="Number" />
                             </div>
                         </div>
-                    </div>
+                    </div> --%>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancelar</button>
                     <button type="button" class="btn btn-success btn-sm">Guardar cambios</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancelar</button>
                 </div>
             </div>
         </div>
@@ -244,6 +296,11 @@
                 }
                 ImageDir.readAsDataURL(input.files[0]);
             }
+        }
+
+        function hideModal() {
+            $find('<%= ModalPopupExtender1.ClientID %>').hide();
+            return false;
         }
     </script>
 

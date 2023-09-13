@@ -52,6 +52,7 @@ namespace moduloRRHH.compania
 
         protected void btnEditarDpto_Click(object sender, EventArgs e)
         {
+
             int rowIndex = ((GridViewRow)((sender as Control)).NamingContainer).RowIndex;
 
             btnRegistrarDpto.Visible = false;
@@ -70,6 +71,9 @@ namespace moduloRRHH.compania
 
         protected void btnBorrarDpto_Click(object sender, EventArgs e)
         {
+            pAlertaModal.Visible = true;
+            txtPD.Text = "";
+
             lblTabla.Text = "departamento";
             btnCloseModal.Text = "Cancelar";
             btnAceptarModal.Visible = true;
@@ -236,12 +240,17 @@ namespace moduloRRHH.compania
 
         protected void btnBorrarPuesto_Click(object sender, EventArgs e)
         {
+            pAlertaModal.Visible = true;
+            txtPD.Text = "";
+
             lblTabla.Text = "puesto";
             btnCloseModal.Text = "Cancelar";
             btnAceptarModal.Visible = true;
             lblHeader.Text = "<i class=\"fa-solid fa-triangle-exclamation\"></i> Advertencia";
             int rowIndex = ((GridViewRow)((sender as Control)).NamingContainer).RowIndex;
-            lblDocDel.Text = "Esta por eliminar el puesto <br><strong>" + gvPuestos.Rows[rowIndex].Cells[1].Text + "</strong><br>¿Desea continuar?";
+            lblDocDel.Text = "Esta por eliminar el siguiente puesto";
+            lblDptoPuesto.Text = gvPuestos.Rows[rowIndex].Cells[1].Text;
+            lblTipo.Text = "puesto";
             lblData.Text = gvPuestos.Rows[rowIndex].Cells[0].Text;
             ModalPopupExtender1.Show();
 
@@ -404,77 +413,85 @@ namespace moduloRRHH.compania
         protected void btnAceptarModal_Click(object sender, EventArgs e)
         {
             DataTable dtTest;
-            if(lblTabla.Text == "departamento")
+            if (lblDptoPuesto.Text == txtPD.Text)
             {
-                dtTest = clsHerramientas.SQLConsulta("SELECT * FROM Empleado WHERE ID_Departamento='" + lblData.Text + "'");
-                if (dtTest.Rows.Count > 0)
-                {
+                pAlertaModal.Visible = false;
 
-                    lblHeader.Text = "<i class=\"fa-solid fa-triangle-exclamation\"></i> Advertencia";
-                    lblDocDel.Text = "Tiene empleados asignados a este departamento";
-                    btnCloseModal.Text = "Ok";
-                    btnAceptarModal.Visible = false;
-
-                    BindDataDpto("");
-                    BindDataPuesto("");
-                    llenarCombo();
-                }
-                else
+                if (lblTabla.Text == "departamento")
                 {
-                    List<clsHerramientas.clsParametros> parametros = new List<clsHerramientas.clsParametros>()
+                    dtTest = clsHerramientas.SQLConsulta("SELECT * FROM Empleado WHERE ID_Departamento='" + lblData.Text + "'");
+                    if (dtTest.Rows.Count > 0)
+                    {
+
+                        lblHeader.Text = "<i class=\"fa-solid fa-triangle-exclamation\"></i> Advertencia";
+                        lblDocDel.Text = "Tiene empleados asignados a este departamento, ";
+                        btnCloseModal.Text = "Ok";
+                        btnAceptarModal.Visible = false;
+
+                        
+                        BindDataDpto("");
+                        BindDataPuesto("");
+                        llenarCombo();
+                    }
+                    else
+                    {
+
+                        List<clsHerramientas.clsParametros> parametros = new List<clsHerramientas.clsParametros>()
                     {
                         new clsHerramientas.clsParametros{NombreParametro="@tabla", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro="departamento"},
                         new clsHerramientas.clsParametros{NombreParametro="@accion", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro="delete"},
                         new clsHerramientas.clsParametros{NombreParametro="@ID_Departamento", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro= lblData.Text}
                     };
 
-                    var tupla = clsHerramientas.TProcedimientoAlmacenado("Master_Division", parametros);
-                    lblHeader.Text = "<i class=\"fa-solid fa-circle-info\"></i> Informacion";
-                    lblDocDel.Text = tupla.Item2;
-                    btnCloseModal.Text = "Ok";
-                    btnAceptarModal.Visible = false;
+                        var tupla = clsHerramientas.TProcedimientoAlmacenado("Master_Division", parametros);
+                        lblHeader.Text = "<i class=\"fa-solid fa-circle-info\"></i> Informacion";
+                        lblDocDel.Text = tupla.Item2;
+                        btnCloseModal.Text = "Ok";
+                        btnAceptarModal.Visible = false;
 
-                    BindDataDpto("");
-                    BindDataPuesto("");
-                    llenarCombo();
+                        BindDataDpto("");
+                        BindDataPuesto("");
+                        llenarCombo();
+
+                    }
+
                 }
-
-            }
-            else if (lblTabla.Text == "puesto")
-            {
-                dtTest = clsHerramientas.SQLConsulta("SELECT * FROM Empleado WHERE ID_puesto='" + lblData.Text + "'");
-                if (dtTest.Rows.Count > 0)
+                else if (lblTabla.Text == "puesto")
                 {
+                    dtTest = clsHerramientas.SQLConsulta("SELECT * FROM Empleado WHERE ID_puesto='" + lblData.Text + "'");
+                    if (dtTest.Rows.Count > 0)
+                    {
 
-                    lblHeader.Text = "<i class=\"fa-solid fa-triangle-exclamation\"></i> Advertencia";
-                    lblDocDel.Text = "Tiene empleados con este puesto asignado";
-                    btnCloseModal.Text = "Ok";
-                    btnAceptarModal.Visible = false;
+                        lblHeader.Text = "<i class=\"fa-solid fa-triangle-exclamation\"></i> Advertencia";
+                        lblDocDel.Text = "Tiene empleados con este puesto asignado";
+                        btnCloseModal.Text = "Ok";
+                        btnAceptarModal.Visible = false;
 
-                    BindDataDpto("");
-                    BindDataPuesto("");
-                    llenarCombo();
-                }
-                else
-                {
-                   
-                    List<clsHerramientas.clsParametros> parametros = new List<clsHerramientas.clsParametros>()
+                        BindDataDpto("");
+                        BindDataPuesto("");
+                        llenarCombo();
+                    }
+                    else
+                    {
+
+                        List<clsHerramientas.clsParametros> parametros = new List<clsHerramientas.clsParametros>()
                     {
                         new clsHerramientas.clsParametros{NombreParametro="@tabla", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro="puesto"},
                         new clsHerramientas.clsParametros{NombreParametro="@accion", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro="delete"},
                         new clsHerramientas.clsParametros{NombreParametro="@ID_puesto", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro= lblData.Text}
                     };
 
-                    var tupla = clsHerramientas.TProcedimientoAlmacenado("Master_Division", parametros);
-                    lblPuestoAlert.Text = tupla.Item2;
-                    BindDataPuesto("");
+                        var tupla = clsHerramientas.TProcedimientoAlmacenado("Master_Division", parametros);
+                        lblPuestoAlert.Text = tupla.Item2;
+                        BindDataPuesto("");
 
-                    lblHeader.Text = "<i class=\"fa-solid fa-circle-info\"></i> Informacion";
-                    lblDocDel.Text = tupla.Item2 +" 😞";
-                    btnCloseModal.Text = "Ok";
-                    btnAceptarModal.Visible = false;
-                }
+                        lblHeader.Text = "<i class=\"fa-solid fa-circle-info\"></i> Informacion";
+                        lblDocDel.Text = tupla.Item2 + " 😞";
+                        btnCloseModal.Text = "Ok";
+                        btnAceptarModal.Visible = false;
+                    }
 
+                } 
             }
         }
     }

@@ -30,8 +30,13 @@
                 </div>
 
                 <div class="col-md">
-                    <asp:Label ID="lblSalario" runat="server" Text="Salario" CssClass="form-label"></asp:Label>
-                    <asp:TextBox runat="server" ReadOnly="true" ID="txtSalario" TextMode="Password" CssClass="form-control" />
+                    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                        <ContentTemplate>
+                            <asp:Label ID="lblSalario" runat="server" Text="Salario" CssClass="form-label"></asp:Label>
+                            <asp:TextBox runat="server" ReadOnly="true" ID="txtSalario" TextMode="Password" CssClass="form-control" />
+                            <asp:CheckBox ID="chSHowHide" Text="Mostrar" AutoPostBack="true" OnCheckedChanged="chSHowHide_CheckedChanged" runat="server" />
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
                 </div>
             </div>
             <hr />
@@ -110,7 +115,7 @@
                 OnRowDataBound="gvTest_RowDataBound" AutoGenerateColumns="false" Width="100%">
                 <Columns>
                     <asp:BoundField DataField="Documento" HeaderText="Documento" SortExpression="Documento"></asp:BoundField>
-                    <asp:CheckBoxField DataField="requerido" HeaderText="Requerido" ReadOnly="True" ></asp:CheckBoxField>
+                    <asp:CheckBoxField DataField="requerido" HeaderText="Requerido" ReadOnly="True"></asp:CheckBoxField>
                     <asp:BoundField DataField="fecha_registro" HeaderText="Fecha de registro"></asp:BoundField>
                     <asp:BoundField DataField="Vencimiento" HeaderText="Vencimiento"></asp:BoundField>
                     <asp:BoundField DataField="detalles" HeaderText="Estado"></asp:BoundField>
