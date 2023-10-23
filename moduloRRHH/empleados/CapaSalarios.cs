@@ -9,19 +9,18 @@ namespace moduloRRHH.empleados
 {
     public class CapaSalarios
     {
-        private string _NoEmpleado;
+        private readonly string _NoEmpleado;
         private decimal _SalarioAnterior;
-        private decimal _SalarioActual;
+        private readonly decimal _SalarioActual;
 
         List<clsHerramientas.clsParametros> parametros;
-        private DataTable dt;
 
         //Numero de empleado, salario anterior, salarios actual, fecha
         public CapaSalarios () { }
         public CapaSalarios(string NoEmpleado, decimal SalarioAnterior, decimal SalarioActual )
         {
             this._NoEmpleado = NoEmpleado;
-            this._SalarioActual = SalarioAnterior;
+            this._SalarioActual = SalarioActual;
             this._SalarioAnterior = SalarioAnterior;
         }
 

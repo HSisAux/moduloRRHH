@@ -1,10 +1,11 @@
-﻿<%@ Page Title="division" Language="C#" MasterPageFile="~/template.Master" AutoEventWireup="true" CodeBehind="division.aspx.cs" MetaDescription="Muestra la seccion de departamentos y de puestos" Inherits="moduloRRHH.compania.division" %>
+﻿
+<%@ Page Title="division" Language="C#" MasterPageFile="~/template.Master" AutoEventWireup="true" CodeBehind="division.aspx.cs" MetaDescription="Muestra la seccion de departamentos y de puestos" Inherits="moduloRRHH.compania.division" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script>
-         function hideModal() {
+        function hideModal() {
             $find('<%= ModalPopupExtender1.ClientID %>').hide();
             return false;
         }
@@ -223,7 +224,7 @@
                             <div class="col">
                                 <label for="txtPuestosID" class="form-label">ID:</label>
                                 <asp:TextBox runat="server" CssClass="form-control" ValidationGroup="valPuesto" ID="txtPuestosID" />
-                                <asp:RequiredFieldValidator ID="RequiredFieldValidator3" Display="Dynamic" ControlToValidate="txtPuestosID" ValidationGroup="valPuesto"  runat="server" ForeColor="Red" ErrorMessage="*Ingrese un ID"></asp:RequiredFieldValidator>
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator3" Display="Dynamic" ControlToValidate="txtPuestosID" ValidationGroup="valPuesto" runat="server" ForeColor="Red" ErrorMessage="*Ingrese un ID"></asp:RequiredFieldValidator>
                             </div>
                         </div>
                         <div class="row">
@@ -238,8 +239,8 @@
                         <div class="row">
                             <div class="col">
                                 <label for="txtPuestosDescripcion" class="form-label">Puesto:</label>
-                                <asp:TextBox runat="server" CssClass="form-control" ValidationGroup="valPuesto"  ID="txtPuestosDescripcion" />
-                                <asp:RequiredFieldValidator ID="RequiredFieldValidator4" Display="Dynamic" ControlToValidate="txtPuestosDescripcion" ValidationGroup="valPuesto"  ForeColor="Red" runat="server" ErrorMessage="*Ingrese el puesto"></asp:RequiredFieldValidator>
+                                <asp:TextBox runat="server" CssClass="form-control" ValidationGroup="valPuesto" ID="txtPuestosDescripcion" />
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator4" Display="Dynamic" ControlToValidate="txtPuestosDescripcion" ValidationGroup="valPuesto" ForeColor="Red" runat="server" ErrorMessage="*Ingrese el puesto"></asp:RequiredFieldValidator>
 
                             </div>
                         </div>
@@ -342,7 +343,7 @@
 
     </div>
     <!--///////////////////////////////////////////////// MODAL ///////////////////////////////////////////////// -->
-     <asp:Button ID="btnShowModal" runat="server" Text="mostrar modal" CssClass="visually-hidden"  />
+    <asp:Button ID="btnShowModal" runat="server" Text="mostrar modal" CssClass="visually-hidden" />
     <asp:Panel ID="pnlModal" CssClass="modalPopup" Style="display: none; color: black;" runat="server">
         <asp:UpdatePanel ID="UpdatePanel7" runat="server">
             <ContentTemplate>
@@ -355,21 +356,26 @@
                             <button type="button" class="btn-close" onclick="return hideModal();"></button>
                         </div>
                         <div class="modal-body">
-                            <asp:Label ID="lblTabla" hidden runat="server" Text="Label"></asp:Label>
-                            <asp:Label ID="lblData" hidden runat="server" Text="Label"></asp:Label>
-                            <asp:Label ID="lblDocDel" runat="server"  Text="text"></asp:Label><br />
-                            <%--<asp:Label ID="lblDptoPuesto" ClientIDMode="Static" runat="server" Font-Bold="true" Text="Label"></asp:Label>--%>
+                            <asp:HiddenField ID="NombreDP" runat="server" />
+                            <asp:Label ID="lblTabla" CssClass="visually-hidden" runat="server" Text="Label"></asp:Label>
+                            <asp:Label ID="lblData" CssClass="visually-hidden" runat="server" Text="Label"></asp:Label>
+                            <asp:Label ID="lblDocDel" runat="server" Text="text"></asp:Label><br />
+
                             <asp:Panel ID="pAlertaModal" runat="server">
-                            <asp:TextBox ID="lblDptoPuesto" CssClass="form-control disabled" ReadOnly="true" runat="server"></asp:TextBox>
-                            <div>Ingrese el nombre del <asp:Label ID="lblTipo" runat="server" Text="Label"></asp:Label> para continuar</div>
-                            <asp:TextBox ID="txtPD" ClientIDMode="Static" CssClass="form-control" ValidationGroup="borrar" runat="server"></asp:TextBox>
-                            <asp:CompareValidator ID="CompareValidator1" ControlToValidate="txtPD" Display="Dynamic" ValidationGroup="borrar" ControlToCompare="lblDptoPuesto" runat="server" ErrorMessage="*No coincide"></asp:CompareValidator>
-                                </asp:Panel>
-                            <%--<label id="txtMensaje" class="text-danger"></label>--%>
+                                <asp:TextBox ID="lblDptoPuesto" CssClass="form-control disabled" ReadOnly="true" runat="server"></asp:TextBox>
+                                <div>Ingrese el nombre del
+                                    <asp:Label ID="lblTipo" runat="server" Text="Label"></asp:Label>
+                                    para continuar</div>
+                                <asp:TextBox ID="txtPD" ClientIDMode="Static" CssClass="form-control" ValidationGroup="borrar" runat="server"></asp:TextBox>
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ControlToValidate="txtPD" Display="Dynamic" ValidationGroup="borrar" ForeColor="#cc0000" ErrorMessage="*Ingrese el nombre"></asp:RequiredFieldValidator>
+                                <asp:CompareValidator ID="CompareValidator1" ControlToValidate="txtPD" Display="Dynamic" ValidationGroup="borrar" ControlToCompare="lblDptoPuesto" runat="server" ForeColor="#cc0000" ErrorMessage="*Los nombres no coinciden"></asp:CompareValidator>
+                            </asp:Panel>
+
                         </div>
                         <div class="modal-footer">
-                            <asp:Button ID="btnAceptarModal" ClientIDMode="Static" CausesValidation="false"  CssClass="btn btn-sm btn-primary" OnClick="btnAceptarModal_Click" runat="server" Text="Si" />
-                            <asp:Button ID="btnCloseModal"  class="btn btn-sm btn-secondary" OnClientClick="return hideModal();" runat="server" Text="Cancelar" />
+                            <asp:Button ID="btnBorrarModal" CssClass="btn btn-sm btn-danger" ValidationGroup="borrar" runat="server" Text="Eliminar" Visible="false" OnClick="btnBorrarModal_Click" />
+                            <asp:Button ID="btnAceptarModal" ClientIDMode="Static" CausesValidation="false" CssClass="btn btn-sm btn-primary" OnClick="btnAceptarModal_Click" runat="server" Text="Si" />
+                            <asp:Button ID="btnCloseModal" class="btn btn-sm btn-secondary" OnClick="btnCloseModal_Click" runat="server" Text="Cancelar" />
                         </div>
                     </div>
                 </div>
@@ -378,7 +384,7 @@
     </asp:Panel>
 
     <cc1:ModalPopupExtender ID="ModalPopupExtender1" BackgroundCssClass="modalBackground" PopupControlID="pnlModal" runat="server" TargetControlID="btnShowModal">
-       <%-- <Animations>              
+        <%-- <Animations>              
                 <OnShown><Fadein Duration="0.1" /></OnShown>
                 <OnHiding><Fadeout Duration="0.1" /></OnHiding>
         </Animations>--%>

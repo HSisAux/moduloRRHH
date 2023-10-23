@@ -39,7 +39,7 @@
                                     <asp:ListItem Text="cada 6 meses" Value="2" />
                                     <asp:ListItem Text="cada 3 meses" Value="3" />
                                     <asp:ListItem Text="cada 1 año" Value="4" />
-                                    <asp:ListItem Text="por fecha" Value="1" />
+                                    <asp:ListItem Text="Por fecha" Value="1" />
                                     <asp:ListItem Text="No expira" Value="0" />
                                 </asp:DropDownList>
                             </div>

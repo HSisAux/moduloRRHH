@@ -14,27 +14,27 @@ namespace moduloRRHH.empleados
 {
     public class CapaManejoEmpleados
     {
-        private string NoEmpleado;
-        private string Nombre;
-        private string apellidoPaterno;
-        private string apellidoMaterno;
-        private bool status;
-        private string rfc;
-        private string nss;
-        private string FechaNac;
-        private string FechaIngreso;
-        private string Calle;
-        private string colonia;
-        private string cp;
-        private string estado;
-        private string ciudad;
-        private string telefono;
-        private string correo;
-        private string TelEmergencia;
-        private string ContactoEmergencia;
-        private string IDDepartamento;
-        private string idpuesto;
-        private string empresa;
+        private readonly string NoEmpleado;
+        private readonly string Nombre;
+        private readonly string apellidoPaterno;
+        private readonly string apellidoMaterno;
+        private readonly bool status;
+        private readonly string rfc;
+        private readonly string nss;
+        private readonly string FechaNac;
+        private readonly string FechaIngreso;
+        private readonly string Calle;
+        private readonly string colonia;
+        private readonly string cp;
+        private readonly string estado;
+        private readonly string ciudad;
+        private readonly string telefono;
+        private readonly string correo;
+        private readonly string TelEmergencia;
+        private readonly string ContactoEmergencia;
+        private readonly string IDDepartamento;
+        private readonly string idpuesto;
+        private readonly string empresa;
         private string foto;
 
         HttpFileCollection files = HttpContext.Current.Request.Files;
@@ -154,8 +154,7 @@ namespace moduloRRHH.empleados
                     try
                     {
                         string link = "\\Archivos\\" + empresa + "\\" + nombre;
-
-                        if (!Directory.Exists(HttpContext.Current.Request.MapPath(link)))
+                            if (!Directory.Exists(HttpContext.Current.Request.MapPath(link)))
                         {
                             DirectoryInfo di = System.IO.Directory.CreateDirectory(HttpContext.Current.Server.MapPath(link));
                         }
@@ -294,5 +293,17 @@ namespace moduloRRHH.empleados
 
             return clsHerramientas.ProcedimientoAlmacenado("Master_Empleado", parametros);
         }
+
+
+        public DataTable TablaDocumentos(string id)
+        {
+            List<clsHerramientas.clsParametros> parametros = new List<clsHerramientas.clsParametros>()
+            {
+                new clsHerramientas.clsParametros{NombreParametro = "@accion", TipoParametro = SqlDbType.VarChar, ValorParametro="prueba"},
+                new clsHerramientas.clsParametros{NombreParametro = "@no_empleado", TipoParametro = SqlDbType.VarChar, ValorParametro=id},
+            };
+            return clsHerramientas.ProcedimientoAlmacenado("Master_Empleado", parametros);
+        }
+
     }
 }

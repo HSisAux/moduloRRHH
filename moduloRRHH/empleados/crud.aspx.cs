@@ -238,9 +238,18 @@ namespace moduloRRHH.empleados
                 txtNoEmpleado.Text = Info["no_empleado"];
                 txtFechaIngreso.Text = Convert.ToDateTime(Info["Fecha_ingreso"]).ToString("yyyy-MM-dd");
                 ddEmpresa.Items.FindByValue(Info["Empresa"]).Selected = true;
-                ddDepartamento.Items.FindByValue(Info["ID_Departamento"]).Selected = true;
-                LLenarComboPuesto(Info["ID_Departamento"]);
-                ddPuesto.Items.FindByValue(Info["ID_puesto"]).Selected = true;
+
+                if (Info["ID_Departamento"] != "gend")
+                {
+                    ddDepartamento.Items.FindByValue(Info["ID_Departamento"]).Selected = true;
+                    LLenarComboPuesto(Info["ID_Departamento"]);
+                    if (Info["ID_puesto"] != "genp")
+                    {
+                        ddPuesto.Items.FindByValue(Info["ID_puesto"]).Selected = true;
+
+                    }
+                }
+                
 
                 //Obtencion del salario del empleado
                 DataTable dtSalario = CapaSalarios.ObtenerSalario(Info["no_empleado"]);

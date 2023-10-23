@@ -429,6 +429,15 @@ namespace moduloRRHH.compania
         protected global::System.Web.UI.WebControls.Label lblHeader;
 
         /// <summary>
+        /// Control NombreDP.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField NombreDP;
+
+        /// <summary>
         /// Control lblTabla.
         /// </summary>
         /// <remarks>
@@ -492,6 +501,15 @@ namespace moduloRRHH.compania
         protected global::System.Web.UI.WebControls.TextBox txtPD;
 
         /// <summary>
+        /// Control RequiredFieldValidator6.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator6;
+
+        /// <summary>
         /// Control CompareValidator1.
         /// </summary>
         /// <remarks>
@@ -499,6 +517,15 @@ namespace moduloRRHH.compania
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CompareValidator CompareValidator1;
+
+        /// <summary>
+        /// Control btnBorrarModal.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnBorrarModal;
 
         /// <summary>
         /// Control btnAceptarModal.

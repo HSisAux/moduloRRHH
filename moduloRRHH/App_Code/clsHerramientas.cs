@@ -60,7 +60,7 @@ namespace moduloRRHH.App_Code
 
         public static string SQLEjecutar(string sqlCommand)
         {
-            string sqlResult = "";
+            string sqlResult;
             SqlConnection conn = new SqlConnection(strConexion);
             SqlCommand cmd = new SqlCommand(sqlCommand, conn);
 

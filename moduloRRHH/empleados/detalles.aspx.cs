@@ -1,4 +1,5 @@
-﻿using moduloRRHH.App_Code;
+﻿using Microsoft.SqlServer.Server;
+using moduloRRHH.App_Code;
 using moduloRRHH.empleados;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.DynamicData;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -20,7 +22,7 @@ namespace moduloRRHH
         {
             if (!IsPostBack)
             {
-                llenarTest();
+                Documentos();
                 ((Label)Master.FindControl("lblPaginaTitulo")).Text = "DETALLES DEL EMPLEADO";
                 if (Request["id"] != null )
                 {
@@ -36,9 +38,12 @@ namespace moduloRRHH
             {
                 case "Jamamadi":
                     imgEmpresa.ImageUrl = "../Assets/img/jamamadi.png";
+                    imgEmpresa.AlternateText = "Jamamadi";
                     break;
                 case "4 Matildes":
                     imgEmpresa.ImageUrl = "../Assets/img/4Matildes.png";
+                    imgEmpresa.AlternateText = "4 Matildes";
+
                     break;
             }
             imgEmpleado.ImageUrl = Info["foto"];
@@ -120,22 +125,15 @@ namespace moduloRRHH
                 imgEmpleado.Style.Add("filter", "grayscale(1)");
             }
         }
-
-        private void llenarTest()
+        public void Documentos()
         {
-            List<clsHerramientas.clsParametros> parametros = new List<clsHerramientas.clsParametros>()
-            {
-                new clsHerramientas.clsParametros{NombreParametro = "@accion", TipoParametro = SqlDbType.VarChar, ValorParametro="prueba"},
-                new clsHerramientas.clsParametros{NombreParametro = "@no_empleado", TipoParametro = SqlDbType.VarChar, ValorParametro=Request["id"]},
-            };
-            gvTest.DataSource = clsHerramientas.ProcedimientoAlmacenado("Master_Empleado", parametros);
-            gvTest.DataBind();
-            
+            gvTest.DataSource = manejoEmpleados.TablaDocumentos(Request["id"]);
+            gvTest.DataBind();            
         }
 
         protected void gvTest_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            string aux = "";
+            string aux;
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 aux = e.Row.Cells[4].Text;
@@ -154,6 +152,12 @@ namespace moduloRRHH
 
                 if (aux == "&nbsp;")
                 {
+
+                    LinkButton btnAceptar = e.Row.FindControl("btnAceptar") as LinkButton;
+                    btnAceptar.Visible = false;
+
+                    Panel panel = e.Row.FindControl("PanelOpciones") as Panel;
+                    panel.Visible = false;
                     if (!checkBox.Checked)
                     {
                         e.Row.Cells[4].Text = "<label class='estado pendiente'>opcional</label>";
@@ -161,14 +165,59 @@ namespace moduloRRHH
                     }
                     else
                     {
-                        e.Row.Cells[4].Text = "<label class='estado inactivo'>Sin entregar</label>";
+                        e.Row.Cells[4].Text = "<label class='estado pendiente'>Sin entregar</label>";
 
                     }
                 }
-                else if(aux == "activo")
+                else
                 {
-                    e.Row.Cells[4].Text = "<label class='estado'>Entregado</label>";
+                    switch (aux)
+                    {
+                        case "creado":
+                            e.Row.Cells[4].Text = "<label class='estado bg-white text-dark border border-success border-2'>Entregado</label>";
+                            break;
+                        case "aceptado":
+                            e.Row.Cells[4].Text = "<label class='estado'>Aprobado</label>";
+                            break;
+                        case "actualizado":
+                            e.Row.Cells[4].Text = "<label class='estado modificado'>Actualizado</label>";
+                            break;
+                        case "vencido":
+                            e.Row.Cells[4].Text = "<label class='estado inactivo fw-bold'>⚠ VENCIDO ⚠</label>";
+                            break;
+                        case "actulizar":
+                            e.Row.Cells[4].Text = "<label class='estado bg-white text-dark border border-warning border-2'><i class=\"fa-solid fa-arrows-rotate\"></i> Actualizar</label>";
+                            break;
+                    }
 
+                    if (e.Row.FindControl("btnAceptar") is LinkButton linkBtn && aux != "actualizado"  )
+                    {
+                        if(aux != "creado"){
+                        // Modifica el texto del LinkButton
+                        linkBtn.Text = "<i class=\"fa-solid fa-rotate\"></i> Actualizar";
+                        linkBtn.Attributes["data-action"] = "editar";
+                        }
+                        
+                    }
+                    if (e.Row.FindControl("btnSubir") is LinkButton linkButton)
+                    {
+                        // Modifica el texto del LinkButton según tu lógica
+                        linkButton.Text = "<i class=\"fa-solid fa-pencil\"></i>";
+                        linkButton.CssClass = "btn btn-sm btn-warning text-white";
+                        linkButton.Attributes["data-accion"] = "editar";
+                    }
+                    if (e.Row.Cells[3].Text !="sin expiracion")
+                    {
+                        DateTime vencimiento = DateTime.Parse(e.Row.Cells[3].Text);
+                        ManejoDocumentos.ComprobacionVencimiento(e.Row.Cells[7].Text, aux, vencimiento);
+                    }
+                    if (e.Row.FindControl("btnVer") is LinkButton lbtnVer)
+                    {
+                        // Modifica el texto del LinkButton según tu lógica
+                        lbtnVer.PostBackUrl = "~/empleados/visor.aspx?doc="+ e.Row.Cells[7].Text;
+
+
+                    }
                 }
             }
         }
@@ -184,6 +233,93 @@ namespace moduloRRHH
                 txtSalario.TextMode = TextBoxMode.Password;
 
             }
+        }
+
+        protected void SubirEditar_Click(object sender, EventArgs e)
+        {
+            int rowIndex = ((GridViewRow)((sender as Control)).NamingContainer).RowIndex;
+            hfDocumento.Value = gvTest.Rows[rowIndex].Cells[5].Text;
+            hfExpiracion.Value = gvTest.Rows[rowIndex].Cells[6].Text;
+            hfDocumentacionID.Value = gvTest.Rows[rowIndex].Cells[7].Text;
+
+            LinkButton linkButton = gvTest.Rows[rowIndex].FindControl("btnSubir") as LinkButton;
+            if (linkButton != null)
+            {
+                hfAccion.Value = linkButton.Attributes["data-accion"];
+            }
+            if(gvTest.Rows[rowIndex].Cells[6].Text == "1")
+            {
+                panelFecha.Visible = true;
+            }
+            else
+            {
+                panelFecha.Visible = false;
+            }
+            ModalPopupExtender1.Show();
+
+        }
+
+        protected void LinkButton2_Click(object sender, EventArgs e)
+        {
+            //docid 5, nocontrol
+            int rowIndex = ((GridViewRow)((sender as Control)).NamingContainer).RowIndex;
+            DataTable dt = clsHerramientas.SQLConsulta("SELECT Archivo FROM Documentacion WHERE no_empleado='"+txtNoEmpleado.Text.Trim()+"' AND Documentos_ID='"+ gvTest.Rows[rowIndex].Cells[5].Text + "'");
+            if(dt.Rows.Count > 0)
+            {
+                ScriptManager.RegisterStartupScript(this, GetType(), "MostrarAlerta", "Imprimir('" + dt.Rows[0]["Archivo"].ToString().Replace('\\', '/') + "');", true);
+            }
+        }
+
+        protected void btnAceptar_Click(object sender, EventArgs e)
+        {
+            string res = "";
+            LinkButton btn = (LinkButton)sender;
+            int rowIndex = ((GridViewRow)((sender as Control)).NamingContainer).RowIndex;
+            if (btn.Attributes["data-action"] == "aceptar")
+            {
+                 res = ManejoDocumentos.AceptarDoc(gvTest.Rows[rowIndex].Cells[7].Text, "014", txtNoEmpleado.Text,"aceptado");
+                if (res == "aceptado")
+                {
+                    Documentos();
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(this, GetType(), "MostrarAlerta", "Imprimir('" + res + "');", true);
+                }
+            }
+            else if (btn.Attributes["data-action"] == "editar")
+            {
+                 res = ManejoDocumentos.AceptarDoc(gvTest.Rows[rowIndex].Cells[7].Text, "014", txtNoEmpleado.Text, "actulizar");
+                if (res == "actulizar")
+                {
+                    Documentos();
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(this, GetType(), "MostrarAlerta", "Imprimir('" + res + "');", true);
+                }
+            }
+        }
+
+        public void Historial(string archivo)
+        {
+            //Obtengo el historial por el id de documnetacion.
+            gvHistory.DataSource = ManejoDocumentos.ObtenerHistorial(archivo);
+            gvHistory.DataBind();
+        }
+
+        protected void btnHistorial_Click(object sender, EventArgs e)
+        {
+            int rowIndex = ((GridViewRow)((sender as Control)).NamingContainer).RowIndex;
+            //Obtengo el nombre del documento
+            lblDocHistorial.Text = "Historial de "+ gvTest.Rows[rowIndex].Cells[0].Text;
+
+            //Obtengo el historial con el dcoumentoid
+            Historial(gvTest.Rows[rowIndex].Cells[7].Text);
+
+            //Muestro el modal
+            ModalHistorial.Show();
+
         }
     }
 }

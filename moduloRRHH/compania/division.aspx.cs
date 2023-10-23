@@ -1,22 +1,18 @@
 ﻿using moduloRRHH.App_Code;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
-using System.Data.SqlClient;
 using System.Drawing;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Web;
-using System.Web.Services.Description;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Xml;
 
 namespace moduloRRHH.compania
 {
     public partial class division : System.Web.UI.Page
     {
+        MetodosDepartamentos Departamentos;
+        MetodosPuestos Puestos;
+        List<ListaEmpleados> _AuxEMpleados;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -55,6 +51,7 @@ namespace moduloRRHH.compania
 
             int rowIndex = ((GridViewRow)((sender as Control)).NamingContainer).RowIndex;
 
+            //Lleno campos
             btnRegistrarDpto.Visible = false;
             btnCancelarDpto.Visible = true;
             btnAceptarDpto.Visible = true;
@@ -62,6 +59,7 @@ namespace moduloRRHH.compania
             txtIDdpto.Text = gvDepartamentos.Rows[rowIndex].Cells[0].Text;
             txtDpto.Text = gvDepartamentos.Rows[rowIndex].Cells[1].Text;
 
+            //Cambio la fila a un color amarillo para resaltar el que se va a editar
             gvDepartamentos.Rows[rowIndex].Cells[0].BackColor = Color.Yellow;
             gvDepartamentos.Rows[rowIndex].Cells[1].BackColor = Color.Yellow;
             gvDepartamentos.Rows[rowIndex].Cells[2].BackColor = Color.Yellow;
@@ -71,15 +69,44 @@ namespace moduloRRHH.compania
 
         protected void btnBorrarDpto_Click(object sender, EventArgs e)
         {
-            pAlertaModal.Visible = true;
+            pAlertaModal.Visible = false;
             txtPD.Text = "";
 
             lblTabla.Text = "departamento";
             btnCloseModal.Text = "Cancelar";
             btnAceptarModal.Visible = true;
             lblHeader.Text = "<i class=\"fa-solid fa-triangle-exclamation\"></i> Advertencia";
+            
+            //Obtengo el index de la fila seleccionada 
             int rowIndex = ((GridViewRow)((sender as Control)).NamingContainer).RowIndex;
-            lblDocDel.Text = "Esta por eliminar el departamento <br><strong>" + gvDepartamentos.Rows[rowIndex].Cells[1].Text + "</strong><br>Si lo elimina, se borraran todos los puestos relacionados a este departamento<br>¿Desea continuar?";
+            
+            //Si hay lista
+            //Guardo el nombre del departamento en un hiddenField
+            NombreDP.Value = gvDepartamentos.Rows[rowIndex].Cells[1].Text;
+
+            //Genero el objeto con el id del departamento seleccionado
+            Departamentos = new MetodosDepartamentos("", gvDepartamentos.Rows[rowIndex].Cells[0].Text);
+
+            //Lleno la lista con los empleados del departamento
+            _AuxEMpleados = Departamentos.PrevencionDepartamento();
+            if(_AuxEMpleados.Count > 0)
+            {
+                lblDocDel.Text = "<p>Este departamente cuenta con los siguientes empleados:</p>";
+                for (int i = 0; i < _AuxEMpleados.Count; i++)
+                {
+                    lblDocDel.Text += "<p>" + _AuxEMpleados[i].NoEmpleado+". "+ _AuxEMpleados[i].NombreEmpleado+" - "+ _AuxEMpleados[i].Puesto+"</p>"; 
+                }
+                lblDocDel.Text += "Si continua, el departamento asignado cambiara a uno general.</br> Desea continuar?";
+            }
+            else
+            {
+                lblDocDel.Text = "Esta por eliminar el siguiente departamento:";
+                lblDptoPuesto.Text = gvDepartamentos.Rows[rowIndex].Cells[1].Text;
+                lblTipo.Text = lblTabla.Text;
+                pAlertaModal.Visible = true;
+                btnAceptarModal.Visible = false;
+                btnBorrarModal.Visible = true;
+            }
             lblData.Text = gvDepartamentos.Rows[rowIndex].Cells[0].Text;
             ModalPopupExtender1.Show();
             
@@ -87,13 +114,8 @@ namespace moduloRRHH.compania
 
         protected void BindDataDpto(string valor)
         {
-            List<clsHerramientas.clsParametros> parametros = new List<clsHerramientas.clsParametros>()
-            {
-                new clsHerramientas.clsParametros{NombreParametro="@tabla", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro="departamento"},
-                new clsHerramientas.clsParametros{NombreParametro="@accion", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro="select"},
-                new clsHerramientas.clsParametros{NombreParametro="@valor", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro=valor}
-            };
-            DataTable dt = clsHerramientas.ProcedimientoAlmacenado("Master_Division", parametros);
+            Departamentos = new MetodosDepartamentos();
+            DataTable dt = Departamentos.ObtenerDepartamentos(valor);
             gvDepartamentos.DataSource = dt;
             gvDepartamentos.DataBind();
 
@@ -101,13 +123,8 @@ namespace moduloRRHH.compania
         }
         protected void BindDataPuesto(string valor)
         {
-            List<clsHerramientas.clsParametros> parametros = new List<clsHerramientas.clsParametros>()
-            {
-                new clsHerramientas.clsParametros{NombreParametro="@tabla", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro="puesto"},
-                new clsHerramientas.clsParametros{NombreParametro="@accion", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro="select"},
-                new clsHerramientas.clsParametros{NombreParametro="@valor", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro=valor}
-            };
-            DataTable dtP = clsHerramientas.ProcedimientoAlmacenado("Master_Division", parametros);
+            Puestos = new MetodosPuestos();
+            DataTable dtP = Puestos.ObtenerPuestos(valor);
             gvPuestos.DataSource = dtP;
             gvPuestos.DataBind();
             lblTotalPuesto.Text = "Total de registros: "+dtP.Rows.Count;
@@ -115,20 +132,13 @@ namespace moduloRRHH.compania
 
         protected void btnRegistrarDpto_Click(object sender, EventArgs e)
         {
+            //Ejecuto el constructor para ejecutar el metodo de registro
+            Departamentos = new MetodosDepartamentos(txtDpto.Text,txtIDdpto.Text);
             PAlerta.Visible = true;
 
-            List<clsHerramientas.clsParametros> parametros = new List<clsHerramientas.clsParametros>()
-            {
-                new clsHerramientas.clsParametros{NombreParametro="@tabla", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro="departamento"},
-                new clsHerramientas.clsParametros{NombreParametro="@accion", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro="insert"},
-                new clsHerramientas.clsParametros{NombreParametro="@ID_Departamento", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro= txtIDdpto.Text},
-                new clsHerramientas.clsParametros{NombreParametro="@Nombre", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro= txtDpto.Text},
-            };
-            var resultado = clsHerramientas.TProcedimientoAlmacenado("Master_Division", parametros);
-            gvDepartamentos.DataSource = resultado.Item1;
-            lblResult.Text = resultado.Item2;
+            lblResult.Text = Departamentos.RegistrarDepartamento();
+            
             BindDataDpto("");
-
             txtIDdpto.Text = "";
             txtDpto.Text = "";
             llenarCombo();
@@ -141,16 +151,9 @@ namespace moduloRRHH.compania
 
         protected void btnAceptarDpto_Click(object sender, EventArgs e)
         {
-            List<clsHerramientas.clsParametros> parametros = new List<clsHerramientas.clsParametros>()
-            {
-                new clsHerramientas.clsParametros{NombreParametro="@tabla", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro="departamento"},
-                new clsHerramientas.clsParametros{NombreParametro="@accion", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro="update"},
-                new clsHerramientas.clsParametros{NombreParametro="@ID_Departamento", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro= txtIDdpto.Text},
-                new clsHerramientas.clsParametros{NombreParametro="@Nombre", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro= txtDpto.Text},
-            };
-            var resultado = clsHerramientas.TProcedimientoAlmacenado("Master_Division", parametros);
-            gvDepartamentos.DataSource = resultado.Item1;
-            lblResult.Text = resultado.Item2;
+            
+            Departamentos = new MetodosDepartamentos(txtDpto.Text, txtIDdpto.Text);
+            lblResult.Text = Departamentos.EditarDepartamento();
             BindDataDpto("");
             PAlerta.Visible = true;
 
@@ -186,13 +189,8 @@ namespace moduloRRHH.compania
 
         public void llenarCombo()
         {
-            List<clsHerramientas.clsParametros> parametros = new List<clsHerramientas.clsParametros>()
-            {
-                new clsHerramientas.clsParametros{NombreParametro="@tabla", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro="departamento"},
-                new clsHerramientas.clsParametros{NombreParametro="@accion", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro="select"},
-                new clsHerramientas.clsParametros{NombreParametro="@valor", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro=""}
-            };
-            DataTable dt = clsHerramientas.ProcedimientoAlmacenado("Master_Division", parametros);
+            Departamentos = new MetodosDepartamentos();
+            DataTable dt = Departamentos.ObtenerDepartamentos("");
             cbDepartamento.DataSource = dt;
             cbDepartamento.DataTextField = "Nombre";
             cbDepartamento.DataValueField = "ID_Departamento";
@@ -201,19 +199,10 @@ namespace moduloRRHH.compania
 
         protected void btnRegistrarPuesto_Click(object sender, EventArgs e)
         {
+            Puestos = new MetodosPuestos(txtPuestosID.Text, txtPuestosDescripcion.Text, cbDepartamento.SelectedValue);
             PAlertaPuesto.Visible = true;
+            lblPuestoAlert.Text = Puestos.RegistrarPuesto();
 
-            List<clsHerramientas.clsParametros> parametros = new List<clsHerramientas.clsParametros>()
-            {
-                new clsHerramientas.clsParametros{NombreParametro="@tabla", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro="puesto"},
-                new clsHerramientas.clsParametros{NombreParametro="@accion", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro="insert"},
-                new clsHerramientas.clsParametros{NombreParametro="@ID_puesto", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro= txtPuestosID.Text},
-                new clsHerramientas.clsParametros{NombreParametro="@Puesto", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro= txtPuestosDescripcion.Text},
-                new clsHerramientas.clsParametros{NombreParametro="@ID_Departamento", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro= cbDepartamento.SelectedValue},
-            };
-            var resultado = clsHerramientas.TProcedimientoAlmacenado("Master_Division", parametros);
-            gvPuestos.DataSource = resultado.Item1;
-            lblPuestoAlert.Text = resultado.Item2;
             BindDataPuesto("");
             txtPuestosDescripcion.Text = "";
             txtPuestosID.Text = "";
@@ -240,34 +229,44 @@ namespace moduloRRHH.compania
 
         protected void btnBorrarPuesto_Click(object sender, EventArgs e)
         {
-            pAlertaModal.Visible = true;
+            int rowIndex = ((GridViewRow)((sender as Control)).NamingContainer).RowIndex;
+            Puestos = new MetodosPuestos(gvPuestos.Rows[rowIndex].Cells[0].Text, "","");
+            
+            pAlertaModal.Visible = false;
             txtPD.Text = "";
-
             lblTabla.Text = "puesto";
             btnCloseModal.Text = "Cancelar";
             btnAceptarModal.Visible = true;
             lblHeader.Text = "<i class=\"fa-solid fa-triangle-exclamation\"></i> Advertencia";
-            int rowIndex = ((GridViewRow)((sender as Control)).NamingContainer).RowIndex;
-            lblDocDel.Text = "Esta por eliminar el siguiente puesto";
-            lblDptoPuesto.Text = gvPuestos.Rows[rowIndex].Cells[1].Text;
+
             lblTipo.Text = "puesto";
             lblData.Text = gvPuestos.Rows[rowIndex].Cells[0].Text;
+            NombreDP.Value = gvPuestos.Rows[rowIndex].Cells[1].Text;
+
+            List<ListaEmpleados> prevencion = Puestos.PrevencionPuesto();
+            if (prevencion.Count > 0)
+            {               
+                lblDocDel.Text = "Los siguientes empleado cuentan tienen el puesto de <strong>"+ gvPuestos.Rows[rowIndex].Cells[1].Text + "</strong> que formata parte del " +
+                    "<br/> ";
+                for (int i = 0; i < prevencion.Count; i++)
+                {
+                    lblDocDel.Text += prevencion[i].NoEmpleado + "-" + prevencion[i].NombreEmpleado+"<br/>";
+                }
+                lblDocDel.Text += "<br/> El puesto asignado cambiara a uno general. Desea continuar?";
+            }
+            else
+            {
+                lblDocDel.Text = "Esta por eliminar el siguiente puesto:";
+                lblDptoPuesto.Text = gvPuestos.Rows[rowIndex].Cells[1].Text;
+
+                pAlertaModal.Visible = true;
+
+
+                btnAceptarModal.Visible = false;
+                btnBorrarModal.Visible = true;
+            }
             ModalPopupExtender1.Show();
-
-            //PAlertaPuesto.Visible = true;
-            //int rowIndex = ((GridViewRow)((sender as Control)).NamingContainer).RowIndex;
-            //List<clsHerramientas.clsParametros> parametros = new List<clsHerramientas.clsParametros>()
-            //{
-            //    new clsHerramientas.clsParametros{NombreParametro="@tabla", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro="puesto"},
-            //    new clsHerramientas.clsParametros{NombreParametro="@accion", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro="delete"},
-            //    new clsHerramientas.clsParametros{NombreParametro="@ID_puesto", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro= gvPuestos.Rows[rowIndex].Cells[0].Text}
-            //};
-
-            //var tupla = clsHerramientas.TProcedimientoAlmacenado("Master_Division", parametros);
-            //lblPuestoAlert.Text = tupla.Item2;
-            ////dt = /*clsHerramientas.ProcedimientoAlmacenado("Master_Documentos", parametros);*/ tupla.Item1;
-
-            //BindDataPuesto("");
+            
         }
 
         //Establece el valor en el combobox
@@ -292,18 +291,8 @@ namespace moduloRRHH.compania
         protected void btnAceptarPuesto_Click(object sender, EventArgs e)
         {
             PAlertaPuesto.Visible = true;
-            //int rowIndex = ((GridViewRow)((sender as Control)).NamingContainer).RowIndex;
-            List<clsHerramientas.clsParametros> parametros = new List<clsHerramientas.clsParametros>()
-            {
-                new clsHerramientas.clsParametros{NombreParametro="@tabla", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro="puesto"},
-                new clsHerramientas.clsParametros{NombreParametro="@accion", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro="update"},
-                new clsHerramientas.clsParametros{NombreParametro="@Puesto", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro=txtPuestosDescripcion.Text },
-                new clsHerramientas.clsParametros{NombreParametro="@ID_Departamento", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro= cbDepartamento.SelectedValue },
-                new clsHerramientas.clsParametros{NombreParametro="@ID_puesto", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro= txtPuestosID.Text}
-            };
-
-            var tupla = clsHerramientas.TProcedimientoAlmacenado("Master_Division", parametros);
-            lblPuestoAlert.Text = tupla.Item2;;
+            Puestos = new MetodosPuestos(txtPuestosID.Text, txtPuestosDescripcion.Text, cbDepartamento.SelectedValue);
+            lblPuestoAlert.Text = Puestos.EditarPuesto();
             BindDataPuesto("");
 
             btnAceptarPuesto.Visible = false;
@@ -358,8 +347,10 @@ namespace moduloRRHH.compania
                 sortingDirection = "Asc";
 
             }
-            DataView sortedView = new DataView(clsHerramientas.ProcedimientoAlmacenado("Master_Division", parametros));
-            sortedView.Sort = e.SortExpression + " " + sortingDirection;
+            DataView sortedView = new DataView(clsHerramientas.ProcedimientoAlmacenado("Master_Division", parametros))
+            {
+                Sort = e.SortExpression + " " + sortingDirection
+            };
             Session["SortedView"] = sortedView;
             gvPuestos.DataSource = sortedView;
             gvPuestos.DataBind();
@@ -412,13 +403,19 @@ namespace moduloRRHH.compania
 
         protected void btnAceptarModal_Click(object sender, EventArgs e)
         {
-            DataTable dtTest;
-            if (lblDptoPuesto.Text == txtPD.Text)
-            {
+            
+            btnAceptarModal.Visible = false;
+
                 pAlertaModal.Visible = false;
 
                 if (lblTabla.Text == "departamento")
                 {
+                    lblDocDel.Text = "Esta por eliminar el siguiente departamento:";
+                    lblDptoPuesto.Text = NombreDP.Value;
+                    lblTipo.Text = lblTabla.Text;
+                    btnBorrarModal.Visible = true;
+                    pAlertaModal.Visible = true;
+                    /*
                     dtTest = clsHerramientas.SQLConsulta("SELECT * FROM Empleado WHERE ID_Departamento='" + lblData.Text + "'");
                     if (dtTest.Rows.Count > 0)
                     {
@@ -435,15 +432,8 @@ namespace moduloRRHH.compania
                     }
                     else
                     {
-
-                        List<clsHerramientas.clsParametros> parametros = new List<clsHerramientas.clsParametros>()
-                    {
-                        new clsHerramientas.clsParametros{NombreParametro="@tabla", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro="departamento"},
-                        new clsHerramientas.clsParametros{NombreParametro="@accion", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro="delete"},
-                        new clsHerramientas.clsParametros{NombreParametro="@ID_Departamento", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro= lblData.Text}
-                    };
-
-                        var tupla = clsHerramientas.TProcedimientoAlmacenado("Master_Division", parametros);
+                        
+                        
                         lblHeader.Text = "<i class=\"fa-solid fa-circle-info\"></i> Informacion";
                         lblDocDel.Text = tupla.Item2;
                         btnCloseModal.Text = "Ok";
@@ -454,10 +444,13 @@ namespace moduloRRHH.compania
                         llenarCombo();
 
                     }
-
+                    */
                 }
+                //================ Acciones con la tabla de puesto===============================================
                 else if (lblTabla.Text == "puesto")
                 {
+                /*
+                    //=====================Pregunto si tiene este puesto esta relacionado con un empleado ====================
                     dtTest = clsHerramientas.SQLConsulta("SELECT * FROM Empleado WHERE ID_puesto='" + lblData.Text + "'");
                     if (dtTest.Rows.Count > 0)
                     {
@@ -473,7 +466,7 @@ namespace moduloRRHH.compania
                     }
                     else
                     {
-
+                        // =============Eliminacion del puesto si no tiene empleados ===========================================
                         List<clsHerramientas.clsParametros> parametros = new List<clsHerramientas.clsParametros>()
                     {
                         new clsHerramientas.clsParametros{NombreParametro="@tabla", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro="puesto"},
@@ -490,9 +483,82 @@ namespace moduloRRHH.compania
                         btnCloseModal.Text = "Ok";
                         btnAceptarModal.Visible = false;
                     }
-
+                    */
+                lblDocDel.Text = "Esta por eliminar el siguiente puesto:";
+                lblDptoPuesto.Text = NombreDP.Value;
+                lblTipo.Text = lblTabla.Text;
+                btnBorrarModal.Visible = true;
+                pAlertaModal.Visible = true;
                 } 
+        }
+
+        protected void btnBorrarModal_Click(object sender, EventArgs e)
+        {
+            string ResultadoAccion;
+
+            if(lblDptoPuesto.Text == txtPD.Text) {
+                pAlertaModal.Visible = false;
+                if (lblTabla.Text == "departamento") { 
+                Departamentos = new MetodosDepartamentos("",lblData.Text);
+
+                //Lleno la lista con los empleados del departamento
+                _AuxEMpleados = Departamentos.PrevencionDepartamento();
+                
+                if (_AuxEMpleados.Count > 0)
+                {
+                    ResultadoAccion = Departamentos.CambiarGenerico(_AuxEMpleados);
+                    if (!ResultadoAccion.Contains("Error"))
+                    {
+                        lblHeader.Text = "<i class=\"fa-solid fa-check\"></i> Exito";
+                    }
+                    else
+                    {
+                        lblHeader.Text = "<i class=\"fa-solid fa-x\"></i> Error";
+                    }
+                    lblDocDel.Text = ResultadoAccion+"</br>";
+                }
+                else {
+                    lblDocDel.Text = Departamentos.EliminarDepartamento(lblData.Text);
+                }
+                }
+                else
+                {
+
+                    Puestos = new MetodosPuestos(lblData.Text,"","");
+                    _AuxEMpleados = Puestos.PrevencionPuesto();
+                    if (_AuxEMpleados.Count > 0)
+                    {
+                        ResultadoAccion = Puestos.CambiarGenerico(_AuxEMpleados);
+                        if (!ResultadoAccion.Contains("Error"))
+                        {
+                            lblHeader.Text = "<i class=\"fa-solid fa-check\"></i> Exito";
+                        }
+                        else
+                        {
+                            lblHeader.Text = "<i class=\"fa-solid fa-x\"></i> Error";
+                        }
+                        lblDocDel.Text = ResultadoAccion + "</br>";
+                    }
+                    else
+                    {
+                        //borrar si no hay lista
+                        lblDocDel.Text = Puestos.EliminarPuesto(lblData.Text);
+                    }
+                    //ResultadoAccion = Puestos.CambiarGenerico()
+                }
+                //Limpiar modal
+                btnBorrarModal.Visible = false;
+                btnCloseModal.Text = "Ok";
+                
+
             }
+        }
+
+        protected void btnCloseModal_Click(object sender, EventArgs e)
+        {
+            ModalPopupExtender1.Hide();
+            BindDataDpto("");
+            BindDataPuesto("");
         }
     }
 }

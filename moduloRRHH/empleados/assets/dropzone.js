@@ -74,6 +74,8 @@ btnUpload.onclick = () => {
     $('#btnCancelar').hide();
     $('#btnUpload').hide();
     subirArchivoXML();
+    
+    //subirArchivoAjax();
 }
 
 $('document').ready(function () {
@@ -112,7 +114,7 @@ function subirArchivoXML() {
     li.classList.add('in-prog');
     li.innerHTML = `
         <div class="col">
-            <img src="Pdf-2127829.png" width="100%" />
+            <img src="assets/Pdf-2127829.png" width="100%" />
             </div>
             <div class="col">
                 <div class="file-name">
@@ -138,15 +140,31 @@ function subirArchivoXML() {
     var http = new XMLHttpRequest();
     var data = new FormData();
 
+    var empleado =  $('#lblNombres').text() + ' ' + $('#lblApellido').text();
     data.append(selector2.files[0].name, selector2.files[0]);
+    data.append("expiracion", $('#hfExpiracion').val());
+    data.append("documento", $('#hfDocumento').val());
+    data.append("empresa", $('#imgEmpresa').attr('alt'));
+    data.append("nombre", empleado);
+    data.append("noempleado", $('#txtNoEmpleado').val());
+    data.append("DocumentacionID", $('#hfDocumentacionID').val());
+    data.append("accion", $('#hfAccion').val());
+    data.append("fecha", $('#dateFecha').val());
+
     http.onload = function () {
         li.classList.add('complete');
         li.classList.remove('in-prog');
         barrita.innerHTML = 'Archivo subido';
 
         /*alert(':D');*/
+        if (barrita.innerHTML == 'Archivo subido') {
+            setTimeout(hideModal, 5000);
+       // Limpiar();
+        setTimeout(() => { document.location.reload(); }, 3000);
+        console.log(http.responseText);
+        }
+       
 
-        setTimeout(cerrarModal, 3000);
     }
     http.upload.onprogress = (e) => {
         var porcentaje = (e.loaded / e.total) * 100;
@@ -169,7 +187,8 @@ function subirArchivoAjax() {
 
     let selector = document.getElementById("fileup");
     /*var fileSel = fileSelectorInput.files[0];*/
-
+    data.append("nombre", "juan");
+    data.append("id", "12");
     data.append(selector.files[0].name, selector.files[0]);
     $.ajax({
         url: "hFIleUpload.ashx",
@@ -204,3 +223,24 @@ function cerrarModal() {
     $('#exampleModal').modal('hide');
 
 }
+
+function hideModal() {
+    $find('ModalPopupExtender1').hide();
+    Limpiar();
+    return false;
+}
+
+function OcultarModal() {
+    $find('ModalHistorial').hide();   
+    return false;
+}
+
+window.addEventListener(
+    "keydown",
+    (event) => {
+        if (event.code == 'Escape') {
+            hideModal();
+        }
+    },
+    true,
+);

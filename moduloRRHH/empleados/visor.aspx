@@ -9,23 +9,24 @@
         </div>
     </div>
     <div class="row mt-2">
-        <div class="col">
-            <table class="table table-hover text-center">
-                <thead class="table-header" style="color:white; background:#1D3B71;">
-                <tr>
-                    <th>Fecha de cambio</th>
-                    <th>Tipo de cambio</th>
-                    <th>Cambiado por</th>
-                </tr>
-                    </thead>
-                <tbody>
-                    <tr>
-                        <td>08/07/2023</td>
-                        <td>Creado</td>
-                        <td>Usuario</td>
-                    </tr> 
-                </tbody>
-            </table>
+        <div class="col">            
+            <asp:GridView ID="gvHistory" CssClass="table table-responsive table-striped table-hover text-center" AutoGenerateColumns="false" runat="server" ShowHeaderWhenEmpty="True">
+                <Columns>
+                    <asp:BoundField DataField="Fecha_cambio" HeaderText="Fecha de cambio"></asp:BoundField>
+                    <asp:BoundField DataField="accion" HeaderText="Cambio"></asp:BoundField>
+                    <asp:BoundField DataField="Nombre" HeaderText="modificado por"></asp:BoundField>
+                </Columns>
+                <EmptyDataTemplate>
+                    <div class="d-flex justify-content-center">
+                        <asp:Literal ID="Literal2" runat="server" Text="No se encontraron empleados"></asp:Literal>
+                    </div>
+                </EmptyDataTemplate>
+            </asp:GridView>
+        </div>
+    </div>
+    <div class="row">
+        <div class="d-flex justify-content-center">
+            <asp:LinkButton ID="btnPaTras" runat="server"  OnClick="btnPaTras_Click" CssClass="btn btn-secondary"><i class="fa-solid fa-chevron-left"></i> Regresar</asp:LinkButton>
         </div>
     </div>
 </asp:Content>
