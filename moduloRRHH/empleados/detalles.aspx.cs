@@ -165,7 +165,7 @@ namespace moduloRRHH
                     }
                     else
                     {
-                        e.Row.Cells[4].Text = "<label class='estado pendiente'>Sin entregar</label>";
+                        e.Row.Cells[4].Text = "<label class='estado pendiente label-parpadeo'>Sin entregar</label>";
 
                     }
                 }
@@ -183,7 +183,7 @@ namespace moduloRRHH
                             e.Row.Cells[4].Text = "<label class='estado modificado'>Actualizado</label>";
                             break;
                         case "vencido":
-                            e.Row.Cells[4].Text = "<label class='estado inactivo fw-bold'>⚠ VENCIDO ⚠</label>";
+                            e.Row.Cells[4].Text = "<label class='estado inactivo blink fw-bold'>⚠ VENCIDO ⚠</label>";
                             break;
                         case "actulizar":
                             e.Row.Cells[4].Text = "<label class='estado bg-white text-dark border border-warning border-2'><i class=\"fa-solid fa-arrows-rotate\"></i> Actualizar</label>";
@@ -299,6 +299,7 @@ namespace moduloRRHH
                     ScriptManager.RegisterStartupScript(this, GetType(), "MostrarAlerta", "Imprimir('" + res + "');", true);
                 }
             }
+            Documentos();
         }
 
         public void Historial(string archivo)

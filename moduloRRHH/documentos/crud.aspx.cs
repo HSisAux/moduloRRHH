@@ -13,6 +13,7 @@ namespace moduloRRHH.documentos
 {
     public partial class crud : System.Web.UI.Page
     {
+        MetodoDocumentos Metodos = new MetodoDocumentos();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -41,58 +42,23 @@ namespace moduloRRHH.documentos
             {
                 requerido = "1";
             }
+            MetodoDocumentos metodoDocumentos = new MetodoDocumentos(id,nombre,expiracion, requerido);
             DataTable dt = new DataTable();
             if(id!= "" && nombre != "")
             {
-                
-                DataTable table = clsHerramientas.SQLConsulta("SELECT * FROM Documentos WHERE ID='" + id + "'");
-                if (table.Rows.Count > 0 )
-                {
-                    lblResult.Text= "ya existe un documento registrado con el ID especificado";
-                    PAlerta.Visible = true;
-
-                }
-                else
-                {
-                    List<clsHerramientas.clsParametros> parametros = new List<clsHerramientas.clsParametros>()
-                {
-                    new clsHerramientas.clsParametros{NombreParametro="@accion", TipoParametro=SqlDbType.VarChar, ValorParametro="create"},
-                    new clsHerramientas.clsParametros{NombreParametro="@ID",TipoParametro=SqlDbType.VarChar, ValorParametro=id},
-                    new clsHerramientas.clsParametros{NombreParametro="@nombre",TipoParametro=SqlDbType.VarChar, ValorParametro=nombre},
-                    new clsHerramientas.clsParametros{NombreParametro="@expiracion",TipoParametro=SqlDbType.VarChar, ValorParametro=expiracion},
-                    new clsHerramientas.clsParametros{NombreParametro="@requerido",TipoParametro=SqlDbType.VarChar, ValorParametro=requerido}
-
-                };
-
-                    //dt = clsHerramientas.ProcedimientoAlmacenado("Master_Documentos",parametros);
-
-                    var ejecutacion = clsHerramientas.TProcedimientoAlmacenado("Master_Documentos", parametros);
-                dt = ejecutacion.Item1;
-
-               
-                    lblResult.Text = ejecutacion.Item2;
-                    PAlerta.Visible = true;
-               
-                }
-
-
+                lblResult.Text = metodoDocumentos.CrearRegistro();
+                PAlerta.Visible = true;
                 BindGrid(txtBuscar.Text.Trim());
                 txtDocID.Text = "";
                 txtNombre.Text = "";
                 chRequerido.Checked = false;
-
             }
             
         }
 
         private void BindGrid(string buscar)
         {
-            List<clsHerramientas.clsParametros> parametros = new List<clsHerramientas.clsParametros>()
-            {
-                new clsHerramientas.clsParametros{NombreParametro="@accion", TipoParametro=SqlDbType.VarChar, ValorParametro="read"},
-                new clsHerramientas.clsParametros{NombreParametro="@valor", TipoParametro=SqlDbType.VarChar,ValorParametro=buscar}
-            };
-            gvDocumentos.DataSource = clsHerramientas.ProcedimientoAlmacenado("Master_Documentos", parametros);
+            gvDocumentos.DataSource = Metodos.ObtenerRegistros(buscar);
             gvDocumentos.DataBind();
         }
 
@@ -194,26 +160,11 @@ namespace moduloRRHH.documentos
             {
                 requerido = "1";
             }
-            DataTable dt = new DataTable();
+            MetodoDocumentos metodoDoc = new MetodoDocumentos(id, nombre, expiracion, requerido);
             if (id != "" && nombre != "")
             {
-                List<clsHerramientas.clsParametros> parametros = new List<clsHerramientas.clsParametros>()
-                {
-                    new clsHerramientas.clsParametros{NombreParametro="@accion", TipoParametro=SqlDbType.VarChar, ValorParametro="update"},
-                    new clsHerramientas.clsParametros{NombreParametro="@ID",TipoParametro=SqlDbType.VarChar, ValorParametro=id},
-                    new clsHerramientas.clsParametros{NombreParametro="@nombre",TipoParametro=SqlDbType.VarChar, ValorParametro=nombre},
-                    new clsHerramientas.clsParametros{NombreParametro="@expiracion",TipoParametro=SqlDbType.VarChar, ValorParametro=expiracion},
-                    new clsHerramientas.clsParametros{NombreParametro="@requerido",TipoParametro=SqlDbType.VarChar, ValorParametro=requerido}
-
-                };
-                var ejecutado = clsHerramientas.TProcedimientoAlmacenado("Master_Documentos", parametros);
-
-                //dt = clsHerramientas.ProcedimientoAlmacenado("Master_Documentos", parametros);
-
-                dt = ejecutado.Item1;
-                
-                    lblResult.Text = ejecutado.Item2;
-                    PAlerta.Visible = true;
+               lblResult.Text = metodoDoc.ActualizarRegistro();
+               PAlerta.Visible = true;
                 
                
 
@@ -256,25 +207,15 @@ namespace moduloRRHH.documentos
 
         protected void btnAceptarModal_Click(object sender, EventArgs e)
         {
-
-            (DataTable, string) tupla;
-            DataTable dt = new DataTable();
-            List<clsHerramientas.clsParametros> parametros = new List<clsHerramientas.clsParametros>()
-                {
-                    new clsHerramientas.clsParametros{NombreParametro="@accion", TipoParametro=SqlDbType.VarChar, ValorParametro="delete"},
-                    new clsHerramientas.clsParametros{NombreParametro="@ID",TipoParametro=SqlDbType.VarChar, ValorParametro= lblData.Text  },
-                };
-            tupla = clsHerramientas.TProcedimientoAlmacenado("Master_Documentos", parametros);
-
-            dt = /*clsHerramientas.ProcedimientoAlmacenado("Master_Documentos", parametros);*/ tupla.Item1;
-
+            MetodoDocumentos docs = new MetodoDocumentos(lblData.Text);
             BindGrid(txtBuscar.Text.Trim());
-
             lblHeader.Text = "<i class=\"fa-solid fa-circle-info\"></i> Informacion";
 
-            lblDocDel.Text = tupla.Item2 ;
+            lblDocDel.Text = docs.BorrarRegistro() ;
             btnCloseModal.Text = "Ok";
             btnAceptarModal.Visible = false;
+            BindGrid(txtBuscar.Text.Trim());
+
         }
 
         protected void btnCloseAlert_Click(object sender, EventArgs e)

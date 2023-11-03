@@ -36,10 +36,7 @@
                                 <asp:TextBox runat="server" ClientIDMode="Static" CssClass="form-control" autocomplete="off" ID="txtEmpleado" />
 
 
-                                <asp:TextBox ID="txtMLLV" runat="server" ClientIDMode="Static" list="dlNombres"></asp:TextBox>
-                                <datalist id="dlNombres">
-                                    <option value="Chocolate"></option>
-                                </datalist>
+                                
                             </div>
                         </div>
                         <div class="row">

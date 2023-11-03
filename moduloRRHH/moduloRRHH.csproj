@@ -363,6 +363,7 @@
     <Compile Include="documentos\crud.aspx.designer.cs">
       <DependentUpon>crud.aspx</DependentUpon>
     </Compile>
+    <Compile Include="documentos\MetodoDocumentos.cs" />
     <Compile Include="empleados\CapaManejoEmpleados.cs" />
     <Compile Include="empleados\CapaSalarios.cs" />
     <Compile Include="empleados\crud.aspx.cs">

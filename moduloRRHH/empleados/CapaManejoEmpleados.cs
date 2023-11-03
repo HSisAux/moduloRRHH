@@ -14,28 +14,29 @@ namespace moduloRRHH.empleados
 {
     public class CapaManejoEmpleados
     {
-        private readonly string NoEmpleado;
-        private readonly string Nombre;
-        private readonly string apellidoPaterno;
-        private readonly string apellidoMaterno;
-        private readonly bool status;
-        private readonly string rfc;
-        private readonly string nss;
-        private readonly string FechaNac;
-        private readonly string FechaIngreso;
-        private readonly string Calle;
-        private readonly string colonia;
-        private readonly string cp;
-        private readonly string estado;
-        private readonly string ciudad;
-        private readonly string telefono;
-        private readonly string correo;
-        private readonly string TelEmergencia;
-        private readonly string ContactoEmergencia;
-        private readonly string IDDepartamento;
-        private readonly string idpuesto;
-        private readonly string empresa;
-        private string foto;
+        public string NoEmpleado { get; set; }
+        public string Nombre { get; set; }
+        public string ApellidoPaterno { get; set; }
+        public string ApellidoMaterno { get; set; }
+        public bool Status { get; set; }
+        public string RFC { get; set; }
+        public string NSS { get; set; }
+        public string FechaNac { get; set; }
+        public string FechaIngreso { get; set; }
+        public string Calle { get; set; }
+        public string Colonia { get; set; }
+        public string CP { get; set; }
+        public string Estado { get; set; }
+        public string Ciudad { get; set; }
+        public string Telefono { get; set; }
+        public string Correo { get; set; }
+        public string TelEmergencia { get; set; }
+        public string ContactoEmergencia { get; set; }
+        public string IDDepartamento { get; set; }
+        public string IDPuesto { get; set; }
+        public string Empresa { get; set; }
+        public string Foto { get; set; }
+        
 
         HttpFileCollection files = HttpContext.Current.Request.Files;
         //Constructores
@@ -43,25 +44,25 @@ namespace moduloRRHH.empleados
         {
             this.NoEmpleado = noEmpleado;
             this.Nombre = nombre;
-            this.apellidoPaterno = apellidoPaterno;
-            this.apellidoMaterno = apellidoMaterno;
-            this.status = status;
-            this.rfc = rfc;
-            this.nss = nss;
+            this.ApellidoPaterno = apellidoPaterno;
+            this.ApellidoMaterno = apellidoMaterno;
+            this.Status = status;
+            this.RFC = rfc;
+            this.NSS = nss;
             this.FechaNac = fechaNac;
             this.FechaIngreso = fechaIngreso;
             this.Calle = calle;
-            this.colonia = colonia;
-            this.cp = cp;
-            this.estado = estado;
-            this.ciudad = ciudad;
-            this.telefono = telefono;
-            this.correo = correo;
+            this.Colonia = colonia;
+            this.CP = cp;
+            this.Estado = estado;
+            this.Ciudad = ciudad;
+            this.Telefono = telefono;
+            this.Correo = correo;
             this.TelEmergencia = telEmergencia;
             this.ContactoEmergencia = contactoEmergencia;
             this.IDDepartamento = iDDepartamento;
-            this.idpuesto = idpuesto;
-            this.empresa = empresa;
+            this.IDPuesto = idpuesto;
+            this.Empresa = empresa;
         }
 
         public CapaManejoEmpleados()
@@ -76,25 +77,25 @@ namespace moduloRRHH.empleados
                 new clsHerramientas.clsParametros{NombreParametro="@accion", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro=accion},
                 new clsHerramientas.clsParametros{NombreParametro="@no_empleado", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= NoEmpleado },
                 new clsHerramientas.clsParametros{NombreParametro="@Nombre", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= Nombre },
-                new clsHerramientas.clsParametros{NombreParametro="@ApellidoP", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= apellidoPaterno },
-                new clsHerramientas.clsParametros{NombreParametro="@ApellidoM", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= apellidoMaterno},
-                new clsHerramientas.clsParametros{NombreParametro="@status", TipoParametro=System.Data.SqlDbType.Bit , ValorParametro= status.ToString() },
-                new clsHerramientas.clsParametros{NombreParametro="@rfc", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= rfc },
-                new clsHerramientas.clsParametros{NombreParametro="@nss", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= nss },
+                new clsHerramientas.clsParametros{NombreParametro="@ApellidoP", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= ApellidoPaterno },
+                new clsHerramientas.clsParametros{NombreParametro="@ApellidoM", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= ApellidoMaterno},
+                new clsHerramientas.clsParametros{NombreParametro="@status", TipoParametro=System.Data.SqlDbType.Bit , ValorParametro= Status.ToString() },
+                new clsHerramientas.clsParametros{NombreParametro="@rfc", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= RFC },
+                new clsHerramientas.clsParametros{NombreParametro="@nss", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= NSS },
                 new clsHerramientas.clsParametros{NombreParametro="@fechaNacimiento", TipoParametro=System.Data.SqlDbType.Date, ValorParametro= FechaNac },
                 new clsHerramientas.clsParametros{NombreParametro="@fechaIngreso", TipoParametro=System.Data.SqlDbType.Date, ValorParametro= FechaIngreso },
                 new clsHerramientas.clsParametros{NombreParametro="@Calle", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= Calle},
-                new clsHerramientas.clsParametros{NombreParametro="@Colonia", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= colonia},
-                new clsHerramientas.clsParametros{NombreParametro="@cp", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= cp},
-                new clsHerramientas.clsParametros{NombreParametro="@Estado", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= estado},
-                new clsHerramientas.clsParametros{NombreParametro="@Ciudad", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= ciudad},
-                new clsHerramientas.clsParametros{NombreParametro="@Telefono", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= telefono},
+                new clsHerramientas.clsParametros{NombreParametro="@Colonia", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= Colonia},
+                new clsHerramientas.clsParametros{NombreParametro="@cp", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= CP},
+                new clsHerramientas.clsParametros{NombreParametro="@Estado", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= Estado},
+                new clsHerramientas.clsParametros{NombreParametro="@Ciudad", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= Ciudad},
+                new clsHerramientas.clsParametros{NombreParametro="@Telefono", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= Telefono},
                 new clsHerramientas.clsParametros{NombreParametro="@TelEmergencia", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro = TelEmergencia},
                 new clsHerramientas.clsParametros{NombreParametro="@ContactoEmergencia", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= ContactoEmergencia},
-                new clsHerramientas.clsParametros{NombreParametro="@Correo", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= correo},
+                new clsHerramientas.clsParametros{NombreParametro="@Correo", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= Correo},
                 new clsHerramientas.clsParametros{NombreParametro="@IDdepartamento", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= IDDepartamento},
-                new clsHerramientas.clsParametros{NombreParametro="@IDpuesto", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= idpuesto},
-                new clsHerramientas.clsParametros{NombreParametro="@Empresa", TipoParametro=System.Data.SqlDbType.Int, ValorParametro= empresa}
+                new clsHerramientas.clsParametros{NombreParametro="@IDpuesto", TipoParametro=System.Data.SqlDbType.VarChar, ValorParametro= IDPuesto},
+                new clsHerramientas.clsParametros{NombreParametro="@Empresa", TipoParametro=System.Data.SqlDbType.Int, ValorParametro= Empresa}
             };
             if (accion == "insert")
             {
@@ -106,7 +107,7 @@ namespace moduloRRHH.empleados
                         try
                         {
                             //se genera una direccion, que apunta a la carpeta de archivos/ la empresa en la que esta registrado el empleado,/ su numero y nombre completo
-                            string link = "\\Archivos\\" + empresa + "\\" + NoEmpleado+" "+Nombre+" "+apellidoPaterno+" "+apellidoMaterno;
+                            string link = "\\Archivos\\" + Empresa + "\\" + NoEmpleado+" "+Nombre+" "+ApellidoPaterno+" "+ApellidoMaterno;
 
                             //reviso si la direccion existe y si no, la creo
                             if (!Directory.Exists(HttpContext.Current.Request.MapPath(link)))
@@ -114,10 +115,10 @@ namespace moduloRRHH.empleados
                                 DirectoryInfo di = System.IO.Directory.CreateDirectory(HttpContext.Current.Server.MapPath(link));
                             }
                             //Se genera la direccion en la que se guardara la foto
-                            foto = link + "\\" + file.FileName;
+                            Foto = link + "\\" + file.FileName;
 
                             //Se guarda la foto en una carpeta
-                            file.SaveAs(HttpContext.Current.Server.MapPath(foto));
+                            file.SaveAs(HttpContext.Current.Server.MapPath(Foto));
                         }
                         catch(Exception ex)
                         {
@@ -127,17 +128,17 @@ namespace moduloRRHH.empleados
                     else
                     {
                         //foto generica
-                        foto = "\\Assets\\img\\default-user.png";
+                        Foto = "\\Assets\\img\\default-user.png";
                     }
                 }
                 else
                 {
                     //foto generica
-                    foto = "\\Assets\\img\\default-user.png";
+                    Foto = "\\Assets\\img\\default-user.png";
                 }
 
                 //Guardamos la foto 
-                parametros.Add(new clsHerramientas.clsParametros { NombreParametro = "@foto", TipoParametro = System.Data.SqlDbType.VarChar, ValorParametro = foto });
+                parametros.Add(new clsHerramientas.clsParametros { NombreParametro = "@foto", TipoParametro = System.Data.SqlDbType.VarChar, ValorParametro = Foto });
             }
             var resultado = clsHerramientas.TProcedimientoAlmacenado("Master_Empleado", parametros);
             return resultado.Item2;
@@ -158,18 +159,18 @@ namespace moduloRRHH.empleados
                         {
                             DirectoryInfo di = System.IO.Directory.CreateDirectory(HttpContext.Current.Server.MapPath(link));
                         }
-                        foto = link + "\\" + file.FileName;
-                        file.SaveAs(HttpContext.Current.Server.MapPath(foto));
+                        Foto = link + "\\" + file.FileName;
+                        file.SaveAs(HttpContext.Current.Server.MapPath(Foto));
                         
                         List<clsHerramientas.clsParametros> parametros = new List<clsHerramientas.clsParametros>()
                         {
                             new clsHerramientas.clsParametros{NombreParametro="@accion", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro="Fotoperfil"},
-                            new clsHerramientas.clsParametros{NombreParametro="@foto", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro=foto},
+                            new clsHerramientas.clsParametros{NombreParametro="@foto", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro=Foto},
                             new clsHerramientas.clsParametros{NombreParametro="@no_empleado", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro= id}
                         };
                         var ejecutarquery = clsHerramientas.TProcedimientoAlmacenado("Master_Empleado", parametros);
 
-                        return (ejecutarquery.Item2,foto) ;
+                        return (ejecutarquery.Item2,Foto) ;
                     }
                     catch (Exception ex)
                     {

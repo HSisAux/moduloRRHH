@@ -481,3 +481,74 @@ input[type="checkbox"]:focus {
     border-radius: 5px;
     width: fit-content;
 }
+
+
+i.fa-solid.fa-arrows-rotate {
+    animation: mymove 2s linear infinite;
+}
+
+@keyframes mymove {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+.estado.inactivo.blink {
+    animation: blink 0.5s infinite;
+}
+@keyframes blink {
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes parpadeo {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+label.estado.pendiente.label-parpadeo::before {
+    content: "";
+    position: absolute;
+    border-radius: 50px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #756E6E;
+    animation: parpadeo 1s infinite;
+}
+
+.label-parpadeo {
+    background-color: gray;
+    color: white;
+    position: relative;
+    padding: 3px;
+    border-radius: 50px;
+}
+
+    .label-parpadeo::before {
+        content: "";
+        position: absolute;
+        border-radius: 50px;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: gray;
+        animation: parpadeo 1s infinite;
+    }

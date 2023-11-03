@@ -1,8 +1,8 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/template.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="moduloRRHH._Default" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-
-    <main>
+    <h1>Bienvenido! ヾ(￣▽￣)</h1>
+    <%--<main>
 
         <div style="background: #D8E2FF; border-radius: 13px;" class="p-5 mt-2">
             <section class="row" aria-labelledby="aspnetTitle">
@@ -54,5 +54,5 @@
         //}
 
         $('#btnHome').addClass('seleccionado');
-    </script>
+    </script>--%>
 </asp:Content>

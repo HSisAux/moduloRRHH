@@ -83,8 +83,8 @@ namespace moduloRRHH.empleados
                         }
                         else
                         {
-                            resultado = "actulizar";
-                            string res = Historial(idDoc, "actulizar", usuario, noEmpleado);
+                            resultado = "actualizar";
+                            string res = Historial(idDoc, "actualizar", usuario, noEmpleado);
                         }
                         
                     }
@@ -114,6 +114,10 @@ namespace moduloRRHH.empleados
                 new clsHerramientas.clsParametros{NombreParametro = "@no_empleado", TipoParametro = SqlDbType.VarChar, ValorParametro= dueno},
                 new clsHerramientas.clsParametros{NombreParametro = "@DocumentacionID", TipoParametro = SqlDbType.VarChar, ValorParametro=docId}
             };
+            if (docId != "")
+            {
+                parametros[0].ValorParametro = "historialAct";
+            }
             var resultado = clsHerramientas.TProcedimientoAlmacenado("Master_Documentacion", parametros);
             return resultado.Item2;
         }
