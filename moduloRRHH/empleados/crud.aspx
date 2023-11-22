@@ -159,7 +159,7 @@
                         <section class="row">
                             <label for="txtSalario" class="form-label"><i class="fa-solid fa-circle-info me-1" title="Puede registrar el salario del trabajador o hacerlo mas tarde en la pagina de salarios"></i>Salario:</label>
                             <div class="input-group mb-3 w-50">
-                                <asp:LinkButton ID="btnShowModalAJAX" OnClick="btnShowModalAJAX_Click" CssClass="btn btn-outline-success" ToolTip="Editar salario" runat="server"><i class="fa-solid fa-dollar-sign"></i></asp:LinkButton>
+                                <asp:LinkButton ID="btnShowModalAJAX" OnClick="btnShowModalAJAX_Click" CssClass="btn btn-outline-success" CausesValidation="false" ToolTip="Editar salario" runat="server"><i class="fa-solid fa-dollar-sign"></i></asp:LinkButton>
                                 <%--<asp:Button runat="server" CausesValidation="false" Text=":D" />--%>
                                 <%--<button class="btn btn-outline-success" title="editar salario" type="button" data-bs-toggle="modal" data-bs-target="#SalarioModal" id="btnSalario"><i class="fa-solid fa-dollar-sign"></i></button>--%>
                                 <asp:TextBox runat="server" CssClass="form-control" ReadOnly="true" TextMode="Password" ID="txtSalario" />
