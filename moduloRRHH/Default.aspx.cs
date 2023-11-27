@@ -18,28 +18,30 @@ namespace moduloRRHH
         {
             ((Label)Master.FindControl("lblPaginaTitulo")).Text = "inicio";
             cargar();
-            cargar2();
+            //cargar2();
         }
 
         public void cargar()
         {
             var tupla = inicio.ObtenerDocumentacion();
-            gvDocumentosFaltantes.DataSource = tupla.Item1;
+            gvDocumentosFaltantes.DataSource = /*tupla.Item1*/inicio.Separacion("faltantes");
             gvDocumentosFaltantes.DataBind();
 
-            //gvDocumentosVencidos.DataSource = tupla.Item2;
-            //gvDocumentosVencidos.DataBind();
-        }
-
-        public void cargar2()
-        {
-            gvDocumentosVencidos.DataSource = inicio.Separacion();
+            gvDocumentosVencidos.DataSource = /*tupla.Item2*/ inicio.Separacion("vencidos");
             gvDocumentosVencidos.DataBind();
-
         }
 
         protected void btnPerfil_Click(object sender, EventArgs e)
         {
+            //No_empleado
+            int rowIndex = ((GridViewRow)((sender as Control)).NamingContainer).RowIndex;
+            Context.Response.Redirect("empleados/detalles.aspx?id="+gvDocumentosFaltantes.Rows[rowIndex].Cells[0].Text);
+        }
+
+        protected void btnPerfilVencido_Click(object sender, EventArgs e)
+        {
+            int rowIndex = ((GridViewRow)((sender as Control)).NamingContainer).RowIndex;
+            Context.Response.Redirect("empleados/detalles.aspx?id=" + gvDocumentosVencidos.Rows[rowIndex].Cells[0].Text);
 
         }
     }

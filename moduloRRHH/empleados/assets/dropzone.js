@@ -151,6 +151,7 @@ function subirArchivoXML() {
     data.append("accion", $('#hfAccion').val());
     data.append("fecha", $('#dateFecha').val());
 
+
     http.onload = function () {
         li.classList.add('complete');
         li.classList.remove('in-prog');
@@ -159,7 +160,7 @@ function subirArchivoXML() {
         /*alert(':D');*/
         if (barrita.innerHTML == 'Archivo subido') {
             setTimeout(hideModal, 5000);
-       // Limpiar();
+        //Limpiar();
         setTimeout(() => { document.location.reload(); }, 3000);
         console.log(http.responseText);
         }
@@ -179,6 +180,7 @@ function subirArchivoXML() {
     }
     http.open('POST', 'hFIleUpload.ashx');
     http.send(data);
+
 }
 
 function subirArchivoAjax() {

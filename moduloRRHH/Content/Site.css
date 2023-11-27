@@ -529,12 +529,12 @@ label.estado.pendiente.label-parpadeo::before {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #756E6E;
+    background-color: #dc3545;
     animation: parpadeo 1s infinite;
 }
 
 .label-parpadeo {
-    background-color: gray;
+    background-color: #dc3545;
     color: white;
     position: relative;
     padding: 3px;
@@ -549,6 +549,6 @@ label.estado.pendiente.label-parpadeo::before {
         left: 0;
         right: 0;
         bottom: 0;
-        background: gray;
+        background: #dc3545;
         animation: parpadeo 1s infinite;
     }

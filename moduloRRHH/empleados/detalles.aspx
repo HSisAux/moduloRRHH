@@ -315,7 +315,7 @@
                                 <div>
                                     <br />
                                     <asp:Label ID="lblFecha" runat="server" Text="El documento que se esta pidiendo tiene fecha de vencimiento. Seleccionala a continuacion:"></asp:Label>
-                                    <input type="date" id="dateFecha" class="form-control m-auto" />
+                                    <input type="date" required id="dateFecha" class="form-control m-auto" />
                                     <%--<asp:TextBox ID="dateFecha" ClientIDMode="Static" Width="50%"  CssClass="form-control m-auto" runat="server" TextMode="Date"></asp:TextBox>--%>
                                 </div>
                             </asp:Panel>

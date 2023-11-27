@@ -51,15 +51,15 @@ namespace moduloRRHH.App_Code
             //Columnas no_empleado | nombre completo | archivo que falta
             dtDocumentos.Columns.Add(new DataColumn("No_empleado", typeof(string)));
             dtDocumentos.Columns.Add(new DataColumn("Empleado", typeof(string)));
-            dtDocumentos.Columns.Add(new DataColumn("Archivo_faltante", typeof(string)));
+            dtDocumentos.Columns.Add(new DataColumn("Archivo", typeof(string)));
 
             //------------------
             //Crear tabla de archivos que faltan :D | Documentos 
             DataTable dtVencidos = new DataTable("DocumentosVencidos");
             //Columnas no_empleado | nombre completo | archivo que falta
-            dtVencidos.Columns.Add(new DataColumn("no Empleado", typeof(string)));
+            dtVencidos.Columns.Add(new DataColumn("No_empleado", typeof(string)));
             dtVencidos.Columns.Add(new DataColumn("Empleado", typeof(string)));
-            dtVencidos.Columns.Add(new DataColumn("Archivo vencido", typeof(string)));
+            dtVencidos.Columns.Add(new DataColumn("Archivo", typeof(string)));
 
 
             //Obtener los documentos faltantes con banderas bool;
@@ -107,15 +107,15 @@ namespace moduloRRHH.App_Code
 
                 if (dtAux == tabla.Rows[i]["No_empleado"].ToString())
                 {
-                    archivo += "<div>" + tabla.Rows[i]["Archivo_faltante"].ToString() + "</div>";
+                    archivo += "<li>" + tabla.Rows[i]["Archivo_faltante"].ToString() + "</li>";
                 }
                 else
                 {
                     // Agregar la fila a dtDocumentos con la lista de archivos formateada
-                    dtDocumentos.Rows.Add(dtDocumentos.NewRow().ItemArray = new object[] { tabla.Rows[i - 1]["No_empleado"].ToString(), tabla.Rows[i - 1]["Empleado"].ToString(), archivo });
+                    dtDocumentos.Rows.Add(dtDocumentos.NewRow().ItemArray = new object[] { tabla.Rows[i - 1]["No_empleado"].ToString(), tabla.Rows[i - 1]["Empleado"].ToString(), "<div><ul>"+archivo+"</ul></div>" });
 
                     // Reiniciar la cadena para el próximo empleado
-                    archivo = "<div>" + tabla.Rows[i]["Archivo_faltante"].ToString() + "</div>";
+                    archivo = "<li>" + tabla.Rows[i]["Archivo_faltante"].ToString() + "</li>";
                 }
 
                 dtAux = tabla.Rows[i]["No_empleado"].ToString();
@@ -124,13 +124,66 @@ namespace moduloRRHH.App_Code
             // Agregar la última fila después de salir del bucle
             if (!string.IsNullOrEmpty(dtAux))
             {
-                dtDocumentos.Rows.Add(dtDocumentos.NewRow().ItemArray = new object[] { tabla.Rows[tabla.Rows.Count - 1]["No_empleado"].ToString(), tabla.Rows[tabla.Rows.Count - 1]["Empleado"].ToString(), archivo });
+                dtDocumentos.Rows.Add(dtDocumentos.NewRow().ItemArray = new object[] { tabla.Rows[tabla.Rows.Count - 1]["No_empleado"].ToString(), tabla.Rows[tabla.Rows.Count - 1]["Empleado"].ToString(), "<ul>"+archivo+"</ul>" });
             }
 
             return dtDocumentos;
         }
 
 
+        //-------------------------- personalizado --------------------------
+        public DataTable Separacion(string tipo)
+        {
+            DataTable dtDocumentos = new DataTable("Documentos");
+            // Columnas no_empleado | nombre completo | archivo que falta
+            dtDocumentos.Columns.Add(new DataColumn("No_empleado", typeof(string)));
+            dtDocumentos.Columns.Add(new DataColumn("Empleado", typeof(string)));
+            dtDocumentos.Columns.Add(new DataColumn("Archivo", typeof(string)));
 
+            var dt = ObtenerDocumentacion();
+            DataTable tabla; 
+            if(tipo == "faltantes")
+            {
+                tabla = dt.Item1;
+            }
+            else
+            {
+                tabla = dt.Item2;
+            }
+
+            string dtAux = "";
+            string archivo = "";
+
+            for (int i = 0; i < tabla.Rows.Count; i++)
+            {
+                if (dtAux == "")
+                {
+                    dtAux = tabla.Rows[i]["No_empleado"].ToString();
+                }
+
+                if (dtAux == tabla.Rows[i]["No_empleado"].ToString())
+                {
+                    archivo += "<li>" + tabla.Rows[i]["Archivo"].ToString() + "</li>";
+                }
+                else
+                {
+                    // Agregar la fila a dtDocumentos con la lista de archivos formateada
+                    dtDocumentos.Rows.Add(dtDocumentos.NewRow().ItemArray = new object[] { tabla.Rows[i - 1]["No_empleado"].ToString(), tabla.Rows[i - 1]["Empleado"].ToString(), "<div><ul>" + archivo + "</ul></div>" });
+
+                    // Reiniciar la cadena para el próximo empleado
+                    archivo = "<li>" + tabla.Rows[i]["Archivo"].ToString() + "</li>";
+                }
+
+                dtAux = tabla.Rows[i]["No_empleado"].ToString();
+            }
+
+            // Agregar la última fila después de salir del bucle
+            if (!string.IsNullOrEmpty(dtAux))
+            {
+                dtDocumentos.Rows.Add(dtDocumentos.NewRow().ItemArray = new object[] { tabla.Rows[tabla.Rows.Count - 1]["No_empleado"].ToString(), tabla.Rows[tabla.Rows.Count - 1]["Empleado"].ToString(), "<ul>" + archivo + "</ul>" });
+            }
+
+            return dtDocumentos;
+        }
     }
 }
