@@ -99,8 +99,9 @@ namespace moduloRRHH
                 {
                     status = "True";
             }
+                string nombre = lblNombres.Text+" "+lblApellido.Text;
                 EstadoStatus(status);
-                ScriptManager.RegisterStartupScript(this, GetType(), "MostrarAlerta", "alert('" + manejoEmpleados.CambiarStatus(Request["id"],status)+"');", true);
+                ScriptManager.RegisterStartupScript(this, GetType(), "MostrarAlerta", "alert('" + manejoEmpleados.CambiarStatus(Request["id"],status, imgEmpresa.AlternateText, nombre)+"');", true);
             }
         }
 

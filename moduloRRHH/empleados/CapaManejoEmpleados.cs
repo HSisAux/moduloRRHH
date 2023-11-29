@@ -251,7 +251,7 @@ namespace moduloRRHH.empleados
         }
 
         /*============== Cambia el estado de activo/inactivo del empleado  ===============*/
-        public string CambiarStatus(string id, string status)
+        public string CambiarStatus(string id, string status, string Empresa, string Nombre)
         {
             List<clsHerramientas.clsParametros> parametros = new List<clsHerramientas.clsParametros>()
             {
@@ -260,6 +260,25 @@ namespace moduloRRHH.empleados
                 new clsHerramientas.clsParametros{NombreParametro="@Estado", TipoParametro= System.Data.SqlDbType.VarChar, ValorParametro=status},
             };
              var cambio = clsHerramientas.TProcedimientoAlmacenado("Master_Empleado", parametros);
+
+            string link = "\\Archivos\\" +Empresa + "\\" + id + " " + Nombre;
+            string Nlink = "\\Archivos\\" + Empresa + "\\Inactivo " + id + " " + Nombre;
+            if (Directory.Exists(HttpContext.Current.Request.MapPath(link)) || Directory.Exists(HttpContext.Current.Request.MapPath(Nlink)))
+            {
+                if(status == "True")
+                {
+                    Directory.Move(HttpContext.Current.Request.MapPath(Nlink), HttpContext.Current.Request.MapPath(link));
+                }
+                else
+                {
+                    Directory.Move(HttpContext.Current.Request.MapPath(link), HttpContext.Current.Request.MapPath(Nlink));
+                }
+                //string link = "\\Archivos\\" +Empresa + "\\" + id + " " + Nombre + "\\Documentos";
+                //   status+" "+
+                //DirectoryInfo di = System.IO.Directory.CreateDirectory(HttpContext.Current.Server.MapPath(link));
+            }
+
+
             return cambio.Item2;
         }
         /*=================== Obtener lista de empleados ==========================*/
