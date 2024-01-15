@@ -32,7 +32,7 @@
                         </asp:TemplateField>
                     </Columns>
                     <EmptyDataTemplate>
-                        <div>No hay documentacion vencida <br /></div>
+                        <div>No hay documentacion vencida <br /> <i class="fa-regular fa-star"></i></div>
                     </EmptyDataTemplate>
                 </asp:GridView>
             </div>
