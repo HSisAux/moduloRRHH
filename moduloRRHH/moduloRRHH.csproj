@@ -192,6 +192,7 @@
     <Content Include="Assets\fontawesome\webfonts\fa-v4compatibility.ttf" />
     <Content Include="Assets\fontawesome\webfonts\fa-v4compatibility.woff2" />
     <Content Include="empleados\prueba.pdf" />
+    <Content Include="empleados\hFIleUpload.ashx" />
     <Content Include="Scripts\bootstrap.min.js.map" />
     <Content Include="Scripts\bootstrap.js.map" />
     <Content Include="Scripts\bootstrap.esm.min.js.map" />
@@ -214,7 +215,6 @@
     <Content Include="Content\bootstrap-grid.rtl.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
-    <Content Include="empleados\hFIleUpload.ashx" />
     <None Include="Scripts\jquery-3.6.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.6.0.js" />
     <Content Include="Scripts\jquery-3.6.0.min.js" />
