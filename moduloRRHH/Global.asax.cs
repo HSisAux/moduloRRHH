@@ -21,7 +21,7 @@ namespace moduloRRHH
             ScriptManager.ScriptResourceMapping.AddDefinition("jquery",
                 new ScriptResourceDefinition
                 {
-                    Path= "/Scripts/jquery-3.6.0.min.js"
+                    Path= "~/Scripts/jquery-3.6.0.min.js"
                 });
 
         }
